@@ -5,12 +5,21 @@ import Illustrations from "@/components/Illustrations";
 import { ThemeProvider } from "styled-components";
 import theme from "@/styles/theme";
 import GlobalStyle from "@/styles/globalStyle";
+import dynamic from "next/dynamic";
 
-export default function Home({ illustrations, draftMode, token }) {
+const IllustrationsPreview = dynamic(() =>
+  import("@/components/IllustrationsPreview")
+);
+
+export default function Home({ illustrations, draftMode }) {
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
-      <Illustrations illustrations={illustrations} />
+      {draftMode ? (
+        <IllustrationsPreview illustrations={illustrations} />
+      ) : (
+        <Illustrations illustrations={illustrations} />
+      )}
     </ThemeProvider>
   );
 }
