@@ -5,7 +5,6 @@ const nextConfig = {
     styledComponents: true,
   },
   images: {
-    domains: ["cdn.sanity.io"],
     remotePatterns: [
       {
         protocol: "https",
