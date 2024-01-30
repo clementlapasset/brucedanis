@@ -5,15 +5,6 @@ import Image from "next/image";
 
 import styled from "styled-components";
 
-const StyledIllustrationsContainer = styled.div`
-  @media ${(props) => props.theme.minWidth.sm} {
-    display: grid;
-    grid-template-columns: repeat(7, 1fr);
-    grid-gap: 30px;
-    padding: 30px;
-  }
-`;
-
 const StyledIllustration = styled(Link)`
   grid-column: ${({ $position }) =>
     $position.columnStart + "/" + ($position.columnEnd + 1)};
@@ -22,7 +13,7 @@ const StyledIllustration = styled(Link)`
 
 export default function Illustrations({ illustrations }) {
   return (
-    <StyledIllustrationsContainer>
+    <section className="grid">
       {illustrations.map((illustration) => {
         const { title, mainImage, slug, position } = illustration;
         // const imageProps = useNextSanityImage(sanityClient, mainImage);
@@ -45,6 +36,6 @@ export default function Illustrations({ illustrations }) {
           </StyledIllustration>
         );
       })}
-    </StyledIllustrationsContainer>
+    </section>
   );
 }

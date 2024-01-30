@@ -49,4 +49,13 @@ button {
 li {
   list-style: none;
 }
+
+.grid {
+  @media ${(props) => props.theme.minWidth.sm} {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-gap: 30px;
+    padding: 30px;
+  }
+}
 `;

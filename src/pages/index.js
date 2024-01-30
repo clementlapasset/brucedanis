@@ -1,11 +1,13 @@
 import { getClient } from "../../sanity/lib/client";
 import { token } from "../../sanity/lib/token";
 import { ILLUSTRATIONS_QUERY } from "../../sanity/lib/queries";
-import Illustrations from "@/components/Illustrations";
 import { ThemeProvider } from "styled-components";
 import theme from "@/styles/theme";
 import GlobalStyle from "@/styles/globalStyle";
 import dynamic from "next/dynamic";
+
+import Illustrations from "@/components/Illustrations";
+import HomeFooter from "@/components/HomeFooter";
 
 const IllustrationsPreview = dynamic(() =>
   import("@/components/sanityPreview/IllustrationsPreview")
@@ -20,6 +22,7 @@ export default function Home({ illustrations, draftMode }) {
       ) : (
         <Illustrations illustrations={illustrations} />
       )}
+      <HomeFooter />
     </ThemeProvider>
   );
 }
