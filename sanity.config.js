@@ -25,6 +25,7 @@ export default defineConfig({
       previewUrl: {
         draftMode: {
           enable: "/api/draft",
+          disable: "/api/disable-draft",
         },
       },
     }),

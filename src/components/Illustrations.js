@@ -10,12 +10,13 @@ const StyledIllustrationsContainer = styled.div`
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     grid-gap: 30px;
+    padding: 30px;
   }
 `;
 
 const StyledIllustration = styled(Link)`
   grid-column: ${({ $position }) =>
-    $position.columnStart + "/" + $position.columnEnd};
+    $position.columnStart + "/" + ($position.columnEnd + 1)};
   grid-row: ${({ $position }) => $position.rowStart + "/" + $position.rowEnd};
 `;
 
