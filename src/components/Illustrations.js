@@ -20,7 +20,7 @@ export default function Illustrations({ illustrations }) {
         return (
           <StyledIllustration
             key={title}
-            href={`product/${slug.current}`}
+            href={slug.current}
             $position={position}
           >
             <Image
