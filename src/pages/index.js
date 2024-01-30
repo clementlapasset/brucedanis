@@ -8,7 +8,7 @@ import GlobalStyle from "@/styles/globalStyle";
 import dynamic from "next/dynamic";
 
 const IllustrationsPreview = dynamic(() =>
-  import("@/components/IllustrationsPreview")
+  import("@/components/sanityPreview/IllustrationsPreview")
 );
 
 export default function Home({ illustrations, draftMode }) {

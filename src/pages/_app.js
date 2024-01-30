@@ -1,7 +1,11 @@
 import { lazy, Suspense } from "react";
 
-const PreviewProvider = lazy(() => import("@/components/PreviewProvider"));
-const VisualEditing = lazy(() => import("@/components/VisualEditing"));
+const PreviewProvider = lazy(() =>
+  import("@/components/sanityPreview/PreviewProvider")
+);
+const VisualEditing = lazy(() =>
+  import("@/components/sanityPreview/VisualEditing")
+);
 
 export default function App({ Component, pageProps }) {
   const { draftMode, token } = pageProps;
