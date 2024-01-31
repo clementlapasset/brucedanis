@@ -1,6 +1,5 @@
 // import dynamic from "next/dynamic";
 
-// test
 import { getClient } from "../../sanity/lib/client";
 import { token } from "../../sanity/lib/token";
 import {
