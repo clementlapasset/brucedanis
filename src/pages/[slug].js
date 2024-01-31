@@ -13,7 +13,7 @@ export default function SinglePost({ illustration }) {
   // return props.draftMode ? (
   //   <PostPreview post={props.post} params={props.params} />
   // ) : (
-  return <h1>{illustration.title}</h1>;
+  return <h1>{illustration?.title}</h1>;
   // );
 }
 
