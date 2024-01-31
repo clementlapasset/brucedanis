@@ -5,7 +5,7 @@ import sanityClient from "../../sanity/lib/createClient";
 
 import styled from "styled-components";
 
-const StyledIllustration = styled(Link)`
+const StyledContainer = styled.div`
   grid-column: ${({ $position }) =>
     $position.columnStart + "/" + ($position.columnEnd + 1)};
   grid-row: ${({ $position }) => $position.rowStart + "/" + $position.rowEnd};
@@ -18,24 +18,18 @@ export default function Illustrations({ illustrations }) {
         const { title, mainImage, slug, position } = illustration;
         const imageProps = useNextSanityImage(sanityClient, mainImage);
         return (
-          <StyledIllustration
-            key={title}
-            href={slug.current}
-            $position={position}
-          >
-            <Image
-              {...imageProps}
-              style={{ maxWidth: "100%", height: "auto" }}
-              placeholder="blur"
-              blurDataURL={mainImage.asset.metadata.lqip}
-              alt={title}
-              sizes="(max-width: 800px) 100vw, 800px"
-
-              // src={mainImage.asset.url}
-              // width={mainImage.asset.metadata.dimensions.width}
-              // height={mainImage.asset.metadata.dimensions.height}
-            />
-          </StyledIllustration>
+          <StyledContainer $position={position} key={title}>
+            <Link href={`/?illustrationSlug=${slug.current}`} as={slug.current}>
+              <Image
+                {...imageProps}
+                style={{ maxWidth: "100%", height: "auto" }}
+                placeholder="blur"
+                blurDataURL={mainImage.asset.metadata.lqip}
+                alt={title}
+                sizes="(max-width: 800px) 100vw, 800px"
+              />
+            </Link>
+          </StyledContainer>
         );
       })}
     </section>
