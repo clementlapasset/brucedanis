@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
-// import { useNextSanityImage } from "next-sanity-image";
-// import sanityClient from "../../sanity/lib/createClient";
+import { useNextSanityImage } from "next-sanity-image";
+import sanityClient from "../../sanity/lib/createClient";
 
 import styled from "styled-components";
 
@@ -16,7 +16,7 @@ export default function Illustrations({ illustrations }) {
     <section className="grid">
       {illustrations.map((illustration) => {
         const { title, mainImage, slug, position } = illustration;
-        // const imageProps = useNextSanityImage(sanityClient, mainImage);
+        const imageProps = useNextSanityImage(sanityClient, mainImage);
         return (
           <StyledIllustration
             key={title}
@@ -24,14 +24,16 @@ export default function Illustrations({ illustrations }) {
             $position={position}
           >
             <Image
-              // {...imageProps}
-              src={mainImage.asset.url}
-              width={mainImage.asset.metadata.dimensions.width}
-              height={mainImage.asset.metadata.dimensions.height}
+              {...imageProps}
               style={{ maxWidth: "100%", height: "auto" }}
               placeholder="blur"
               blurDataURL={mainImage.asset.metadata.lqip}
               alt={title}
+              sizes="(max-width: 800px) 100vw, 800px"
+
+              // src={mainImage.asset.url}
+              // width={mainImage.asset.metadata.dimensions.width}
+              // height={mainImage.asset.metadata.dimensions.height}
             />
           </StyledIllustration>
         );
