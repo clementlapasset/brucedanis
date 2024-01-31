@@ -12,8 +12,15 @@ const StyledContainer = styled.section`
   left: 0;
 `;
 
-export default function IllustrationModal({ illustration, slug, isModal }) {
+export default function IllustrationModal({
+  illustration,
+  setIllustrationIndex,
+}) {
   const router = useRouter();
+
+  function handlePrevNext() {
+    // setIllustrationIndex("toto");
+  }
 
   const imageProps = useNextSanityImage(sanityClient, illustration?.mainImage);
   if (illustration) {
@@ -30,6 +37,7 @@ export default function IllustrationModal({ illustration, slug, isModal }) {
           sizes="(max-width: 800px) 100vw, 800px"
         />
         <button onClick={() => router.push("/")}>Close</button>
+        <button onClick={() => handlePrevNext()}>next</button>
         {/* <Link
         href={`/?illustrationSlug=${slug.current}`}
         as={slug.current}

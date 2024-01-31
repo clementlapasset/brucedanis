@@ -19,14 +19,14 @@ const IllustrationsPreview = dynamic(() =>
 export default function Home({ illustrations, draftMode }) {
   const router = useRouter();
   const [illustration, setIllustration] = useState();
+  const [illustrationIndex, setIllustrationIndex] = useState();
 
   useEffect(() => {
-    setIllustration(
-      illustrations.find(
-        (illustration) =>
-          illustration.slug.current === router.query.illustrationSlug
-      )
-    );
+    const findIllustration = (illustration) =>
+      illustration.slug.current === router.query.illustrationSlug;
+    setIllustration(illustrations.find(findIllustration));
+    setIllustrationIndex(illustrations.findIndex(findIllustration));
+    console.log(illustrationIndex);
   }, [router]);
 
   return (
@@ -47,6 +47,7 @@ export default function Home({ illustrations, draftMode }) {
         <IllustrationModal
           pathname={router.pathname}
           illustration={illustration}
+          setIllustrationIndex={setIllustrationIndex}
         />
       </Modal>
     </ThemeProvider>
