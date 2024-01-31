@@ -12,40 +12,24 @@ const StyledContainer = styled.section`
   left: 0;
 `;
 
-export default function IllustrationModal({ illustrations }) {
+export default function IllustrationModal({ illustration, slug, isModal }) {
   const router = useRouter();
-  const [modalIsOpen, setIsOpen] = useState(false);
 
-  useEffect(() => {
-    setIsOpen(!!router.query.illustrationSlug);
-  }, [router]);
-
-  function handleClose() {
-    setIsOpen(false);
-    router.push("/");
-  }
-
-  if (modalIsOpen) {
-    const slug = router.query.illustrationSlug;
-    const illustration = illustrations.find(
-      (illustration) => illustration.slug.current === slug
-    );
-
+  const imageProps = useNextSanityImage(sanityClient, illustration?.mainImage);
+  if (illustration) {
     const { title, mainImage } = illustration;
-    // const imageProps = useNextSanityImage(sanityClient, mainImage);
-
     return (
       <StyledContainer className="grid">
         {title}
-        {/* <Image
+        <Image
           {...imageProps}
           style={{ maxWidth: "100%", height: "auto" }}
           placeholder="blur"
           blurDataURL={mainImage.asset.metadata.lqip}
           alt={title}
           sizes="(max-width: 800px) 100vw, 800px"
-        /> */}
-        <button onClick={() => handleClose()}>Close</button>
+        />
+        <button onClick={() => router.push("/")}>Close</button>
         {/* <Link
         href={`/?illustrationSlug=${slug.current}`}
         as={slug.current}

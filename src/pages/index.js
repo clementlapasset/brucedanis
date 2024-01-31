@@ -18,6 +18,16 @@ const IllustrationsPreview = dynamic(() =>
 
 export default function Home({ illustrations, draftMode }) {
   const router = useRouter();
+  const [illustration, setIllustration] = useState();
+
+  useEffect(() => {
+    setIllustration(
+      illustrations.find(
+        (illustration) =>
+          illustration.slug.current === router.query.illustrationSlug
+      )
+    );
+  }, [router]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -28,17 +38,17 @@ export default function Home({ illustrations, draftMode }) {
         <Illustrations illustrations={illustrations} />
       )}
       <HomeFooter />
-      {/* // <Modal
-        //   isOpen={router.query.illustrationSlug}
-        //   onRequestClose={() => router.push("/")}
-        //   contentLabel="Post modal"
-        // > */}
-      <IllustrationModal
-        // slug={router.query.illustrationSlug}
-        // pathname={router.pathname}
-        illustrations={illustrations}
-      />
-      {/* // </Modal> */}
+      <Modal
+        isOpen={!!router.query.illustrationSlug}
+        onRequestClose={() => router.push("/")}
+        contentLabel="Post modal"
+        ariaHideApp={false}
+      >
+        <IllustrationModal
+          pathname={router.pathname}
+          illustration={illustration}
+        />
+      </Modal>
     </ThemeProvider>
   );
 }
