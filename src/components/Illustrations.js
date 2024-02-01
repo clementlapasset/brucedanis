@@ -30,7 +30,7 @@ export default function Illustrations({ illustrations }) {
                 placeholder="blur"
                 blurDataURL={mainImage.asset.metadata.lqip}
                 alt={title}
-                sizes="(max-width: 800px) 100vw, 800px"
+                // sizes="(max-width: 800px) 100vw, 800px"
               />
             </Link>
           </StyledContainer>

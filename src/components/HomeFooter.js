@@ -1,23 +1,44 @@
 import Image from "next/image";
 import styled from "styled-components";
 import signature from "@/assets/imgs/signature.png";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+
+const noAuto = "calc(14.28vw - 30px) ";
 
 const StyledContainer = styled.section`
   position: fixed;
-  top: ${({ $isFullPage }) => $isFullPage && 0};
+  transition: all 1s;
+  height: ${({ $screenHeight, $isFullPage }) =>
+    $isFullPage ? $screenHeight : 153 - 60}px;
+  top: ${({ $isFullPage }) => $isFullPage && "0"};
+  right: ${({ $isFullPage }) => $isFullPage && "0"};
   bottom: 0;
   left: 0;
   background-color: white;
+  display: ${({ $isFullPage }) => ($isFullPage ? "flex" : "grid")};
+  grid-template-columns: ${({ $isFullPage }) =>
+    $isFullPage
+      ? "50vw 50vw 0 0 0 0 0"
+      : noAuto + noAuto + noAuto + noAuto + noAuto + noAuto + noAuto};
+  grid-gap: 30px;
+  padding: 30px;
+  justify-content: ${({ $isFullPage }) => $isFullPage && "center"};
+  align-items: ${({ $isFullPage }) => $isFullPage && "center"};
+  & > div {
+    position: ${({ $isFullPage }) => ($isFullPage ? "absolute" : "relative")};
+    transition: opacity 0.4s 0.5s;
+    opacity: ${({ $isFullPage }) => ($isFullPage ? 0 : 1)};
+    visibility: ${({ $isFullPage }) => ($isFullPage ? "hidden" : "visible")};
+  }
   .signature {
-    max-width: 170px;
+    transition: all 1s;
+    max-width: 600px;
     height: auto;
-    grid-column: 1 / 3;
+    grid-column: 1/3;
     margin: 0 auto 15px;
     align-self: center;
     @media ${({ theme }) => theme.minWidth.sm} {
       margin-bottom: 0;
-      max-width: 100%;
     }
   }
   h2 {
@@ -68,7 +89,13 @@ const StyledContainer = styled.section`
 `;
 
 export default function HomeFooter({ events, isPageLoaded }) {
-  const [isFullPage, setIsFullPage] = useState(false);
+  const [isFullPage, setIsFullPage] = useState(true);
+  const [screenHeight, setScreenHeight] = useState();
+
+  useEffect(() => {
+    const screenHeight = window.innerHeight;
+    setScreenHeight(screenHeight);
+  }, []);
 
   useEffect(() => {
     setTimeout(() => {
@@ -77,7 +104,7 @@ export default function HomeFooter({ events, isPageLoaded }) {
   }, [isPageLoaded]);
 
   return (
-    <StyledContainer className="grid" $isFullPage={isFullPage}>
+    <StyledContainer $isFullPage={isFullPage} $screenHeight={screenHeight}>
       <Image
         className="signature"
         src={signature}
