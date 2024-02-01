@@ -75,7 +75,7 @@ export default function Home({ illustrations, draftMode, events }) {
       {draftMode ? (
         <IllustrationsPreview illustrations={illustrations} />
       ) : (
-        <Illustrations illustrations={illustrations} />
+        isPageLoaded && <Illustrations illustrations={illustrations} />
       )}
       <HomeFooter events={events} isPageLoaded={isPageLoaded} />
       <Modal
