@@ -10,8 +10,12 @@ body {
   background-color: ${(props) => props.theme.colors.backgroundLight};
   color: ${(props) => props.theme.colors.black};
   font-family: "Arial", sans-serif;
-  font-size: 14px;
-  line-height: 21px;
+  font-size: 12px;
+    line-height: 16px;
+  @media ${({ theme }) => theme.minWidth.sm} {
+    font-size: 14px;
+    line-height: 21px;
+  }
 }
 
 a {
@@ -43,8 +47,11 @@ li {
 }
 
 .grid {
-  @media ${(props) => props.theme.minWidth.sm} {
     display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 15px;
+    padding: 15px;
+  @media ${(props) => props.theme.minWidth.sm} {
     grid-template-columns: repeat(7, 1fr);
     grid-gap: 30px;
     padding: 30px;

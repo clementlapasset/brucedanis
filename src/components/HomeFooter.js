@@ -12,28 +12,52 @@ const StyledContainer = styled.section`
     max-width: 100%;
     height: auto;
     grid-column: 1 / 3;
+    margin-bottom: 15px;
+    align-self: center;
+    @media ${({ theme }) => theme.minWidth.sm} {
+      margin-bottom: 0;
+    }
   }
   h2 {
     text-transform: uppercase;
     font-style: italic;
-    font-size: 16px;
-    line-height: 20px;
+    font-size: 14px;
     margin-bottom: 10px;
+    @media ${({ theme }) => theme.minWidth.sm} {
+      font-size: 16px;
+      line-height: 20px;
+    }
   }
   a:hover {
     text-decoration: underline;
   }
   .expos {
-    grid-column: 4 / 5;
+    grid-column: 1 / 2;
+
+    @media ${({ theme }) => theme.minWidth.sm} {
+      grid-column: 4 / 5;
+    }
   }
   .adresse {
-    grid-column: 5 / 6;
+    grid-column: 1 / 2;
+    @media ${({ theme }) => theme.minWidth.sm} {
+      grid-column: 5 / 6;
+    }
   }
   .contact {
-    grid-column: 6 / 7;
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+    @media ${({ theme }) => theme.minWidth.sm} {
+      grid-column: 6 / 7;
+      grid-row: auto;
+    }
   }
   .credits {
     padding-top: 30px;
+    grid-column: 2 / 3;
+    @media ${({ theme }) => theme.minWidth.sm} {
+      grid-column: 7 / 8;
+    }
     .credits-links {
       display: flex;
       flex-wrap: wrap;
