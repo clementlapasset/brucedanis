@@ -36,6 +36,7 @@ export default function Home({ illustrations, draftMode, events }) {
   }, [router]);
 
   function handleIllustrationsNav(way) {
+    // This is the way
     let slug = 0;
     if (way === "next") {
       const nextIndex =
