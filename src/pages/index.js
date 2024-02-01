@@ -21,20 +21,17 @@ export default function Home({ illustrations, draftMode, events }) {
   const [illustration, setIllustration] = useState();
   const [illustrationsByCategory, setIllustrationsByCategory] = useState([]);
   const [illustrationIndex, setIllustrationIndex] = useState();
+  const [isPageLoad, setIsPageLoad] = useState(false);
 
   useEffect(() => {
-    // callback function to call when event triggers
     const onPageLoad = () => {
       console.log("page loaded");
-      // do something else
+      setIsPageLoad(true);
     };
-
-    // Check if the page has already loaded
     if (document.readyState === "complete") {
       onPageLoad();
     } else {
       window.addEventListener("load", onPageLoad, false);
-      // Remove the event listener when component unmounts
       return () => window.removeEventListener("load", onPageLoad);
     }
   }, []);
@@ -80,7 +77,7 @@ export default function Home({ illustrations, draftMode, events }) {
       ) : (
         <Illustrations illustrations={illustrations} />
       )}
-      <HomeFooter events={events} />
+      <HomeFooter events={events} isPageLoad={isPageLoad} />
       <Modal
         isOpen={!!router.query.illustrationSlug}
         onRequestClose={() => router.push("/")}

@@ -1,10 +1,11 @@
-import Link from "next/link";
 import Image from "next/image";
 import styled from "styled-components";
 import signature from "@/assets/imgs/signature.png";
+import { useState, useEffect } from "react";
 
 const StyledContainer = styled.section`
   position: fixed;
+  top: ${({ $isFullPage }) => $isFullPage && 0};
   bottom: 0;
   left: 0;
   background-color: white;
@@ -66,9 +67,18 @@ const StyledContainer = styled.section`
   }
 `;
 
-export default function HomeFooter({ events }) {
+export default function HomeFooter({ events, isPageLoad }) {
+  const [isFullPage, setIsFullPage] = useState(true);
+
+  useEffect(() => {
+    setIsFullPage(true);
+    setTimeout(() => {
+      isPageLoad && setIsFullPage(false);
+    }, 3000);
+  }, []);
+
   return (
-    <StyledContainer className="grid">
+    <StyledContainer className="grid" $isFullPage={isFullPage}>
       <Image
         className="signature"
         src={signature}
