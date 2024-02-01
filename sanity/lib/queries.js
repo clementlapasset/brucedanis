@@ -3,6 +3,7 @@ import { groq } from "next-sanity";
 export const ILLUSTRATIONS_QUERY = groq`*[_type == "illustration" && defined(slug)] {
 title,
 slug,
+category,
 position,
 mainImage {
   asset->{
