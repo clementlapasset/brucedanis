@@ -19,7 +19,11 @@ export default function Illustrations({ illustrations }) {
         const imageProps = useNextSanityImage(sanityClient, mainImage);
         return (
           <StyledContainer $position={position} key={title}>
-            <Link href={`/?illustrationSlug=${slug.current}`} as={slug.current}>
+            <Link
+              href={`/?illustrationSlug=${slug.current}`}
+              as={slug.current}
+              scroll={false}
+            >
               <Image
                 {...imageProps}
                 style={{ maxWidth: "100%", height: "auto" }}

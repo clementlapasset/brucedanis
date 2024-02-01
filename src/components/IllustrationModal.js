@@ -1,10 +1,8 @@
-import Link from "next/link";
 import styled from "styled-components";
 import sanityClient from "../../sanity/lib/createClient";
 import Image from "next/image";
 import { useNextSanityImage } from "next-sanity-image";
 import { useRouter } from "next/router";
-import { useEffect, useState } from "react";
 
 const StyledContainer = styled.section`
   position: absolute;
@@ -12,15 +10,8 @@ const StyledContainer = styled.section`
   left: 0;
 `;
 
-export default function IllustrationModal({
-  illustration,
-  setIllustrationIndex,
-}) {
+export default function IllustrationModal({ illustration, handlePrevNext }) {
   const router = useRouter();
-
-  function handlePrevNext() {
-    // setIllustrationIndex("toto");
-  }
 
   const imageProps = useNextSanityImage(sanityClient, illustration?.mainImage);
   if (illustration) {
@@ -37,14 +28,8 @@ export default function IllustrationModal({
           sizes="(max-width: 800px) 100vw, 800px"
         />
         <button onClick={() => router.push("/")}>Close</button>
-        <button onClick={() => handlePrevNext()}>next</button>
-        {/* <Link
-        href={`/?illustrationSlug=${slug.current}`}
-        as={slug.current}
-        key={title}
-      >
-        suivant
-      </Link> */}
+        <button onClick={() => handlePrevNext("next")}>next</button>
+        <button onClick={() => handlePrevNext("prev")}>prev</button>
       </StyledContainer>
     );
   }

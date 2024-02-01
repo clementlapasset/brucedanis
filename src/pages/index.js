@@ -26,8 +26,26 @@ export default function Home({ illustrations, draftMode }) {
       illustration.slug.current === router.query.illustrationSlug;
     setIllustration(illustrations.find(findIllustration));
     setIllustrationIndex(illustrations.findIndex(findIllustration));
-    console.log(illustrationIndex);
   }, [router]);
+
+  function handleIllustrationsNav(way) {
+    let slug = 0;
+    if (way === "next") {
+      const nextIndex =
+        illustrationIndex + 1 < illustrations.length
+          ? illustrationIndex + 1
+          : 0;
+      slug = illustrations[nextIndex].slug.current;
+    }
+    if (way === "prev") {
+      const prevIndex =
+        illustrationIndex - 1 >= 0
+          ? illustrationIndex - 1
+          : illustrations.length;
+      slug = illustrations[prevIndex].slug.current;
+    }
+    router.push(`/?illustrationSlug=${slug}`, slug, false);
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -41,13 +59,13 @@ export default function Home({ illustrations, draftMode }) {
       <Modal
         isOpen={!!router.query.illustrationSlug}
         onRequestClose={() => router.push("/")}
-        contentLabel="Post modal"
+        contentLabel="Illustrations modal"
         ariaHideApp={false}
       >
         <IllustrationModal
           pathname={router.pathname}
           illustration={illustration}
-          setIllustrationIndex={setIllustrationIndex}
+          handlePrevNext={handleIllustrationsNav}
         />
       </Modal>
     </ThemeProvider>
