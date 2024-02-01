@@ -67,15 +67,15 @@ const StyledContainer = styled.section`
   }
 `;
 
-export default function HomeFooter({ events, isPageLoad }) {
+export default function HomeFooter({ events, isPageLoaded }) {
   const [isFullPage, setIsFullPage] = useState(true);
 
   useEffect(() => {
     setIsFullPage(true);
     setTimeout(() => {
-      isPageLoad && setIsFullPage(false);
+      isPageLoaded && setIsFullPage(false);
     }, 3000);
-  }, []);
+  }, [isPageLoaded]);
 
   return (
     <StyledContainer className="grid" $isFullPage={isFullPage}>

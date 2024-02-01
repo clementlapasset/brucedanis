@@ -21,12 +21,12 @@ export default function Home({ illustrations, draftMode, events }) {
   const [illustration, setIllustration] = useState();
   const [illustrationsByCategory, setIllustrationsByCategory] = useState([]);
   const [illustrationIndex, setIllustrationIndex] = useState();
-  const [isPageLoad, setIsPageLoad] = useState(false);
+  const [isPageLoaded, setIsPageLoaded] = useState(false);
 
   useEffect(() => {
     const onPageLoad = () => {
       console.log("page loaded");
-      setIsPageLoad(true);
+      setIsPageLoaded(true);
     };
     if (document.readyState === "complete") {
       onPageLoad();
@@ -77,7 +77,7 @@ export default function Home({ illustrations, draftMode, events }) {
       ) : (
         <Illustrations illustrations={illustrations} />
       )}
-      <HomeFooter events={events} isPageLoad={isPageLoad} />
+      <HomeFooter events={events} isPageLoaded={isPageLoaded} />
       <Modal
         isOpen={!!router.query.illustrationSlug}
         onRequestClose={() => router.push("/")}
