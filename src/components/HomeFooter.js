@@ -68,10 +68,9 @@ const StyledContainer = styled.section`
 `;
 
 export default function HomeFooter({ events, isPageLoaded }) {
-  const [isFullPage, setIsFullPage] = useState(true);
+  const [isFullPage, setIsFullPage] = useState(false);
 
   useEffect(() => {
-    setIsFullPage(true);
     setTimeout(() => {
       isPageLoaded && setIsFullPage(false);
     }, 3000);
