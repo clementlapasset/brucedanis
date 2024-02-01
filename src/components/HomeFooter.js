@@ -9,13 +9,14 @@ const StyledContainer = styled.section`
   left: 0;
   background-color: white;
   .signature {
-    max-width: 100%;
+    max-width: 170px;
     height: auto;
     grid-column: 1 / 3;
-    margin-bottom: 15px;
+    margin: 0 auto 15px;
     align-self: center;
     @media ${({ theme }) => theme.minWidth.sm} {
       margin-bottom: 0;
+      max-width: 100%;
     }
   }
   h2 {
