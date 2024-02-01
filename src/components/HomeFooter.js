@@ -80,8 +80,18 @@ export default function HomeFooter({ events }) {
       <div className="credits">
         <p>© 2024 Bruce d’Anis</p>
         <p className="credits-links">
-          Site réalisé par <a href="https://clementlapasset.dev/">Clément</a> et{" "}
-          <a href="https://alapasset.dev/">Adrien Lapasset</a>
+          Site réalisé par&nbsp;
+          <a
+            target="_blank"
+            rel="noreferrer"
+            href="https://clementlapasset.dev/"
+          >
+            Clément
+          </a>
+          &nbsp;et&nbsp;
+          <a target="_blank" rel="noreferrer" href="https://alapasset.dev/">
+            Adrien Lapasset
+          </a>
         </p>
       </div>
     </StyledContainer>
