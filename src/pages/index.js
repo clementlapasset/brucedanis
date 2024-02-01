@@ -1,6 +1,6 @@
 import { getClient } from "../../sanity/lib/client";
 import { token } from "../../sanity/lib/token";
-import { ILLUSTRATIONS_QUERY } from "../../sanity/lib/queries";
+import { ILLUSTRATIONS_QUERY, EVENTS_QUERY } from "../../sanity/lib/queries";
 import { ThemeProvider } from "styled-components";
 import theme from "@/styles/theme";
 import GlobalStyle from "@/styles/globalStyle";
@@ -16,7 +16,7 @@ const IllustrationsPreview = dynamic(() =>
   import("@/components/sanityPreview/IllustrationsPreview")
 );
 
-export default function Home({ illustrations, draftMode }) {
+export default function Home({ illustrations, draftMode, events }) {
   const router = useRouter();
   const [illustration, setIllustration] = useState();
   const [illustrationIndex, setIllustrationIndex] = useState();
@@ -37,7 +37,7 @@ export default function Home({ illustrations, draftMode }) {
       ) : (
         <Illustrations illustrations={illustrations} />
       )}
-      <HomeFooter />
+      <HomeFooter events={events} />
       <Modal
         isOpen={!!router.query.illustrationSlug}
         onRequestClose={() => router.push("/")}
@@ -57,10 +57,12 @@ export default function Home({ illustrations, draftMode }) {
 export const getStaticProps = async ({ draftMode = false }) => {
   const client = getClient(draftMode ? token : undefined);
   const illustrations = await client.fetch(ILLUSTRATIONS_QUERY);
+  const events = await client.fetch(EVENTS_QUERY);
 
   return {
     props: {
       illustrations,
+      events,
       draftMode,
       token: draftMode ? token : "",
     },

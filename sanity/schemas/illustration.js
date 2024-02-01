@@ -23,6 +23,9 @@ export default {
       title: "Illustration principale",
       description: "Image de l'illustration visible sur la page d'accueil",
       type: "image",
+      options: {
+        hotspot: true, // Enables image cropping
+      },
       validation: (Rule) => Rule.required(),
     },
     {

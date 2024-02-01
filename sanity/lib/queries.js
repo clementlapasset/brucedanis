@@ -16,3 +16,5 @@ export const ILLUSTRATIONS_SLUG_QUERY = groq`*[_type == "illustration" && define
 }`;
 
 export const ILLUSTRATION_QUERY = groq`*[_type == "illustration" && slug.current == $slug][0]`;
+
+export const EVENTS_QUERY = groq`*[_type == "event"]`;
