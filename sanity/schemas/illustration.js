@@ -26,9 +26,17 @@ export default {
       validation: (Rule) => Rule.required(),
     },
     {
+      name: "category",
+      title: "Catégorie",
+      type: "reference",
+      to: [{ type: "category" }],
+      validation: (Rule) => Rule.required(),
+    },
+    {
       name: "position",
       title: "Position",
       type: "object",
+      validation: (Rule) => Rule.required(),
       fields: [
         {
           name: "columnStart",

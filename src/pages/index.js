@@ -19,30 +19,37 @@ const IllustrationsPreview = dynamic(() =>
 export default function Home({ illustrations, draftMode }) {
   const router = useRouter();
   const [illustration, setIllustration] = useState();
+  const [illustrationsByCategory, setIllustrationsByCategory] = useState([]);
   const [illustrationIndex, setIllustrationIndex] = useState();
 
   useEffect(() => {
     const findIllustration = (illustration) =>
       illustration.slug.current === router.query.illustrationSlug;
-    setIllustration(illustrations.find(findIllustration));
-    setIllustrationIndex(illustrations.findIndex(findIllustration));
+    const illustration = illustrations.find(findIllustration);
+    setIllustration(illustration);
+    const illustrationsByCategory = illustrations.filter(
+      (illustrations) =>
+        illustrations.category._ref === illustration?.category._ref
+    );
+    setIllustrationsByCategory(illustrationsByCategory);
+    setIllustrationIndex(illustrationsByCategory.findIndex(findIllustration));
   }, [router]);
 
   function handleIllustrationsNav(way) {
     let slug = 0;
     if (way === "next") {
       const nextIndex =
-        illustrationIndex + 1 < illustrations.length
+        illustrationIndex + 1 < illustrationsByCategory.length
           ? illustrationIndex + 1
           : 0;
-      slug = illustrations[nextIndex].slug.current;
+      slug = illustrationsByCategory[nextIndex].slug.current;
     }
     if (way === "prev") {
       const prevIndex =
-        illustrationIndex - 1 > 0
+        illustrationIndex - 1 >= 0
           ? illustrationIndex - 1
-          : illustrations.length - 1;
-      slug = illustrations[prevIndex].slug.current;
+          : illustrationsByCategory.length - 1;
+      slug = illustrationsByCategory[prevIndex].slug.current;
     }
     router.push(`/?illustrationSlug=${slug}`, slug, false);
   }

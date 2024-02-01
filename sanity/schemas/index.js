@@ -1,3 +1,4 @@
 import illustration from "./illustration";
+import category from "./category";
 
-export const schemaTypes = [illustration];
+export const schemaTypes = [illustration, category];
