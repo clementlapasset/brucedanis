@@ -39,9 +39,9 @@ export default function Home({ illustrations, draftMode }) {
     }
     if (way === "prev") {
       const prevIndex =
-        illustrationIndex - 1 >= 0
+        illustrationIndex - 1 > 0
           ? illustrationIndex - 1
-          : illustrations.length;
+          : illustrations.length - 1;
       slug = illustrations[prevIndex].slug.current;
     }
     router.push(`/?illustrationSlug=${slug}`, slug, false);
