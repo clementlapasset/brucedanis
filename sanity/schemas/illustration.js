@@ -19,20 +19,20 @@ export default {
       },
     },
     {
+      name: "category",
+      title: "Catégorie",
+      type: "reference",
+      to: [{ type: "category" }],
+      validation: (Rule) => Rule.required(),
+    },
+    {
       name: "mainImage",
       title: "Illustration principale",
       description: "Image de l'illustration visible sur la page d'accueil",
       type: "image",
       options: {
-        hotspot: true, // Enables image cropping
+        hotspot: true,
       },
-      validation: (Rule) => Rule.required(),
-    },
-    {
-      name: "category",
-      title: "Catégorie",
-      type: "reference",
-      to: [{ type: "category" }],
       validation: (Rule) => Rule.required(),
     },
     {
@@ -72,6 +72,23 @@ export default {
           validation: (Rule) => Rule.required().min(1),
         },
       ],
+    },
+    {
+      name: "titleImage",
+      title: "Titre illustré",
+      description: "Image du titre en calligraphie",
+      type: "image",
+      options: {
+        hotspot: true,
+      },
+      validation: (Rule) => Rule.required(),
+    },
+    {
+      name: "technique",
+      title: "Technique",
+      description: "Technique utilisée qui apparaitra sous le titre",
+      type: "string",
+      validation: (Rule) => Rule.required(),
     },
   ],
 };

@@ -70,20 +70,31 @@ const StyledContainer = styled.section`
   .contact {
     grid-column: 2 / 3;
     grid-row: 2 / 3;
+    text-align: end;
     @media ${({ theme }) => theme.minWidth.sm} {
       grid-column: 6 / 7;
       grid-row: auto;
+      text-align: left;
     }
   }
   .credits {
-    padding-top: 30px;
+    align-self: flex-end;
     grid-column: 2 / 3;
+    font-size: 10px;
+    text-align: end;
     @media ${({ theme }) => theme.minWidth.sm} {
+      padding-top: 30px;
       grid-column: 7 / 8;
+      font-size: 12px;
+      text-align: left;
     }
     .credits-links {
       display: flex;
       flex-wrap: wrap;
+      justify-content: end;
+      @media ${({ theme }) => theme.minWidth.sm} {
+        justify-content: start;
+      }
     }
   }
 `;
