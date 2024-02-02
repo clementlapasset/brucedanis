@@ -36,6 +36,11 @@ export default {
       validation: (Rule) => Rule.required(),
     },
     {
+      name: "gifImage",
+      title: "GIF de l'illustration",
+      type: "image",
+    },
+    {
       name: "position",
       title: "Position",
       type: "object",
@@ -89,6 +94,59 @@ export default {
       description: "Technique utilisée qui apparaitra sous le titre",
       type: "string",
       validation: (Rule) => Rule.required(),
+    },
+    {
+      name: "dimensions",
+      title: "Dimensions",
+      description: "Dimensions du format principal (ex : 10 x 20 cm)",
+      type: "string",
+      validation: (Rule) => Rule.required(),
+    },
+    {
+      name: "price",
+      type: "number",
+      title: "Prix",
+      validation: (Rule) => Rule.required().min(1),
+    },
+    {
+      name: "description",
+      title: "Description",
+      type: "text",
+    },
+    {
+      name: "alternativeFormats",
+      title: "Autres formats / couleurs",
+      type: "array",
+      of: [
+        {
+          type: "object",
+          fields: [
+            {
+              name: "variantImage",
+              title: "Image",
+              type: "image",
+              options: {
+                hotspot: true,
+              },
+              validation: (Rule) => Rule.required(),
+            },
+            {
+              name: "dimensions",
+              title: "Dimensions",
+              type: "string",
+              description:
+                'Dimensions associées à cette couleur (ex : "10 x 20 cm")',
+              validation: (Rule) => Rule.required(),
+            },
+            {
+              name: "price",
+              type: "number",
+              title: "Prix",
+              validation: (Rule) => Rule.required().min(1),
+            },
+          ],
+        },
+      ],
     },
   ],
 };
