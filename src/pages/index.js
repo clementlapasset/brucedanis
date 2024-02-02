@@ -70,7 +70,6 @@ export default function Home({ illustrations, draftMode, events }) {
   }
 
   return (
-    // This is the way
     <ThemeProvider theme={theme}>
       <GlobalStyle />
       {draftMode ? (

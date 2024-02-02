@@ -7,41 +7,46 @@ import { useState, useEffect, useRef } from "react";
 const noAuto = "calc(14.28vw - 30px) ";
 
 const StyledContainer = styled.section`
+  overflow: hidden;
+  box-sizing: border-box;
   position: fixed;
-  transition: height 1s, grid-template-columns 1s;
-  height: ${({ $screenHeight, $isFullPage }) =>
-    $isFullPage ? $screenHeight : 153 - 60}px;
+  transition: all 1s;
+  height: ${({ $screenHeight, $isFullPage, $isMinimized }) =>
+    $isFullPage ? $screenHeight : $isMinimized ? 60 : 153}px;
   width: 100%;
   bottom: 0;
   left: 0;
   background-color: white;
-  display: ${({ $isFullPage }) => ($isFullPage ? "flex" : "grid")};
+  display: grid;
   grid-template-columns: ${({ $isFullPage }) =>
     $isFullPage
       ? "50vw 50vw 0 0 0 0 0"
       : noAuto + noAuto + noAuto + noAuto + noAuto + noAuto + noAuto};
-  grid-gap: 30px;
-  padding: 30px;
+  grid-gap: ${({ $isFullPage }) => ($isFullPage ? 0 : "30px")};
+  padding: ${({ $isMinimized }) => ($isMinimized ? 15 : 30)}px;
   justify-content: ${({ $isFullPage }) => $isFullPage && "center"};
   align-items: ${({ $isFullPage }) => $isFullPage && "center"};
   & > div {
     position: ${({ $isFullPage }) => ($isFullPage ? "absolute" : "relative")};
-    transition: opacity 0.4s 0.5s;
-    opacity: ${({ $isFullPage }) => ($isFullPage ? 0 : 1)};
-    visibility: ${({ $isFullPage }) => ($isFullPage ? "hidden" : "visible")};
+    transition: opacity 0.4s ${({ $isMinimized }) => !$isMinimized && "0.5s"};
+    opacity: ${({ $isFullPage, $isMinimized }) =>
+      $isFullPage || $isMinimized ? 0 : 1};
   }
   .signature {
-    transition: all 1s;
-    max-width: 170px;
-    width: 100%;
-    height: auto;
     grid-column: 1/3;
-    margin: 0 auto 15px;
-    align-self: center;
-    @media ${({ theme }) => theme.minWidth.sm} {
-      margin-bottom: 0;
-      width: auto;
-      max-width: ${({ $isFullPage }) => ($isFullPage ? 700 : 500)}px;
+    transition: margin 1s;
+    margin: ${({ $isFullPage }) =>
+      $isFullPage ? "auto calc(50% - 300px)" : "auto 0"};
+
+    .img {
+      transition: transform 1s;
+      transform: ${({ $isMinimized }) => $isMinimized && "translateY(-30px)"};
+      transition: width 1s;
+      height: auto;
+      @media ${({ theme }) => theme.minWidth.sm} {
+        margin-bottom: 0;
+        width: ${({ $isMinimized }) => ($isMinimized ? 170 : 370)}px;
+      }
     }
   }
   h2 {
@@ -104,7 +109,10 @@ const StyledContainer = styled.section`
 
 export default function HomeFooter({ events, isPageLoaded }) {
   const [isFullPage, setIsFullPage] = useState(true);
+  // const [isFullPage, setIsFullPage] = useState(false);
+  const [isMinimized, setIsMinimized] = useState(false);
   const [screenHeight, setScreenHeight] = useState();
+  const [scrollY, setScrollY] = useState(0);
 
   useEffect(() => {
     const screenHeight = window.innerHeight;
@@ -114,27 +122,50 @@ export default function HomeFooter({ events, isPageLoaded }) {
   useEffect(() => {
     setTimeout(() => {
       isPageLoaded && setIsFullPage(false);
-    }, 5000);
+    }, 3000);
   }, [isPageLoaded]);
+
+  useEffect(() => {
+    const handleIsMinimized = () => {
+      const currentScrollY = window.scrollY;
+      if (currentScrollY > scrollY) {
+        setIsMinimized(true);
+      }
+      if (currentScrollY < scrollY) {
+        setIsMinimized(false);
+      }
+      setScrollY(currentScrollY);
+    };
+    window.addEventListener("scroll", handleIsMinimized);
+    return () => {
+      window.removeEventListener("scroll", handleIsMinimized);
+    };
+  }, [scrollY]);
 
   if (screenHeight)
     return (
-      <StyledContainer $isFullPage={isFullPage} $screenHeight={screenHeight}>
-        {isFullPage ? (
-          <Image
-            className="signature"
-            src={signatureGif}
-            width={600}
-            alt="Signature Bruce d'Anis"
-          />
-        ) : (
-          <Image
-            className="signature"
-            src={signature}
-            width={500}
-            alt="Signature Bruce d'Anis"
-          />
-        )}
+      <StyledContainer
+        $isMinimized={isMinimized}
+        $isFullPage={isFullPage}
+        $screenHeight={screenHeight}
+      >
+        <aside className="signature">
+          {isFullPage ? (
+            <Image
+              src={signatureGif}
+              width={600}
+              alt="Signature Bruce d'Anis"
+              priority={true}
+            />
+          ) : (
+            <Image
+              className="img"
+              src={signature}
+              width={600}
+              alt="Signature Bruce d'Anis"
+            />
+          )}
+        </aside>
         {events.length > 0 && (
           <div className="expos">
             <h2>Expos en cours</h2>
