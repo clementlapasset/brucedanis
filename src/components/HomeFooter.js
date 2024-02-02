@@ -34,13 +34,12 @@ const StyledContainer = styled.section`
   }
   .signature {
     grid-column: 1/3;
-    transition: margin 1s;
-    margin: ${({ $isFullPage }) =>
-      $isFullPage ? "auto calc(50% - 300px)" : "auto 0"};
-
+    position: absolute;
+    transition: all 1s;
+    left: ${({ $isFullPage }) => ($isFullPage ? "calc(50% - 300px)" : "30px")};
+    bottom: ${({ $isFullPage, $isMinimized }) =>
+      $isFullPage ? "calc(50% - 170px)" : $isMinimized ? "15px" : "30px"};
     .img {
-      transition: transform 1s;
-      transform: ${({ $isMinimized }) => $isMinimized && "translateY(-30px)"};
       transition: width 1s;
       height: auto;
       @media ${({ theme }) => theme.minWidth.sm} {
