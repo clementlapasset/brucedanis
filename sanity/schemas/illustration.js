@@ -39,6 +39,7 @@ export default {
       name: "gifImage",
       title: "GIF de l'illustration",
       type: "image",
+      validation: (Rule) => Rule.required(),
     },
     {
       name: "position",
@@ -110,12 +111,12 @@ export default {
     },
     {
       name: "description",
-      title: "Description",
+      title: "Description (optionnel)",
       type: "text",
     },
     {
       name: "alternativeFormats",
-      title: "Autres formats / couleurs",
+      title: "Autres formats / couleurs (optionnel)",
       type: "array",
       of: [
         {

@@ -10,7 +10,28 @@ mainImage {
     ...,
     metadata
   }
-}}`;
+},
+titleImage {
+  asset->{
+    ...,
+    metadata
+  }
+},
+technique,
+dimensions,
+price,
+description,
+"alternativeFormats": alternativeFormats[]{
+    variantImage {
+      asset->{
+        ...,
+    metadata
+      }
+    },
+    dimensions,
+    price
+  }
+}`;
 
 export const ILLUSTRATIONS_SLUG_QUERY = groq`*[_type == "illustration" && defined(slug.current)][]{
   "params": { "slug": slug.current }
