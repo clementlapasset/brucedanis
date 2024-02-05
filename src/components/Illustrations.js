@@ -17,24 +17,46 @@ const StyledIllustration = styled.div`
       $position.columnStart + "/" + ($position.columnEnd + 1)};
     grid-row: ${({ $position }) => $position.rowStart + "/" + $position.rowEnd};
   }
+  &:hover {
+    .gifImage {
+      opacity: 1;
+    }
+  }
+  a {
+    position: relative;
+  }
+  .gifImage {
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
 `;
 
 export default function Illustrations({ illustrations }) {
   return (
     <StyledContainer className="grid">
       {illustrations.map((illustration) => {
-        const { title, mainImage, slug, position } = illustration;
-        const imageProps = useNextSanityImage(sanityClient, mainImage);
+        const { title, mainImage, gifImage, slug, position } = illustration;
+        const mainImageProps = useNextSanityImage(sanityClient, mainImage);
+        const gifImageProps = useNextSanityImage(sanityClient, gifImage);
         return (
           <StyledIllustration $position={position} key={title}>
             <Link href={`/?illustrationSlug=${slug.current}`} scroll={false}>
               <Image
-                {...imageProps}
+                {...mainImageProps}
                 style={{ maxWidth: "100%", height: "auto" }}
                 placeholder="blur"
-                blurDataURL={mainImage.asset.metadata.lqip}
+                blurDataURL={mainImage?.asset.metadata.lqip}
                 alt={title}
-                // sizes="(max-width: 800px) 100vw, 800px"
+                sizes="(max-width: 800px) 100vw, 800px"
+              />
+              <Image
+                {...gifImageProps}
+                style={{ maxWidth: "100%", height: "auto" }}
+                alt={title}
+                sizes="(max-width: 800px) 100vw, 800px"
+                className="gifImage"
               />
             </Link>
           </StyledIllustration>

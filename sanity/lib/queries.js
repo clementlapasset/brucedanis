@@ -11,6 +11,12 @@ mainImage {
     metadata
   }
 },
+gifImage {
+  asset->{
+    ...,
+    metadata
+  }
+},
 titleImage {
   asset->{
     ...,
