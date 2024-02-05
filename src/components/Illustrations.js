@@ -5,20 +5,28 @@ import sanityClient from "../../sanity/lib/createClient";
 
 import styled from "styled-components";
 
-const StyledContainer = styled.div`
-  grid-column: ${({ $position }) =>
-    $position.columnStart + "/" + ($position.columnEnd + 1)};
-  grid-row: ${({ $position }) => $position.rowStart + "/" + $position.rowEnd};
+const StyledContainer = styled.section`
+  display: block !important;
+  @media ${({ theme }) => theme.minWidth.md} {
+    display: grid !important;
+  }
+`;
+const StyledIllustration = styled.div`
+  @media ${({ theme }) => theme.minWidth.md} {
+    grid-column: ${({ $position }) =>
+      $position.columnStart + "/" + ($position.columnEnd + 1)};
+    grid-row: ${({ $position }) => $position.rowStart + "/" + $position.rowEnd};
+  }
 `;
 
 export default function Illustrations({ illustrations }) {
   return (
-    <section className="grid">
+    <StyledContainer className="grid">
       {illustrations.map((illustration) => {
         const { title, mainImage, slug, position } = illustration;
         const imageProps = useNextSanityImage(sanityClient, mainImage);
         return (
-          <StyledContainer $position={position} key={title}>
+          <StyledIllustration $position={position} key={title}>
             <Link href={`/?illustrationSlug=${slug.current}`} scroll={false}>
               <Image
                 {...imageProps}
@@ -29,9 +37,9 @@ export default function Illustrations({ illustrations }) {
                 // sizes="(max-width: 800px) 100vw, 800px"
               />
             </Link>
-          </StyledContainer>
+          </StyledIllustration>
         );
       })}
-    </section>
+    </StyledContainer>
   );
 }
