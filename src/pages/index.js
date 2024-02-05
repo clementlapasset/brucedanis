@@ -1,7 +1,7 @@
 import { getClient } from "../../sanity/lib/client";
 import { token } from "../../sanity/lib/token";
 import { ILLUSTRATIONS_QUERY, EVENTS_QUERY } from "../../sanity/lib/queries";
-import { ThemeProvider } from "styled-components";
+import { ThemeProvider, styled } from "styled-components";
 import theme from "@/styles/theme";
 import GlobalStyle from "@/styles/globalStyle";
 import dynamic from "next/dynamic";
@@ -11,6 +11,11 @@ import Illustrations from "@/components/Illustrations";
 import HomeFooter from "@/components/HomeFooter";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+
+const StyledModal = styled(Modal)`
+  min-height: 100vh;
+  background-color: white;
+`;
 
 const IllustrationsPreview = dynamic(() =>
   import("@/components/sanityPreview/IllustrationsPreview")
@@ -78,7 +83,7 @@ export default function Home({ illustrations, draftMode, events }) {
         isPageLoaded && <Illustrations illustrations={illustrations} />
       )}
       <HomeFooter events={events} isPageLoaded={isPageLoaded} />
-      <Modal
+      <StyledModal
         isOpen={!!router.query.illustrationSlug}
         onRequestClose={() => router.push("/")}
         contentLabel="Illustrations modal"
@@ -89,7 +94,7 @@ export default function Home({ illustrations, draftMode, events }) {
           illustration={illustration}
           handlePrevNext={handleIllustrationsNav}
         />
-      </Modal>
+      </StyledModal>
     </ThemeProvider>
   );
 }
