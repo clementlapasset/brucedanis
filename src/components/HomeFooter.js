@@ -10,7 +10,6 @@ const StyledContainer = styled.section`
   box-sizing: border-box;
   position: fixed;
   transition: all 1s;
-
   width: 100%;
   bottom: 0;
   left: 0;
@@ -18,15 +17,16 @@ const StyledContainer = styled.section`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   padding: 15px;
+  height: ${({ $screenHeight, $isFullPage, $isMinimized }) =>
+    $isFullPage ? $screenHeight : $isMinimized ? 60 : 244}px;
   @media ${({ theme }) => theme.minWidth.md} {
     grid-template-columns: ${({ $isFullPage }) =>
       $isFullPage
         ? "50vw 50vw 0 0 0 0 0"
         : noAuto + noAuto + noAuto + noAuto + noAuto + noAuto + noAuto};
     grid-gap: ${({ $isFullPage }) => ($isFullPage ? 0 : "30px")};
-    padding: ${({ $isMinimized }) => ($isMinimized ? 15 : 30)}px;
+    padding: ${({ $isMinimized }) => ($isMinimized ? "15px 30px" : "30px")};
     justify-content: ${({ $isFullPage }) => $isFullPage && "center"};
-    align-items: ${({ $isFullPage }) => $isFullPage && "center"};
     height: ${({ $screenHeight, $isFullPage, $isMinimized }) =>
       $isFullPage ? $screenHeight : $isMinimized ? 60 : 153}px;
   }
@@ -37,26 +37,47 @@ const StyledContainer = styled.section`
       $isFullPage || $isMinimized ? 0 : 1};
     line-height: 18px;
   }
-  .signature {
-    grid-column: 1/3;
-    justify-self: center;
+  span {
+    height: 30px;
     @media ${({ theme }) => theme.minWidth.md} {
-      position: absolute;
+      display: none;
+    }
+  }
+  .signature {
+    transition: all 1s 0.2s;
+
+    top: ${({ $isFullPage }) => ($isFullPage ? "calc(50% - 30px)" : "15px")};
+    position: absolute;
+    width: 100%;
+    grid-column: 1/3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    @media ${({ theme }) => theme.minWidth.md} {
+      height: unset;
+      width: auto;
+      display: block;
       transition: all 1s;
-      left: ${({ $isFullPage }) =>
-        $isFullPage ? "calc(50% - 300px)" : "30px"};
+      left: ${({ $isFullPage }) => ($isFullPage ? "calc(50% - 300px)" : "0px")};
       bottom: ${({ $isFullPage, $isMinimized }) =>
-        $isFullPage ? "calc(50% - 170px)" : $isMinimized ? "15px" : "30px"};
+        $isFullPage ? "calc(50% - 170px)" : $isMinimized ? "8px" : "30px"};
     }
     .img {
-      transition: width 1s;
+      transition: all 1s;
       height: auto;
       width: 170px;
-      margin-bottom: 30px;
+      margin-bottom: 15px;
       @media ${({ theme }) => theme.minWidth.md} {
+        position: relative;
+        top: unset;
         margin-bottom: 0;
         width: ${({ $isMinimized }) => ($isMinimized ? 170 : 370)}px;
       }
+    }
+    .gif {
+      width: 100%;
+      max-width: 600px;
+      height: auto;
     }
   }
   h2 {
@@ -74,7 +95,6 @@ const StyledContainer = styled.section`
   }
   .expos {
     grid-column: 1 / 2;
-
     @media ${({ theme }) => theme.minWidth.md} {
       grid-column: 4 / 5;
     }
@@ -165,16 +185,20 @@ export default function HomeFooter({ events, isPageLoaded }) {
               width={600}
               alt="Signature Bruce d'Anis"
               priority={true}
+              className="gif"
             />
           ) : (
-            <Image
-              className="img"
-              src={signature}
-              width={600}
-              alt="Signature Bruce d'Anis"
-            />
+            <>
+              <Image
+                className="img"
+                src={signature}
+                width={600}
+                alt="Signature Bruce d'Anis"
+              />
+            </>
           )}
         </aside>
+        <span></span>
         {events.length > 0 && (
           <div className="expos">
             <h2>Expos en cours</h2>
