@@ -60,11 +60,7 @@ const StyledContainer = styled.section`
   }
 `;
 
-export default function IllustrationModal({
-  illustration,
-  handlePrevNext,
-  paymentLink,
-}) {
+export default function IllustrationModal({ illustration, handlePrevNext }) {
   const router = useRouter();
 
   const mainImageProps = useNextSanityImage(
@@ -83,6 +79,7 @@ export default function IllustrationModal({
       technique,
       dimensions,
       price,
+      paymentUrl,
       description,
       alternativeFormats,
     } = illustration;
@@ -123,7 +120,7 @@ export default function IllustrationModal({
         <div className="description">{description}</div>
         <a
           className="buy-btn"
-          href={paymentLink}
+          href={paymentUrl}
           target="_blank"
           rel="noopener noreferrer"
         >

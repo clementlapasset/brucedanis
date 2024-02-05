@@ -5,6 +5,11 @@ title,
 slug,
 category,
 position,
+technique,
+dimensions,
+price,
+paymentUrl,
+description,
 mainImage {
   asset->{
     ...,
@@ -23,10 +28,6 @@ titleImage {
     metadata
   }
 },
-technique,
-dimensions,
-price,
-description,
 "alternativeFormats": alternativeFormats[]{
     variantImage {
       asset->{
