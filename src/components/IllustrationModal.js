@@ -9,19 +9,30 @@ import closeBtn from "../assets/icons/close-btn.svg";
 import linkArrow from "../assets/icons/link-arrow.svg";
 
 const StyledContainer = styled.section`
-  position: absolute;
+  /* position: absolute;
   top: 0;
-  left: 0;
+  left: 0; */
   height: 100%;
   overflow-y: auto;
+  background-color: white;
 
   .close-btn {
     grid-column: 2 / 3;
     justify-self: end;
+    @media ${({ theme }) => theme.minWidth.lg} {
+      grid-column: 7 / 8;
+    }
   }
 
   .main-image {
     grid-column: 1 / 3;
+    max-height: 50vh;
+    padding: 15px 0;
+    @media ${({ theme }) => theme.minWidth.lg} {
+      grid-column: 1 / 5;
+      //max-height: 100%;
+      padding: 30px 0;
+    }
   }
 
   .title-image {
@@ -42,21 +53,31 @@ const StyledContainer = styled.section`
   }
 
   .buy-btn {
+    grid-column: 1 / 3;
     text-transform: uppercase;
     font-size: 16px;
     font-weight: bold;
     margin: 15px 0;
   }
 
+  .spacer {
+    height: 80px;
+    grid-column: 1 / 3;
+  }
+
   .mobile-arrows {
     position: fixed;
-    width: calc(100% - 60px);
-    padding: 30px 15px;
-    bottom: 0;
+    padding: 30px;
+    right: 20px;
+    left: 20px;
+    bottom: 15px;
     grid-column: 1 / 3;
     display: flex;
     justify-content: space-between;
     background-color: white;
+    @media ${({ theme }) => theme.minWidth.lg} {
+      display: none;
+    }
   }
 `;
 
@@ -101,7 +122,6 @@ export default function IllustrationModal({
           className="main-image"
           style={{
             width: "100%",
-            maxHeight: "60vh",
             objectFit: "contain",
             height: "auto",
           }}
@@ -155,6 +175,7 @@ export default function IllustrationModal({
               </div>
             );
           })}
+        <div className="spacer"></div>
         <div className="mobile-arrows">
           <button onClick={() => handlePrevNext("prev")}>
             <Image src={prevArrowSrc} alt="Précédent" width={38} height={15} />

@@ -12,10 +12,28 @@ import HomeFooter from "@/components/HomeFooter";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
-const StyledModal = styled(Modal)`
-  min-height: 100vh;
-  background-color: white;
-`;
+// const StyledModal = styled(Modal)`
+//   /* min-height: 100vh;
+//   background-color: white;
+//    @media ${({ theme }) => theme.minWidth.lg} {
+//     min-height: 100%;
+//   }  */
+// `;
+const customStyles = {
+  content: {
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
+    width: "100vw",
+    height: "100vh",
+  },
+  overlay: {
+    backgroundColor: "rgba(255, 255, 255, 0.75)",
+  },
+};
 
 const IllustrationsPreview = dynamic(() =>
   import("@/components/sanityPreview/IllustrationsPreview")
@@ -83,18 +101,19 @@ export default function Home({ illustrations, draftMode, events }) {
         isPageLoaded && <Illustrations illustrations={illustrations} />
       )}
       <HomeFooter events={events} isPageLoaded={isPageLoaded} />
-      <StyledModal
+      <Modal
         isOpen={!!router.query.illustrationSlug}
         onRequestClose={() => router.push("/")}
         contentLabel="Illustrations modal"
         ariaHideApp={false}
+        style={customStyles}
       >
         <IllustrationModal
           pathname={router.pathname}
           illustration={illustration}
           handlePrevNext={handleIllustrationsNav}
         />
-      </StyledModal>
+      </Modal>
     </ThemeProvider>
   );
 }
