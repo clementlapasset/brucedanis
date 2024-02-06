@@ -6,7 +6,6 @@ import theme from "@/styles/theme";
 import GlobalStyle from "@/styles/globalStyle";
 import dynamic from "next/dynamic";
 import IllustrationModal from "@/components/IllustrationModal";
-import Modal from "react-modal";
 import Illustrations from "@/components/Illustrations";
 import HomeFooter from "@/components/HomeFooter";
 import { useRouter } from "next/router";
@@ -101,19 +100,19 @@ export default function Home({ illustrations, draftMode, events }) {
         isPageLoaded && <Illustrations illustrations={illustrations} />
       )}
       <HomeFooter events={events} isPageLoaded={isPageLoaded} />
-      <Modal
+      {/* <Modal
         isOpen={!!router.query.illustrationSlug}
         onRequestClose={() => router.push("/")}
         contentLabel="Illustrations modal"
         ariaHideApp={false}
         style={customStyles}
-      >
-        <IllustrationModal
-          pathname={router.pathname}
-          illustration={illustration}
-          handlePrevNext={handleIllustrationsNav}
-        />
-      </Modal>
+      > */}
+      <IllustrationModal
+        pathname={router.pathname}
+        illustration={illustration}
+        handlePrevNext={handleIllustrationsNav}
+      />
+      {/* </Modal> */}
     </ThemeProvider>
   );
 }

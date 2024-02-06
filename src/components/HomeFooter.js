@@ -45,7 +45,6 @@ const StyledContainer = styled.section`
   }
   .signature {
     transition: all 1s 0.2s;
-
     top: ${({ $isFullPage }) => ($isFullPage ? "calc(50% - 30px)" : "15px")};
     position: absolute;
     width: 100%;
@@ -138,7 +137,7 @@ const StyledContainer = styled.section`
 `;
 
 export default function HomeFooter({ events, isPageLoaded }) {
-  const [isFullPage, setIsFullPage] = useState(true);
+  const [isFullPage, setIsFullPage] = useState(false);
   const [isMinimized, setIsMinimized] = useState(false);
   const [screenHeight, setScreenHeight] = useState();
   const [scrollY, setScrollY] = useState(0);
