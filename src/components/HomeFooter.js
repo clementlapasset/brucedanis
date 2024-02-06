@@ -38,7 +38,7 @@ const StyledContainer = styled.section`
     line-height: 18px;
   }
   span {
-    height: 30px;
+    height: 45px;
     @media ${({ theme }) => theme.minWidth.md} {
       display: none;
     }
@@ -171,12 +171,17 @@ export default function HomeFooter({ events, isPageLoaded }) {
     };
   }, [scrollY]);
 
+  function handleTouch() {
+    setIsMinimized(!isMinimized);
+  }
+
   if (screenHeight)
     return (
       <StyledContainer
         $isMinimized={isMinimized}
         $isFullPage={isFullPage}
         $screenHeight={screenHeight}
+        onTouchStart={() => handleTouch()}
       >
         <aside className="signature">
           {isFullPage ? (

@@ -81,15 +81,7 @@ const StyledContainer = styled.section`
   }
 `;
 
-export default function IllustrationModal({
-  illustration,
-  handlePrevNext,
-  paymentLink,
-  prevArrowSrc = prevArrow,
-  nextArrowSrc = nextArrow,
-  closeBtnSrc = closeBtn,
-  linkArrowSrc = linkArrow,
-}) {
+export default function IllustrationModal({ illustration, handlePrevNext }) {
   const router = useRouter();
 
   const mainImageProps = useNextSanityImage(
@@ -108,6 +100,7 @@ export default function IllustrationModal({
       technique,
       dimensions,
       price,
+      paymentUrl,
       description,
       alternativeFormats,
     } = illustration;
@@ -115,7 +108,7 @@ export default function IllustrationModal({
     return (
       <StyledContainer className="grid">
         <button className="close-btn" onClick={() => router.push("/")}>
-          <Image src={closeBtnSrc} alt="Fermer" width={15} height={15} />
+          <Image src={closeBtn} alt="Fermer" width={15} height={15} />
         </button>
         <Image
           {...mainImageProps}
@@ -147,12 +140,12 @@ export default function IllustrationModal({
         <div className="description">{description}</div>
         <a
           className="buy-btn"
-          href={paymentLink}
+          href={paymentUrl}
           target="_blank"
           rel="noopener noreferrer"
         >
           Commander&nbsp;
-          <Image src={linkArrowSrc} alt="Commander" width={10} height={10} />
+          <Image src={linkArrow} alt="Commander" width={10} height={10} />
         </a>
         {alternativeFormats &&
           alternativeFormats.map((format, index) => {
@@ -178,10 +171,10 @@ export default function IllustrationModal({
         <div className="spacer"></div>
         <div className="mobile-arrows">
           <button onClick={() => handlePrevNext("prev")}>
-            <Image src={prevArrowSrc} alt="Précédent" width={38} height={15} />
+            <Image src={prevArrow} alt="Précédent" width={38} height={15} />
           </button>
           <button onClick={() => handlePrevNext("next")}>
-            <Image src={nextArrowSrc} alt="Suivant" width={38} height={15} />
+            <Image src={nextArrow} alt="Suivant" width={38} height={15} />
           </button>
         </div>
       </StyledContainer>
