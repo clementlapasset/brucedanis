@@ -20,8 +20,8 @@ const StyledContainer = styled.section`
   opacity: ${({ $isVisible }) => ($isVisible ? 1 : 0)};
   transition: all 0.4s;
   .modal {
-    z-index: 1;
-    pointer-events: none;
+    /* z-index: 1; */
+    /* pointer-events: none; */
     background-color: white;
     padding: 0 30px;
     position: relative;
@@ -36,6 +36,7 @@ const StyledContainer = styled.section`
         top: -30px;
         right: -30px;
         position: absolute;
+        /* z-index: 3; */
       }
     }
     .main-image {
@@ -125,17 +126,17 @@ export default function IllustrationModal({ illustration, handlePrevNext }) {
   const [isVisible, setIsVisible] = useState(false);
   const ref = useRef();
 
-  // useEffect(() => {
-  //   const checkIfClickedOutside = (e) => {
-  //     if (ref.current && !ref.current.contains(e.target)) {
-  //       router.push("/");
-  //     }
-  //   };
-  //   document.addEventListener("click", checkIfClickedOutside);
-  //   return () => {
-  //     document.removeEventListener("click", checkIfClickedOutside);
-  //   };
-  // });
+  useEffect(() => {
+    const checkIfClickedOutside = (e) => {
+      if (ref.current && !ref.current.contains(e.target)) {
+        router.push("/");
+      }
+    };
+    document.addEventListener("click", checkIfClickedOutside);
+    return () => {
+      document.removeEventListener("click", checkIfClickedOutside);
+    };
+  });
 
   useEffect(() => {
     if (isVisible) {
