@@ -7,7 +7,7 @@ import prevArrow from "../assets/icons/arrow-left.svg";
 import nextArrow from "../assets/icons/arrow-right.svg";
 import closeBtn from "../assets/icons/close-btn.svg";
 import linkArrow from "../assets/icons/link-arrow.svg";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 const StyledContainer = styled.section`
   background-color: rgba(0, 0, 0, 0.5);
@@ -19,9 +19,9 @@ const StyledContainer = styled.section`
   visibility: ${({ $isVisible }) => ($isVisible ? "visible" : "hidden")};
   opacity: ${({ $isVisible }) => ($isVisible ? 1 : 0)};
   transition: all 0.4s;
-  z-index: 3;
-
   .modal {
+    z-index: 1;
+    pointer-events: none;
     background-color: white;
     padding: 0 30px;
     position: relative;
@@ -40,16 +40,25 @@ const StyledContainer = styled.section`
     }
     .main-image {
       grid-column: 1 / 3;
-      max-height: 50vh;
-      padding: 15px 0;
+      /* max-height: 50vh; */
+      /* padding: 15px 0; */
       @media ${({ theme }) => theme.minWidth.lg} {
         grid-column: 1 / 6;
+        align-self: center;
+        width: 100%;
+        height: auto;
+        max-height: calc(100vh - 260px);
+        object-fit: contain;
+        padding: 30px 0;
       }
     }
     .infosPanel {
       overflow-y: scroll;
       @media ${({ theme }) => theme.minWidth.lg} {
         grid-column: 6 / 8;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
       }
       .title-image {
         /* grid-column: 1 / 2; */
@@ -79,15 +88,21 @@ const StyledContainer = styled.section`
       .alternativeFormats {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
-        grid-gap: 15px;
+        grid-gap: 30px;
+        .variant-format {
+          justify-self: start;
+          img {
+            max-height: 100px;
+            object-fit: contain;
+            width: 100%;
+          }
+        }
       }
     }
-
     .spacer {
       height: 80px;
       grid-column: 1 / 3;
     }
-
     .mobile-arrows {
       position: fixed;
       padding: 30px;
@@ -108,6 +123,19 @@ const StyledContainer = styled.section`
 export default function IllustrationModal({ illustration, handlePrevNext }) {
   const router = useRouter();
   const [isVisible, setIsVisible] = useState(false);
+  const ref = useRef();
+
+  // useEffect(() => {
+  //   const checkIfClickedOutside = (e) => {
+  //     if (ref.current && !ref.current.contains(e.target)) {
+  //       router.push("/");
+  //     }
+  //   };
+  //   document.addEventListener("click", checkIfClickedOutside);
+  //   return () => {
+  //     document.removeEventListener("click", checkIfClickedOutside);
+  //   };
+  // });
 
   useEffect(() => {
     if (isVisible) {
@@ -145,22 +173,17 @@ export default function IllustrationModal({ illustration, handlePrevNext }) {
 
     return (
       <StyledContainer $isVisible={isVisible}>
-        <div className="modal grid">
+        <div className="modal grid" ref={ref}>
           <button className="close-btn" onClick={() => router.push("/")}>
             <Image src={closeBtn} alt="Fermer" width={15} height={15} />
           </button>
           <Image
             {...mainImageProps}
             className="main-image"
-            style={{
-              width: "100%",
-              objectFit: "contain",
-              height: "auto",
-            }}
             placeholder="blur"
             blurDataURL={mainImage.asset.metadata.lqip}
             alt={title}
-            sizes="(max-width: 800px) 100vw, 800px"
+            // sizes="(max-width: 800px) 100vw, 800px"
           />
           <section className="infosPanel">
             <Image
@@ -197,7 +220,6 @@ export default function IllustrationModal({ illustration, handlePrevNext }) {
                         alt={`Format ${index}`}
                         width={500}
                         height={500}
-                        style={{ maxWidth: "100%", height: "auto" }}
                       />
                       <p>{format.dimensions}</p>
                     </div>
