@@ -186,23 +186,19 @@ export default function IllustrationModal({ illustrations }) {
   }
 
   useEffect(() => {
-    if (router.query.illustrationSlug !== undefined) {
-      const findIllustration = (illustration) =>
-        illustration.slug.current === router.query.illustrationSlug;
-      const illustration = illustrations.find(findIllustration);
-      setIllustration(illustration);
-      setSelectedFormat(illustration.formats[0]);
-      const illustrationsByCategory = illustrations.filter(
-        (illustrations) =>
-          illustrations.category._ref === illustration?.category._ref
-      );
-      setIllustrationsByCategory(illustrationsByCategory);
-      setIllustrationIndex(illustrationsByCategory.findIndex(findIllustration));
-    }
-  }, [router]);
+    const findIllustration = (illustration) =>
+      illustration.slug.current === router.query.illustrationSlug;
+    const illustration = illustrations.find(findIllustration);
+    setIllustration(illustration);
+    setSelectedFormat(illustration?.formats[0]);
+    const illustrationsByCategory = illustrations.filter(
+      (illustrations) =>
+        illustrations.category._ref === illustration?.category._ref
+    );
+    setIllustrationsByCategory(illustrationsByCategory);
+    setIllustrationIndex(illustrationsByCategory.findIndex(findIllustration));
 
-  // Outside click to close
-  useEffect(() => {
+    // Outside click to close
     const checkIfClickedOutside = (e) => {
       if (modalRef.current && !modalRef.current.contains(e.target)) {
         router.push("/");
@@ -212,13 +208,13 @@ export default function IllustrationModal({ illustrations }) {
     return () => {
       document.removeEventListener("click", checkIfClickedOutside);
     };
-  });
+  }, [router]);
 
   // Avoid body scroll when modal is open
   useEffect(() => {
     const isIllustrationSlug = !!router.query.illustrationSlug;
     if (isIllustrationSlug) {
-      setIsVisible(true);
+      setIsVisible(isIllustrationSlug);
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "scroll";
