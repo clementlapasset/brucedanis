@@ -3,7 +3,7 @@ import sanityClient from "../../sanity/lib/createClient";
 import Image from "next/image";
 import { useNextSanityImage } from "next-sanity-image";
 import { useRouter } from "next/router";
-import prevArrow from "../assets/icons/arrow-left.svg";
+import PrevArrow from "../assets/icons/ArrowLeft";
 import nextArrow from "../assets/icons/arrow-right.svg";
 import closeBtn from "../assets/icons/close-btn.svg";
 import linkArrow from "../assets/icons/link-arrow.svg";
@@ -28,8 +28,8 @@ const StyledContainer = styled.section`
     overflow-y: scroll;
     @media ${({ theme }) => theme.minWidth.md} {
       display: grid;
-      margin: 100px;
-      height: calc(100vh - 200px);
+      margin: 90px;
+      height: calc(100vh - 180px);
       overflow-y: auto;
     }
     .close-btn {
@@ -42,8 +42,6 @@ const StyledContainer = styled.section`
       }
     }
     .main-image {
-      width: 100%;
-      height: auto;
       @media ${({ theme }) => theme.minWidth.md} {
         grid-column: 1 / 6;
         align-self: center;
@@ -85,11 +83,6 @@ const StyledContainer = styled.section`
         grid-gap: 30px;
         .variant-format {
           justify-self: start;
-          img {
-            max-height: 100px;
-            object-fit: contain;
-            width: 100%;
-          }
         }
       }
     }
@@ -97,15 +90,27 @@ const StyledContainer = styled.section`
       height: 80px;
       grid-column: 1 / 3;
     }
-    .mobile-arrows {
+    .prevArrow,
+    .nextArrow {
       position: absolute;
-      right: 20px;
-      left: 20px;
       bottom: 5px;
-      display: flex;
-      justify-content: space-between;
       @media ${({ theme }) => theme.minWidth.md} {
-        display: none;
+        top: 0;
+        bottom: 0;
+      }
+    }
+    .prevArrow {
+      left: 20px;
+    }
+    .nextArrow {
+      right: 20px;
+    }
+    svg {
+      path {
+        fill: black;
+        @media ${({ theme }) => theme.minWidth.md} {
+          fill: white;
+        }
       }
     }
   }
@@ -114,11 +119,11 @@ const StyledContainer = styled.section`
 export default function IllustrationModal({ illustration, handlePrevNext }) {
   const router = useRouter();
   const [isVisible, setIsVisible] = useState(false);
-  const ref = useRef();
+  const modalRef = useRef();
 
   useEffect(() => {
     const checkIfClickedOutside = (e) => {
-      if (ref.current && !ref.current.contains(e.target)) {
+      if (modalRef.current && !modalRef.current.contains(e.target)) {
         router.push("/");
       }
     };
@@ -164,7 +169,7 @@ export default function IllustrationModal({ illustration, handlePrevNext }) {
 
     return (
       <StyledContainer $isVisible={isVisible}>
-        <div className="modal grid" ref={ref}>
+        <div className="modal grid" ref={modalRef}>
           <button className="close-btn" onClick={() => router.push("/")}>
             <Image src={closeBtn} alt="Fermer" width={15} height={15} />
           </button>
@@ -175,6 +180,7 @@ export default function IllustrationModal({ illustration, handlePrevNext }) {
             blurDataURL={mainImage.asset.metadata.lqip}
             alt={title}
             sizes="(max-width: 800px) 100vw, 800px"
+            style={{ maxWidth: "100%", height: "auto" }}
           />
           <section className="infosPanel">
             <Image
@@ -211,6 +217,11 @@ export default function IllustrationModal({ illustration, handlePrevNext }) {
                         alt={`Format ${index}`}
                         width={500}
                         height={500}
+                        style={{
+                          width: "100%",
+                          objectFit: "contain",
+                          maxHeight: "100px",
+                        }}
                       />
                       <p>{format.dimensions}</p>
                     </div>
@@ -218,14 +229,12 @@ export default function IllustrationModal({ illustration, handlePrevNext }) {
                 })}
             </div>
           </section>
-          <div className="mobile-arrows">
-            <button onClick={() => handlePrevNext("prev")}>
-              <Image src={prevArrow} alt="Précédent" width={38} height={15} />
-            </button>
-            <button onClick={() => handlePrevNext("next")}>
-              <Image src={nextArrow} alt="Suivant" width={38} height={15} />
-            </button>
-          </div>
+          <button className="prevArrow" onClick={() => handlePrevNext("prev")}>
+            <PrevArrow />
+          </button>
+          <button className="nextArrow" onClick={() => handlePrevNext("next")}>
+            <Image src={nextArrow} alt="Suivant" width={38} height={15} />
+          </button>
         </div>
       </StyledContainer>
     );
