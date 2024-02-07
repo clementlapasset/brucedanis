@@ -4,13 +4,13 @@ import Image from "next/image";
 import { useNextSanityImage } from "next-sanity-image";
 import { useRouter } from "next/router";
 import PrevArrow from "../assets/icons/ArrowLeft";
-import nextArrow from "../assets/icons/arrow-right.svg";
-import closeBtn from "../assets/icons/close-btn.svg";
+import NextArrow from "../assets/icons/ArrowRight";
+import CloseBtn from "../assets/icons/CloseBtn";
 import linkArrow from "../assets/icons/link-arrow.svg";
 import { useEffect, useRef, useState } from "react";
 
 const StyledContainer = styled.section`
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: white;
   position: fixed;
   top: 0;
   right: 0;
@@ -19,6 +19,9 @@ const StyledContainer = styled.section`
   visibility: ${({ $isVisible }) => ($isVisible ? "visible" : "hidden")};
   opacity: ${({ $isVisible }) => ($isVisible ? 1 : 0)};
   transition: all 0.4s;
+  @media ${({ theme }) => theme.minWidth.md} {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
   .modal {
     display: block;
     background-color: white;
@@ -37,11 +40,18 @@ const StyledContainer = styled.section`
       top: 8px;
       right: 15px;
       @media ${({ theme }) => theme.minWidth.md} {
-        top: 60px;
-        right: 60px;
+        top: 30px;
+        right: 30px;
+      }
+      path {
+        stroke: black;
+        @media ${({ theme }) => theme.minWidth.md} {
+          stroke: white;
+        }
       }
     }
     .main-image {
+      padding: 15px 0 30px;
       @media ${({ theme }) => theme.minWidth.md} {
         grid-column: 1 / 6;
         align-self: center;
@@ -59,6 +69,10 @@ const StyledContainer = styled.section`
         padding: 60px 0 30px;
       }
       .title-image {
+        padding-bottom: 15px;
+        @media ${({ theme }) => theme.minWidth.md} {
+          padding-bottom: 30px;
+        }
       }
       .info-container {
         grid-column: 1 / 3;
@@ -70,40 +84,50 @@ const StyledContainer = styled.section`
       .description {
         font-size: 14px;
         font-style: italic;
+        padding-top: 15px;
+        @media ${({ theme }) => theme.minWidth.md} {
+          padding-top: 30px;
+        }
       }
       .buy-btn {
         text-transform: uppercase;
         font-size: 16px;
         font-weight: bold;
-        margin: 15px 0;
+        margin: 30px 0;
+        @media ${({ theme }) => theme.minWidth.md} {
+          margin: 30px 0 45px;
+        }
       }
       .alternativeFormats {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         grid-gap: 30px;
+        padding-bottom: 60px;
         .variant-format {
           justify-self: start;
         }
       }
-    }
-    .spacer {
-      height: 80px;
-      grid-column: 1 / 3;
     }
     .prevArrow,
     .nextArrow {
       position: absolute;
       bottom: 5px;
       @media ${({ theme }) => theme.minWidth.md} {
-        top: 0;
-        bottom: 0;
+        top: 50%;
+        bottom: 50%;
       }
     }
     .prevArrow {
-      left: 20px;
+      left: 30px;
+      @media ${({ theme }) => theme.minWidth.md} {
+        left: 20px;
+      }
     }
     .nextArrow {
-      right: 20px;
+      right: 30px;
+      @media ${({ theme }) => theme.minWidth.md} {
+        right: 20px;
+      }
     }
     svg {
       path {
@@ -171,7 +195,7 @@ export default function IllustrationModal({ illustration, handlePrevNext }) {
       <StyledContainer $isVisible={isVisible}>
         <div className="modal grid" ref={modalRef}>
           <button className="close-btn" onClick={() => router.push("/")}>
-            <Image src={closeBtn} alt="Fermer" width={15} height={15} />
+            <CloseBtn />
           </button>
           <Image
             {...mainImageProps}
@@ -233,7 +257,7 @@ export default function IllustrationModal({ illustration, handlePrevNext }) {
             <PrevArrow />
           </button>
           <button className="nextArrow" onClick={() => handlePrevNext("next")}>
-            <Image src={nextArrow} alt="Suivant" width={38} height={15} />
+            <NextArrow />
           </button>
         </div>
       </StyledContainer>
