@@ -11,22 +11,6 @@ import HomeFooter from "@/components/HomeFooter";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
-const customStyles = {
-  content: {
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
-    width: "100vw",
-    height: "100vh",
-  },
-  overlay: {
-    backgroundColor: "rgba(255, 255, 255, 0.75)",
-  },
-};
-
 const IllustrationsPreview = dynamic(() =>
   import("@/components/sanityPreview/IllustrationsPreview")
 );

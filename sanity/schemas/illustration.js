@@ -37,7 +37,7 @@ export default {
     },
     {
       name: "gifImage",
-      title: "GIF de l'illustration",
+      title: "GIF de l'illustration principale",
       type: "image",
       validation: (Rule) => Rule.required(),
     },
@@ -97,17 +97,9 @@ export default {
       validation: (Rule) => Rule.required(),
     },
     {
-      name: "dimensions",
-      title: "Dimensions",
-      description: "Dimensions du format principal (ex : 10 x 20 cm)",
-      type: "string",
-      validation: (Rule) => Rule.required(),
-    },
-    {
-      name: "price",
-      type: "number",
-      title: "Prix",
-      validation: (Rule) => Rule.required().min(1),
+      name: "description",
+      title: "Description (optionnel)",
+      type: "text",
     },
     {
       name: "paymentUrl",
@@ -117,20 +109,15 @@ export default {
       validation: (Rule) => Rule.required().min(1),
     },
     {
-      name: "description",
-      title: "Description (optionnel)",
-      type: "text",
-    },
-    {
-      name: "alternativeFormats",
-      title: "Autres formats / couleurs (optionnel)",
+      name: "formats",
+      title: "Tous les formats / couleurs disponibles",
       type: "array",
       of: [
         {
           type: "object",
           fields: [
             {
-              name: "variantImage",
+              name: "image",
               title: "Image",
               type: "image",
               options: {
@@ -142,8 +129,7 @@ export default {
               name: "dimensions",
               title: "Dimensions",
               type: "string",
-              description:
-                'Dimensions associées à cette couleur (ex : "10 x 20 cm")',
+              description: 'Dimensions du format (ex : "10 x 20 cm")',
               validation: (Rule) => Rule.required(),
             },
             {

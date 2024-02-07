@@ -6,8 +6,6 @@ slug,
 category,
 position,
 technique,
-dimensions,
-price,
 paymentUrl,
 description,
 mainImage {
@@ -28,8 +26,8 @@ titleImage {
     metadata
   }
 },
-"alternativeFormats": alternativeFormats[]{
-    variantImage {
+"formats": formats[]{
+  image {
       asset->{
         ...,
     metadata

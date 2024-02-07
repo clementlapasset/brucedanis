@@ -98,12 +98,12 @@ const StyledContainer = styled.section`
           margin: 30px 0 45px;
         }
       }
-      .alternativeFormats {
+      .formats {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         grid-gap: 30px;
         padding-bottom: 60px;
-        .variant-format {
+        .format {
           justify-self: start;
         }
       }
@@ -184,11 +184,9 @@ export default function IllustrationModal({ illustration, handlePrevNext }) {
       mainImage,
       titleImage,
       technique,
-      dimensions,
-      price,
       paymentUrl,
       description,
-      alternativeFormats,
+      formats,
     } = illustration;
 
     return (
@@ -218,8 +216,8 @@ export default function IllustrationModal({ illustration, handlePrevNext }) {
             />
             <div className="info-container">
               <div>{technique}</div>
-              <div>{dimensions}</div>
-              <div>{price}&nbsp;€</div>
+              {/* <div>{dimensions}</div> */}
+              {/* <div>{price}&nbsp;€</div> */}
             </div>
             <div className="description">{description}</div>
             <a
@@ -231,13 +229,13 @@ export default function IllustrationModal({ illustration, handlePrevNext }) {
               Commander&nbsp;
               <Image src={linkArrow} alt="Commander" width={10} height={10} />
             </a>
-            <div className="alternativeFormats">
-              {alternativeFormats &&
-                alternativeFormats.map((format, index) => {
+            <div className="formats">
+              {formats &&
+                formats.map((format, index) => {
                   return (
-                    <div className="variant-format" key={index}>
+                    <div className="format" key={index}>
                       <Image
-                        src={format.variantImage.asset.url}
+                        src={format.image.asset.url}
                         alt={`Format ${index}`}
                         width={500}
                         height={500}
