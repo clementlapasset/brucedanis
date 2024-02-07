@@ -106,7 +106,7 @@ export default {
       type: "url",
       title: "Lien vers la page de paiement",
       description: "À créer sur Stripe",
-      validation: (Rule) => Rule.required().min(1),
+      validation: (Rule) => Rule.required(),
     },
     {
       name: "formats",

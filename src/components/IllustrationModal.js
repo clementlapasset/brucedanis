@@ -103,9 +103,6 @@ const StyledContainer = styled.section`
         grid-template-columns: repeat(2, 1fr);
         grid-gap: 30px;
         padding-bottom: 60px;
-        .format {
-          justify-self: start;
-        }
       }
     }
     .prevArrow,
@@ -139,6 +136,14 @@ const StyledContainer = styled.section`
     }
   }
 `;
+const StyledFormat = styled.div`
+  justify-self: start;
+  p {
+    text-decoration: ${({ $isSelected }) => $isSelected && "underline"};
+    text-decoration-thickness: 2px;
+    text-underline-offset: 8px;
+  }
+`;
 
 export default function IllustrationModal({ illustrations }) {
   const router = useRouter();
@@ -147,6 +152,7 @@ export default function IllustrationModal({ illustrations }) {
   const [illustration, setIllustration] = useState();
   const [illustrationsByCategory, setIllustrationsByCategory] = useState([]);
   const [illustrationIndex, setIllustrationIndex] = useState();
+  const [selectedFormat, setSelectedFormat] = useState();
 
   function handlePrevNext(way) {
     // This is the way
@@ -169,16 +175,19 @@ export default function IllustrationModal({ illustrations }) {
   }
 
   useEffect(() => {
-    const findIllustration = (illustration) =>
-      illustration.slug.current === router.query.illustrationSlug;
-    const illustration = illustrations.find(findIllustration);
-    setIllustration(illustration);
-    const illustrationsByCategory = illustrations.filter(
-      (illustrations) =>
-        illustrations.category._ref === illustration?.category._ref
-    );
-    setIllustrationsByCategory(illustrationsByCategory);
-    setIllustrationIndex(illustrationsByCategory.findIndex(findIllustration));
+    if (router.query.illustrationSlug !== undefined) {
+      const findIllustration = (illustration) =>
+        illustration.slug.current === router.query.illustrationSlug;
+      const illustration = illustrations.find(findIllustration);
+      setIllustration(illustration);
+      setSelectedFormat(illustration.formats[0]);
+      const illustrationsByCategory = illustrations.filter(
+        (illustrations) =>
+          illustrations.category._ref === illustration?.category._ref
+      );
+      setIllustrationsByCategory(illustrationsByCategory);
+      setIllustrationIndex(illustrationsByCategory.findIndex(findIllustration));
+    }
   }, [router]);
 
   // Outside click to close
@@ -213,6 +222,7 @@ export default function IllustrationModal({ illustrations }) {
     sanityClient,
     illustration?.titleImage
   );
+
   if (illustration && isVisible) {
     const {
       title,
@@ -223,7 +233,7 @@ export default function IllustrationModal({ illustrations }) {
       description,
       formats,
     } = illustration;
-
+    console.log(formats);
     return (
       <StyledContainer $isVisible={isVisible}>
         <div className="modal grid" ref={modalRef}>
@@ -251,8 +261,8 @@ export default function IllustrationModal({ illustrations }) {
             />
             <div className="info-container">
               <div>{technique}</div>
-              {/* <div>{dimensions}</div> */}
-              {/* <div>{price}&nbsp;€</div> */}
+              <div>{selectedFormat.dimensions}</div>
+              <div>{selectedFormat.price}&nbsp;€</div>
             </div>
             <div className="description">{description}</div>
             <a
@@ -267,8 +277,15 @@ export default function IllustrationModal({ illustrations }) {
             <div className="formats">
               {formats &&
                 formats.map((format, index) => {
+                  const isSelected =
+                    format.dimensions === selectedFormat.dimensions;
                   return (
-                    <div className="format" key={index}>
+                    <StyledFormat
+                      className="format"
+                      key={index}
+                      $isSelected={isSelected}
+                      onClick={() => setSelectedFormat(format)}
+                    >
                       <Image
                         src={format.image.asset.url}
                         alt={`Format ${index}`}
@@ -281,7 +298,7 @@ export default function IllustrationModal({ illustrations }) {
                         }}
                       />
                       <p>{format.dimensions}</p>
-                    </div>
+                    </StyledFormat>
                   );
                 })}
             </div>
