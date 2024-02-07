@@ -156,45 +156,18 @@ const StyledFormat = styled.div`
   }
 `;
 
-export default function IllustrationModal({
-  illustration,
-  illustrationIndex,
-  illustrationsByCategory,
-}) {
-  const {
-    title,
-    mainImage,
-    titleImage,
-    technique,
-    paymentUrl,
-    description,
-    formats,
-  } = illustration;
+export default function IllustrationModal({ illustration, handlePrevNext }) {
+  const { title, titleImage, technique, paymentUrl, description, formats } =
+    illustration;
 
   const router = useRouter();
   const [isVisible, setIsVisible] = useState(false);
   const modalRef = useRef();
-  const [selectedFormat, setSelectedFormat] = useState(illustration.formats[0]);
+  const [selectedFormat, setSelectedFormat] = useState(formats[0]);
 
-  function handlePrevNext(way) {
-    // This is the way
-    let slug = 0;
-    if (way === "next") {
-      const nextIndex =
-        illustrationIndex + 1 < illustrationsByCategory.length
-          ? illustrationIndex + 1
-          : 0;
-      slug = illustrationsByCategory[nextIndex].slug.current;
-    }
-    if (way === "prev") {
-      const prevIndex =
-        illustrationIndex - 1 >= 0
-          ? illustrationIndex - 1
-          : illustrationsByCategory.length - 1;
-      slug = illustrationsByCategory[prevIndex].slug.current;
-    }
-    router.push(`/?illustrationSlug=${slug}`, false);
-  }
+  useEffect(() => {
+    setSelectedFormat(formats[0]);
+  }, [formats]);
 
   // Let the exit animation before component is unmount
   function handleQuitModal() {
@@ -227,14 +200,8 @@ export default function IllustrationModal({
     };
   }, [router]);
 
-  const mainImageProps = useNextSanityImage(
-    sanityClient,
-    selectedFormat?.image
-  );
-  const titleImageProps = useNextSanityImage(
-    sanityClient,
-    illustration?.titleImage
-  );
+  const mainImageProps = useNextSanityImage(sanityClient, selectedFormat.image);
+  const titleImageProps = useNextSanityImage(sanityClient, titleImage);
 
   return (
     <StyledContainer $isVisible={isVisible}>
@@ -246,8 +213,8 @@ export default function IllustrationModal({
           {...mainImageProps}
           className="main-image"
           placeholder="blur"
-          blurDataURL={illustration?.mainImage.asset.metadata.lqip}
-          alt={illustration?.title}
+          blurDataURL={selectedFormat.image.asset.metadata.lqip}
+          alt={title}
           sizes="(max-width: 800px) 100vw, 800px"
           style={{ maxWidth: "100%", height: "auto" }}
         />
@@ -257,19 +224,19 @@ export default function IllustrationModal({
             className="title-image"
             style={{ maxWidth: "100%", height: "auto" }}
             placeholder="blur"
-            blurDataURL={illustration?.titleImage.asset.metadata.lqip}
-            alt={illustration?.title}
+            blurDataURL={titleImage.asset.metadata.lqip}
+            alt={title}
             sizes="(max-width: 800px) 100vw, 800px"
           />
           <div className="info-container">
-            <div>{illustration?.technique}</div>
-            <div>{selectedFormat?.dimensions}</div>
-            <div>{selectedFormat?.price}&nbsp;€</div>
+            <div>{technique}</div>
+            <div>{selectedFormat.dimensions}</div>
+            <div>{selectedFormat.price}&nbsp;€</div>
           </div>
-          <div className="description">{illustration?.description}</div>
+          <div className="description">{description}</div>
           <a
             className="buy-btn"
-            href={illustration?.paymentUrl}
+            href={paymentUrl}
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -277,8 +244,8 @@ export default function IllustrationModal({
             <Image src={linkArrow} alt="Commander" width={10} height={10} />
           </a>
           <div className="formats">
-            {illustration?.formats &&
-              illustration?.formats.map((format, index) => {
+            {formats &&
+              formats.map((format, index) => {
                 const isSelected =
                   format.dimensions === selectedFormat.dimensions;
                 return (
