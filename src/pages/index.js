@@ -81,7 +81,7 @@ export default function Home({ illustrations, draftMode, events }) {
           : illustrationsByCategory.length - 1;
       slug = illustrationsByCategory[prevIndex].slug.current;
     }
-    router.push(`/?illustrationSlug=${slug}`, slug, false);
+    router.push(`/?illustrationSlug=${slug}`);
   }
 
   return (
