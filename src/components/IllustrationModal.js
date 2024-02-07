@@ -156,14 +156,25 @@ const StyledFormat = styled.div`
   }
 `;
 
-export default function IllustrationModal({ illustrations }) {
+export default function IllustrationModal({
+  illustration,
+  illustrationIndex,
+  illustrationsByCategory,
+}) {
+  const {
+    title,
+    mainImage,
+    titleImage,
+    technique,
+    paymentUrl,
+    description,
+    formats,
+  } = illustration;
+
   const router = useRouter();
   const [isVisible, setIsVisible] = useState(false);
   const modalRef = useRef();
-  const [illustration, setIllustration] = useState();
-  const [illustrationsByCategory, setIllustrationsByCategory] = useState([]);
-  const [illustrationIndex, setIllustrationIndex] = useState();
-  const [selectedFormat, setSelectedFormat] = useState();
+  const [selectedFormat, setSelectedFormat] = useState(illustration.formats[0]);
 
   function handlePrevNext(way) {
     // This is the way
@@ -185,40 +196,35 @@ export default function IllustrationModal({ illustrations }) {
     router.push(`/?illustrationSlug=${slug}`, false);
   }
 
-  useEffect(() => {
-    const findIllustration = (illustration) =>
-      illustration.slug.current === router.query.illustrationSlug;
-    const illustration = illustrations.find(findIllustration);
-    setIllustration(illustration);
-    setSelectedFormat(illustration?.formats[0]);
-    const illustrationsByCategory = illustrations.filter(
-      (illustrations) =>
-        illustrations.category._ref === illustration?.category._ref
-    );
-    setIllustrationsByCategory(illustrationsByCategory);
-    setIllustrationIndex(illustrationsByCategory.findIndex(findIllustration));
+  // Let the exit animation before component is unmount
+  function handleQuitModal() {
+    setIsVisible(false);
+    setTimeout(() => {
+      router.push("/");
+    }, 400);
+  }
 
-    // Outside click to close
-    const checkIfClickedOutside = (e) => {
-      if (modalRef.current && !modalRef.current.contains(e.target)) {
-        router.push("/");
-      }
-    };
-    document.addEventListener("click", checkIfClickedOutside);
-    return () => {
-      document.removeEventListener("click", checkIfClickedOutside);
-    };
-  }, [router]);
-
-  // Avoid body scroll when modal is open
   useEffect(() => {
+    // Avoid body scroll when modal is open
     const isIllustrationSlug = !!router.query.illustrationSlug;
     if (isIllustrationSlug) {
       setIsVisible(isIllustrationSlug);
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "scroll";
+      handleQuitModal();
     }
+
+    // Outside click to close
+    const checkIfClickedOutside = (e) => {
+      if (modalRef.current && !modalRef.current.contains(e.target)) {
+        handleQuitModal();
+      }
+    };
+    document.addEventListener("click", checkIfClickedOutside);
+    return () => {
+      document.removeEventListener("click", checkIfClickedOutside);
+    };
   }, [router]);
 
   const mainImageProps = useNextSanityImage(
@@ -230,94 +236,82 @@ export default function IllustrationModal({ illustrations }) {
     illustration?.titleImage
   );
 
-  if (illustration && isVisible) {
-    const {
-      title,
-      mainImage,
-      titleImage,
-      technique,
-      paymentUrl,
-      description,
-      formats,
-    } = illustration;
-    console.log(formats);
-    return (
-      <StyledContainer $isVisible={isVisible}>
-        <div className="modal grid" ref={modalRef}>
-          <button className="close-btn" onClick={() => router.push("/")}>
-            <CloseBtn />
-          </button>
+  return (
+    <StyledContainer $isVisible={isVisible}>
+      <div className="modal grid" ref={modalRef}>
+        <button className="close-btn" onClick={() => router.push("/")}>
+          <CloseBtn />
+        </button>
+        <Image
+          {...mainImageProps}
+          className="main-image"
+          placeholder="blur"
+          blurDataURL={illustration?.mainImage.asset.metadata.lqip}
+          alt={illustration?.title}
+          sizes="(max-width: 800px) 100vw, 800px"
+          style={{ maxWidth: "100%", height: "auto" }}
+        />
+        <section className="infosPanel">
           <Image
-            {...mainImageProps}
-            className="main-image"
-            placeholder="blur"
-            blurDataURL={mainImage.asset.metadata.lqip}
-            alt={title}
-            sizes="(max-width: 800px) 100vw, 800px"
+            {...titleImageProps}
+            className="title-image"
             style={{ maxWidth: "100%", height: "auto" }}
+            placeholder="blur"
+            blurDataURL={illustration?.titleImage.asset.metadata.lqip}
+            alt={illustration?.title}
+            sizes="(max-width: 800px) 100vw, 800px"
           />
-          <section className="infosPanel">
-            <Image
-              {...titleImageProps}
-              className="title-image"
-              style={{ maxWidth: "100%", height: "auto" }}
-              placeholder="blur"
-              blurDataURL={titleImage.asset.metadata.lqip}
-              alt={title}
-              sizes="(max-width: 800px) 100vw, 800px"
-            />
-            <div className="info-container">
-              <div>{technique}</div>
-              <div>{selectedFormat.dimensions}</div>
-              <div>{selectedFormat.price}&nbsp;€</div>
-            </div>
-            <div className="description">{description}</div>
-            <a
-              className="buy-btn"
-              href={paymentUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Commander&nbsp;
-              <Image src={linkArrow} alt="Commander" width={10} height={10} />
-            </a>
-            <div className="formats">
-              {formats &&
-                formats.map((format, index) => {
-                  const isSelected =
-                    format.dimensions === selectedFormat.dimensions;
-                  return (
-                    <StyledFormat
-                      className="format"
-                      key={index}
-                      $isSelected={isSelected}
-                      onClick={() => setSelectedFormat(format)}
-                    >
-                      <Image
-                        src={format.image.asset.url}
-                        alt={`Format ${index}`}
-                        width={500}
-                        height={500}
-                        style={{
-                          width: "100%",
-                          objectFit: "contain",
-                          maxHeight: "100px",
-                        }}
-                      />
-                      <p>{format.dimensions}</p>
-                    </StyledFormat>
-                  );
-                })}
-            </div>
-          </section>
-          <button className="prevArrow" onClick={() => handlePrevNext("prev")}>
-            <PrevArrow />
-          </button>
-          <button className="nextArrow" onClick={() => handlePrevNext("next")}>
-            <NextArrow />
-          </button>
-        </div>
-      </StyledContainer>
-    );
-  }
+          <div className="info-container">
+            <div>{illustration?.technique}</div>
+            <div>{selectedFormat?.dimensions}</div>
+            <div>{selectedFormat?.price}&nbsp;€</div>
+          </div>
+          <div className="description">{illustration?.description}</div>
+          <a
+            className="buy-btn"
+            href={illustration?.paymentUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Commander&nbsp;
+            <Image src={linkArrow} alt="Commander" width={10} height={10} />
+          </a>
+          <div className="formats">
+            {illustration?.formats &&
+              illustration?.formats.map((format, index) => {
+                const isSelected =
+                  format.dimensions === selectedFormat.dimensions;
+                return (
+                  <StyledFormat
+                    className="format"
+                    key={index}
+                    $isSelected={isSelected}
+                    onClick={() => setSelectedFormat(format)}
+                  >
+                    <Image
+                      src={format.image.asset.url}
+                      alt={`Format ${index}`}
+                      width={500}
+                      height={500}
+                      style={{
+                        width: "100%",
+                        objectFit: "contain",
+                        maxHeight: "100px",
+                      }}
+                    />
+                    <p>{format.dimensions}</p>
+                  </StyledFormat>
+                );
+              })}
+          </div>
+        </section>
+        <button className="prevArrow" onClick={() => handlePrevNext("prev")}>
+          <PrevArrow />
+        </button>
+        <button className="nextArrow" onClick={() => handlePrevNext("next")}>
+          <NextArrow />
+        </button>
+      </div>
+    </StyledContainer>
+  );
 }
