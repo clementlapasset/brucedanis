@@ -227,7 +227,7 @@ export default function IllustrationModal({ illustrations }) {
 
   const mainImageProps = useNextSanityImage(
     sanityClient,
-    illustration?.mainImage
+    selectedFormat?.image
   );
   const titleImageProps = useNextSanityImage(
     sanityClient,
