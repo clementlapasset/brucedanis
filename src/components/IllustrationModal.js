@@ -20,34 +20,33 @@ const StyledContainer = styled.section`
   opacity: ${({ $isVisible }) => ($isVisible ? 1 : 0)};
   transition: all 0.4s;
   .modal {
-    /* z-index: 1; */
-    /* pointer-events: none; */
+    display: block;
     background-color: white;
     padding: 0 30px;
-    position: relative;
-    @media ${(props) => props.theme.minWidth.md} {
+    margin: 30px 0;
+    height: calc(100vh - 60px);
+    overflow-y: scroll;
+    @media ${({ theme }) => theme.minWidth.md} {
+      display: grid;
       margin: 100px;
       height: calc(100vh - 200px);
+      overflow-y: auto;
     }
     .close-btn {
-      /* grid-column: 2 / 3;
-      justify-self: end; */
-      @media ${({ theme }) => theme.minWidth.lg} {
-        top: -30px;
-        right: -30px;
-        position: absolute;
-        /* z-index: 3; */
+      position: absolute;
+      top: 8px;
+      right: 15px;
+      @media ${({ theme }) => theme.minWidth.md} {
+        top: 60px;
+        right: 60px;
       }
     }
     .main-image {
-      grid-column: 1 / 3;
-      /* max-height: 50vh; */
-      /* padding: 15px 0; */
-      @media ${({ theme }) => theme.minWidth.lg} {
+      width: 100%;
+      height: auto;
+      @media ${({ theme }) => theme.minWidth.md} {
         grid-column: 1 / 6;
         align-self: center;
-        width: 100%;
-        height: auto;
         max-height: calc(100vh - 260px);
         object-fit: contain;
         padding: 30px 0;
@@ -55,17 +54,13 @@ const StyledContainer = styled.section`
     }
     .infosPanel {
       overflow-y: scroll;
-      @media ${({ theme }) => theme.minWidth.lg} {
+      @media ${({ theme }) => theme.minWidth.md} {
         grid-column: 6 / 8;
         display: flex;
         flex-direction: column;
-        justify-content: center;
+        padding: 60px 0 30px;
       }
       .title-image {
-        /* grid-column: 1 / 2; */
-        /* @media ${({ theme }) => theme.minWidth.lg} {
-          grid-column: 1 / 6;
-        } */
       }
       .info-container {
         grid-column: 1 / 3;
@@ -75,12 +70,10 @@ const StyledContainer = styled.section`
         }
       }
       .description {
-        /* grid-column: 1 / 3; */
         font-size: 14px;
         font-style: italic;
       }
       .buy-btn {
-        /* grid-column: 1 / 3; */
         text-transform: uppercase;
         font-size: 16px;
         font-weight: bold;
@@ -105,16 +98,13 @@ const StyledContainer = styled.section`
       grid-column: 1 / 3;
     }
     .mobile-arrows {
-      position: fixed;
-      padding: 30px;
+      position: absolute;
       right: 20px;
       left: 20px;
-      bottom: 15px;
-      grid-column: 1 / 3;
+      bottom: 5px;
       display: flex;
       justify-content: space-between;
-      background-color: white;
-      @media ${({ theme }) => theme.minWidth.lg} {
+      @media ${({ theme }) => theme.minWidth.md} {
         display: none;
       }
     }
@@ -184,7 +174,7 @@ export default function IllustrationModal({ illustration, handlePrevNext }) {
             placeholder="blur"
             blurDataURL={mainImage.asset.metadata.lqip}
             alt={title}
-            // sizes="(max-width: 800px) 100vw, 800px"
+            sizes="(max-width: 800px) 100vw, 800px"
           />
           <section className="infosPanel">
             <Image
@@ -228,8 +218,6 @@ export default function IllustrationModal({ illustration, handlePrevNext }) {
                 })}
             </div>
           </section>
-
-          {/* <div className="spacer"></div> */}
           <div className="mobile-arrows">
             <button onClick={() => handlePrevNext("prev")}>
               <Image src={prevArrow} alt="Précédent" width={38} height={15} />

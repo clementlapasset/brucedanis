@@ -11,13 +11,6 @@ import HomeFooter from "@/components/HomeFooter";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 
-// const StyledModal = styled(Modal)`
-//   /* min-height: 100vh;
-//   background-color: white;
-//    @media ${({ theme }) => theme.minWidth.lg} {
-//     min-height: 100%;
-//   }  */
-// `;
 const customStyles = {
   content: {
     top: "50%",
@@ -100,19 +93,11 @@ export default function Home({ illustrations, draftMode, events }) {
         isPageLoaded && <Illustrations illustrations={illustrations} />
       )}
       <HomeFooter events={events} isPageLoaded={isPageLoaded} />
-      {/* <Modal
-        isOpen={!!router.query.illustrationSlug}
-        onRequestClose={() => router.push("/")}
-        contentLabel="Illustrations modal"
-        ariaHideApp={false}
-        style={customStyles}
-      > */}
       <IllustrationModal
         pathname={router.pathname}
         illustration={illustration}
         handlePrevNext={handleIllustrationsNav}
       />
-      {/* </Modal> */}
     </ThemeProvider>
   );
 }
