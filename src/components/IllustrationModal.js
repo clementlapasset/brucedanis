@@ -26,8 +26,8 @@ const StyledContainer = styled.section`
     display: block;
     background-color: white;
     padding: 0 30px;
-    margin: 30px 0;
-    height: calc(100vh - 60px);
+    margin: 45px 0;
+    height: calc(100vh - 90px);
     overflow-y: scroll;
     @media ${({ theme }) => theme.minWidth.md} {
       display: grid;
@@ -37,8 +37,8 @@ const StyledContainer = styled.section`
     }
     .close-btn {
       position: absolute;
-      top: 8px;
-      right: 15px;
+      top: 15px;
+      right: 30px;
       @media ${({ theme }) => theme.minWidth.md} {
         top: 30px;
         right: 30px;
@@ -108,22 +108,33 @@ const StyledContainer = styled.section`
     .prevArrow,
     .nextArrow {
       position: absolute;
-      bottom: 5px;
+      bottom: 0;
+      width: 50vw;
+      height: 45px;
+      display: flex;
+      align-items: center;
       @media ${({ theme }) => theme.minWidth.md} {
         top: 50%;
         bottom: 50%;
+        width: 90px;
+        height: 90px;
+        display: block;
       }
     }
     .prevArrow {
-      left: 30px;
+      left: 0;
+      justify-content: flex-start;
+      padding-left: 30px;
       @media ${({ theme }) => theme.minWidth.md} {
-        left: 20px;
+        padding-left: 0;
       }
     }
     .nextArrow {
-      right: 30px;
+      right: 0;
+      justify-content: flex-end;
+      padding-right: 30px;
       @media ${({ theme }) => theme.minWidth.md} {
-        right: 20px;
+        padding-right: 0px;
       }
     }
     svg {
@@ -171,7 +182,7 @@ export default function IllustrationModal({ illustrations }) {
           : illustrationsByCategory.length - 1;
       slug = illustrationsByCategory[prevIndex].slug.current;
     }
-    router.push(`/?illustrationSlug=${slug}`);
+    router.push(`/?illustrationSlug=${slug}`, false);
   }
 
   useEffect(() => {
