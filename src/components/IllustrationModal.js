@@ -140,11 +140,48 @@ const StyledContainer = styled.section`
   }
 `;
 
-export default function IllustrationModal({ illustration, handlePrevNext }) {
+export default function IllustrationModal({ illustrations }) {
   const router = useRouter();
   const [isVisible, setIsVisible] = useState(false);
   const modalRef = useRef();
+  const [illustration, setIllustration] = useState();
+  const [illustrationsByCategory, setIllustrationsByCategory] = useState([]);
+  const [illustrationIndex, setIllustrationIndex] = useState();
 
+  function handlePrevNext(way) {
+    // This is the way
+    let slug = 0;
+    if (way === "next") {
+      const nextIndex =
+        illustrationIndex + 1 < illustrationsByCategory.length
+          ? illustrationIndex + 1
+          : 0;
+      slug = illustrationsByCategory[nextIndex].slug.current;
+    }
+    if (way === "prev") {
+      const prevIndex =
+        illustrationIndex - 1 >= 0
+          ? illustrationIndex - 1
+          : illustrationsByCategory.length - 1;
+      slug = illustrationsByCategory[prevIndex].slug.current;
+    }
+    router.push(`/?illustrationSlug=${slug}`);
+  }
+
+  useEffect(() => {
+    const findIllustration = (illustration) =>
+      illustration.slug.current === router.query.illustrationSlug;
+    const illustration = illustrations.find(findIllustration);
+    setIllustration(illustration);
+    const illustrationsByCategory = illustrations.filter(
+      (illustrations) =>
+        illustrations.category._ref === illustration?.category._ref
+    );
+    setIllustrationsByCategory(illustrationsByCategory);
+    setIllustrationIndex(illustrationsByCategory.findIndex(findIllustration));
+  }, [router]);
+
+  // Outside click to close
   useEffect(() => {
     const checkIfClickedOutside = (e) => {
       if (modalRef.current && !modalRef.current.contains(e.target)) {
@@ -157,17 +194,15 @@ export default function IllustrationModal({ illustration, handlePrevNext }) {
     };
   });
 
+  // Avoid body scroll when modal is open
   useEffect(() => {
-    if (isVisible) {
+    const isIllustrationSlug = !!router.query.illustrationSlug;
+    if (isIllustrationSlug) {
+      setIsVisible(true);
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "scroll";
     }
-  }, [isVisible]);
-
-  useEffect(() => {
-    setIsVisible(!!router.query.illustrationSlug);
-    console.log(illustration, isVisible);
   }, [router]);
 
   const mainImageProps = useNextSanityImage(
