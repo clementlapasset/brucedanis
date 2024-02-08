@@ -233,7 +233,7 @@ export default function IllustrationModal({ illustration }) {
   // }
 
   function handlePush(target) {
-    router.push(`/illustration/${target.slug}`);
+    router.push(`/illustration/${target.slug}`, undefined, { scroll: false });
   }
 
   function handlePrevBtn() {
