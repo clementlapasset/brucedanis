@@ -1,7 +1,8 @@
+import { useEffect } from "react";
 import { getClient } from "../../../sanity/lib/client";
 import IllustrationsGrid from "@/components/IllustrationsGrid";
 import HomeFooter from "@/components/HomeFooter";
-
+import { useRouter } from "next/router";
 import IllustrationModal from "../../components/IllustrationModal";
 import {
   ILLUSTRATION_QUERY,
@@ -15,6 +16,13 @@ export default function IllustrationPage({
   illustrations,
   events,
 }) {
+  const router = useRouter();
+
+  useEffect(() => {
+    router.prefetch("/");
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <>
       <IllustrationsGrid illustrations={illustrations} />
@@ -28,8 +36,8 @@ export default function IllustrationPage({
 }
 
 export const getStaticProps = async ({ params = {} }) => {
-  const illustration = await getClient().fetch(ILLUSTRATION_QUERY, params);
   const illustrations = await getClient().fetch(ILLUSTRATIONS_QUERY);
+  const illustration = await getClient().fetch(ILLUSTRATION_QUERY, params);
   const events = await getClient().fetch(EVENTS_QUERY);
 
   return {

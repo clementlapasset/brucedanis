@@ -36,7 +36,7 @@ const StyledIllustration = styled.div`
 export default function Illustrations({ illustrations }) {
   return (
     <StyledContainer className="grid">
-      {illustrations.map((illustration) => {
+      {illustrations?.map((illustration) => {
         const { title, mainImage, gifImage, slug, position } = illustration;
         const mainImageProps = useNextSanityImage(sanityClient, mainImage);
         const gifImageProps = useNextSanityImage(sanityClient, gifImage);

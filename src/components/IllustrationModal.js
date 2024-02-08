@@ -158,27 +158,29 @@ const StyledFormat = styled.div`
 `;
 
 export default function IllustrationModal({ illustration }) {
-  const {
-    title,
-    titleImage,
-    technique,
-    paymentUrl,
-    description,
-    formats,
-    prev,
-    next,
-    first,
-    last,
-  } = illustration;
+  // const {
+  //   title,
+  //   titleImage,
+  //   technique,
+  //   paymentUrl,
+  //   description,
+  //   formats,
+  //   prev,
+  //   next,
+  //   first,
+  //   last,
+  // } = illustration;
 
   const router = useRouter();
   const [isVisible, setIsVisible] = useState(false);
   const modalRef = useRef();
-  const [selectedFormat, setSelectedFormat] = useState(formats[0]);
+  const [selectedFormat, setSelectedFormat] = useState(
+    illustration?.formats[0]
+  );
 
   useEffect(() => {
-    setSelectedFormat(formats[0]);
-  }, [formats]);
+    setSelectedFormat(illustration?.formats[0]);
+  }, [illustration?.formats]);
 
   // Let the exit animation before component is unmount
   function handleQuitModal() {
@@ -205,8 +207,14 @@ export default function IllustrationModal({ illustration }) {
     };
   }, []);
 
-  const mainImageProps = useNextSanityImage(sanityClient, selectedFormat.image);
-  const titleImageProps = useNextSanityImage(sanityClient, titleImage);
+  const mainImageProps = useNextSanityImage(
+    sanityClient,
+    selectedFormat?.image
+  );
+  const titleImageProps = useNextSanityImage(
+    sanityClient,
+    illustration?.titleImage
+  );
 
   function handlePush(target) {
     router.push(`/illustration/${target.slug}`, undefined, { scroll: false });
@@ -238,8 +246,8 @@ export default function IllustrationModal({ illustration }) {
           {...mainImageProps}
           className="main-image"
           placeholder="blur"
-          blurDataURL={selectedFormat.image.asset.metadata.lqip}
-          alt={title}
+          blurDataURL={selectedFormat?.image.asset.metadata.lqip}
+          alt={illustration?.title}
           sizes="(max-width: 800px) 100vw, 800px"
           style={{ maxWidth: "100%", height: "auto" }}
         />
@@ -249,19 +257,19 @@ export default function IllustrationModal({ illustration }) {
             className="title-image"
             style={{ maxWidth: "100%", height: "auto" }}
             placeholder="blur"
-            blurDataURL={titleImage.asset.metadata.lqip}
-            alt={title}
+            blurDataURL={illustration?.titleImage.asset.metadata.lqip}
+            alt={illustration?.title}
             sizes="(max-width: 800px) 100vw, 800px"
           />
           <div className="info-container">
-            <div>{technique}</div>
-            <div>{selectedFormat.dimensions}</div>
-            <div>{selectedFormat.price}&nbsp;€</div>
+            <div>{illustration?.technique}</div>
+            <div>{selectedFormat?.dimensions}</div>
+            <div>{selectedFormat?.price}&nbsp;€</div>
           </div>
-          <div className="description">{description}</div>
+          <div className="description">{illustration?.description}</div>
           <a
             className="buy-btn"
-            href={paymentUrl}
+            href={illustration?.paymentUrl}
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -269,32 +277,31 @@ export default function IllustrationModal({ illustration }) {
             <Image src={linkArrow} alt="Commander" width={10} height={10} />
           </a>
           <div className="formats">
-            {formats &&
-              formats.map((format, index) => {
-                const isSelected =
-                  format.dimensions === selectedFormat.dimensions;
-                return (
-                  <StyledFormat
-                    className="format"
-                    key={index}
-                    $isSelected={isSelected}
-                    onClick={() => setSelectedFormat(format)}
-                  >
-                    <Image
-                      src={format.image.asset.url}
-                      alt={`Format ${index}`}
-                      width={500}
-                      height={500}
-                      style={{
-                        width: "100%",
-                        objectFit: "contain",
-                        maxHeight: "100px",
-                      }}
-                    />
-                    <p>{format.dimensions}</p>
-                  </StyledFormat>
-                );
-              })}
+            {illustration?.formats.map((format, index) => {
+              const isSelected =
+                format.dimensions === selectedFormat?.dimensions;
+              return (
+                <StyledFormat
+                  className="format"
+                  key={index}
+                  $isSelected={isSelected}
+                  onClick={() => setSelectedFormat(format)}
+                >
+                  <Image
+                    src={format.image.asset.url}
+                    alt={`Format ${index}`}
+                    width={500}
+                    height={500}
+                    style={{
+                      width: "100%",
+                      objectFit: "contain",
+                      maxHeight: "100px",
+                    }}
+                  />
+                  <p>{format.dimensions}</p>
+                </StyledFormat>
+              );
+            })}
           </div>
         </section>
         <button className="prevArrow" onClick={() => handlePrevBtn()}>
