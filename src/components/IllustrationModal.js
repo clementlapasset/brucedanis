@@ -175,8 +175,6 @@ export default function IllustrationModal({ illustration }) {
   const [isVisible, setIsVisible] = useState(false);
   const modalRef = useRef();
   const [selectedFormat, setSelectedFormat] = useState(formats[0]);
-  // const [illustrationsByCategory, setIllustrationsByCategory] = useState([]);
-  // const [illustrationIndex, setIllustrationIndex] = useState();
 
   useEffect(() => {
     setSelectedFormat(formats[0]);
@@ -191,10 +189,8 @@ export default function IllustrationModal({ illustration }) {
   }
 
   useEffect(() => {
-    // Avoid body scroll when modal is open
     setIsVisible(true);
     document.body.style.overflow = "hidden";
-    // handleQuitModal();
 
     // Outside click to close
     const checkIfClickedOutside = (e) => {
@@ -211,26 +207,6 @@ export default function IllustrationModal({ illustration }) {
 
   const mainImageProps = useNextSanityImage(sanityClient, selectedFormat.image);
   const titleImageProps = useNextSanityImage(sanityClient, titleImage);
-
-  // function handlePrevNext(way) {
-  //   // This is the way
-  //   let slug = 0;
-  //   if (way === "next") {
-  //     const nextIndex =
-  //       illustrationIndex + 1 < illustrationsByCategory.length
-  //         ? illustrationIndex + 1
-  //         : 0;
-  //     slug = illustrationsByCategory[nextIndex].slug.current;
-  //   }
-  //   if (way === "prev") {
-  //     const prevIndex =
-  //       illustrationIndex - 1 >= 0
-  //         ? illustrationIndex - 1
-  //         : illustrationsByCategory.length - 1;
-  //     slug = illustrationsByCategory[prevIndex].slug.current;
-  //   }
-  //   router.push(`/illustration/${slug}`, { scroll: false });
-  // }
 
   function handlePush(target) {
     router.push(`/illustration/${target.slug}`, undefined, { scroll: false });
@@ -304,7 +280,7 @@ export default function IllustrationModal({ illustration }) {
                     $isSelected={isSelected}
                     onClick={() => setSelectedFormat(format)}
                   >
-                    {/* <Image
+                    <Image
                       src={format.image.asset.url}
                       alt={`Format ${index}`}
                       width={500}
@@ -314,7 +290,7 @@ export default function IllustrationModal({ illustration }) {
                         objectFit: "contain",
                         maxHeight: "100px",
                       }}
-                    /> */}
+                    />
                     <p>{format.dimensions}</p>
                   </StyledFormat>
                 );
