@@ -7,8 +7,8 @@ export default function CloseBtn() {
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
-      <path d="M1 1.02393L16 16.0239" stroke="white" stroke-width="2" />
-      <path d="M1 16.0239L16 1.02393" stroke="white" stroke-width="2" />
+      <path d="M1 1.02393L16 16.0239" stroke="white" strokeWidth="2" />
+      <path d="M1 16.0239L16 1.02393" stroke="white" strokeWidth="2" />
     </svg>
   );
 }

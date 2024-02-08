@@ -13,8 +13,6 @@ import {
 } from "../../../sanity/lib/queries";
 
 export default function IllustrationPage({ illustration, illustrations }) {
-  console.log(illustration.prev);
-
   // const router = useRouter();
 
   // useEffect(() => {

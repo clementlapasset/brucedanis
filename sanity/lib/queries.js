@@ -45,6 +45,15 @@ export const ILLUSTRATION_QUERY = groq`*[_type == "illustration" && slug.current
   },
   "prev": *[_type == 'illustration' && category._ref == ^.category._ref && _createdAt < ^._createdAt] | order(_createdAt desc)[0]{
     "slug": slug.current
+  },
+  "next": *[_type == 'illustration' && category._ref == ^.category._ref && _createdAt > ^._createdAt] | order(_createdAt asc)[0]{
+    "slug": slug.current
+  },
+  "last": *[_type == 'illustration' && category._ref == ^.category._ref ] | order(_createdAt desc)[0]{
+    "slug": slug.current
+  },
+  "first": *[_type == 'illustration' && category._ref == ^.category._ref ] | order(_createdAt asc)[0]{
+    "slug": slug.current
   }
 }`;
 

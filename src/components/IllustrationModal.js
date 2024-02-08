@@ -158,7 +158,6 @@ const StyledFormat = styled.div`
 `;
 
 export default function IllustrationModal({ illustration }) {
-  console.log(illustration);
   const {
     title,
     titleImage,
@@ -167,14 +166,17 @@ export default function IllustrationModal({ illustration }) {
     description,
     formats,
     prev,
+    next,
+    first,
+    last,
   } = illustration;
 
   const router = useRouter();
   const [isVisible, setIsVisible] = useState(false);
   const modalRef = useRef();
   const [selectedFormat, setSelectedFormat] = useState(formats[0]);
-  const [illustrationsByCategory, setIllustrationsByCategory] = useState([]);
-  const [illustrationIndex, setIllustrationIndex] = useState();
+  // const [illustrationsByCategory, setIllustrationsByCategory] = useState([]);
+  // const [illustrationIndex, setIllustrationIndex] = useState();
 
   useEffect(() => {
     setSelectedFormat(formats[0]);
@@ -230,11 +232,23 @@ export default function IllustrationModal({ illustration }) {
   //   router.push(`/illustration/${slug}`, { scroll: false });
   // }
 
-  function handlePrevNext() {
+  function handlePush(target) {
+    router.push(`/illustration/${target.slug}`);
+  }
+
+  function handlePrevBtn() {
     if (prev !== null) {
-      router.push(`/illustration/${prev.slug}`);
+      handlePush(prev);
     } else {
-      router.push(`/illustration/${prev.slug}`);
+      handlePush(last);
+    }
+  }
+
+  function handleNextBtn() {
+    if (next !== null) {
+      handlePush(next);
+    } else {
+      handlePush(first);
     }
   }
 
@@ -307,10 +321,10 @@ export default function IllustrationModal({ illustration }) {
               })}
           </div>
         </section>
-        <button className="prevArrow" onClick={() => handlePrevNext()}>
+        <button className="prevArrow" onClick={() => handlePrevBtn()}>
           <PrevArrow />
         </button>
-        <button className="nextArrow" onClick={() => handlePrevNext()}>
+        <button className="nextArrow" onClick={() => handleNextBtn()}>
           <NextArrow />
         </button>
       </div>
