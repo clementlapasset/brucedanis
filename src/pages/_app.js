@@ -2,7 +2,7 @@ import { lazy, Suspense } from "react";
 import { ThemeProvider } from "styled-components";
 import theme from "@/styles/theme";
 import GlobalStyle from "@/styles/globalStyle";
-import { DataProvider } from "@/app/context";
+import { DataProvider } from "@/app/Context";
 
 const PreviewProvider = lazy(() =>
   import("@/components/sanityPreview/PreviewProvider")
