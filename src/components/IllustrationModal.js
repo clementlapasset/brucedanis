@@ -157,24 +157,34 @@ const StyledFormat = styled.div`
   }
 `;
 
-export default function IllustrationModal({ illustration, handlePrevNext }) {
-  const { title, titleImage, technique, paymentUrl, description, formats } =
-    illustration;
+export default function IllustrationModal({ illustration }) {
+  console.log(illustration);
+  const {
+    title,
+    titleImage,
+    technique,
+    paymentUrl,
+    description,
+    formats,
+    prev,
+  } = illustration;
 
   const router = useRouter();
   const [isVisible, setIsVisible] = useState(false);
   const modalRef = useRef();
   const [selectedFormat, setSelectedFormat] = useState(formats[0]);
+  const [illustrationsByCategory, setIllustrationsByCategory] = useState([]);
+  const [illustrationIndex, setIllustrationIndex] = useState();
 
-  // useEffect(() => {
-  //   setSelectedFormat(formats[0]);
-  // }, [formats]);
+  useEffect(() => {
+    setSelectedFormat(formats[0]);
+  }, [formats]);
 
   // Let the exit animation before component is unmount
   function handleQuitModal() {
     setIsVisible(false);
     setTimeout(() => {
-      router.push("/");
+      router.push("/", undefined, { scroll: false });
     }, 400);
   }
 
@@ -200,7 +210,33 @@ export default function IllustrationModal({ illustration, handlePrevNext }) {
   const mainImageProps = useNextSanityImage(sanityClient, selectedFormat.image);
   const titleImageProps = useNextSanityImage(sanityClient, titleImage);
 
-  console.log(titleImage);
+  // function handlePrevNext(way) {
+  //   // This is the way
+  //   let slug = 0;
+  //   if (way === "next") {
+  //     const nextIndex =
+  //       illustrationIndex + 1 < illustrationsByCategory.length
+  //         ? illustrationIndex + 1
+  //         : 0;
+  //     slug = illustrationsByCategory[nextIndex].slug.current;
+  //   }
+  //   if (way === "prev") {
+  //     const prevIndex =
+  //       illustrationIndex - 1 >= 0
+  //         ? illustrationIndex - 1
+  //         : illustrationsByCategory.length - 1;
+  //     slug = illustrationsByCategory[prevIndex].slug.current;
+  //   }
+  //   router.push(`/illustration/${slug}`, { scroll: false });
+  // }
+
+  function handlePrevNext() {
+    if (prev !== null) {
+      router.push(`/illustration/${prev.slug}`);
+    } else {
+      router.push(`/illustration/${prev.slug}`);
+    }
+  }
 
   return (
     <StyledContainer $isVisible={isVisible}>
@@ -271,10 +307,10 @@ export default function IllustrationModal({ illustration, handlePrevNext }) {
               })}
           </div>
         </section>
-        <button className="prevArrow" onClick={() => handlePrevNext("prev")}>
+        <button className="prevArrow" onClick={() => handlePrevNext()}>
           <PrevArrow />
         </button>
-        <button className="nextArrow" onClick={() => handlePrevNext("next")}>
+        <button className="nextArrow" onClick={() => handlePrevNext()}>
           <NextArrow />
         </button>
       </div>

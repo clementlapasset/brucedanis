@@ -22,26 +22,6 @@ export default function Home({ illustrations, draftMode, events }) {
   const [illustrationsByCategory, setIllustrationsByCategory] = useState([]);
   const [illustrationIndex, setIllustrationIndex] = useState();
 
-  function handlePrevNext(way) {
-    // This is the way
-    let slug = 0;
-    if (way === "next") {
-      const nextIndex =
-        illustrationIndex + 1 < illustrationsByCategory.length
-          ? illustrationIndex + 1
-          : 0;
-      slug = illustrationsByCategory[nextIndex].slug.current;
-    }
-    if (way === "prev") {
-      const prevIndex =
-        illustrationIndex - 1 >= 0
-          ? illustrationIndex - 1
-          : illustrationsByCategory.length - 1;
-      slug = illustrationsByCategory[prevIndex].slug.current;
-    }
-    router.push(`/?illustrationSlug=${slug}`, false);
-  }
-
   useEffect(() => {
     const onPageLoad = () => {
       setIsPageLoaded(true);

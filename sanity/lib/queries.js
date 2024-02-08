@@ -1,13 +1,8 @@
 import { groq } from "next-sanity";
-
 export const ILLUSTRATIONS_QUERY = groq`*[_type == "illustration" && defined(slug)] {
 title,
 slug,
-category,
 position,
-technique,
-paymentUrl,
-description,
 mainImage {
   asset->{
     ...,
@@ -20,22 +15,6 @@ gifImage {
     metadata
   }
 },
-titleImage {
-  asset->{
-    ...,
-    metadata
-  }
-},
-"formats": formats[]{
-  image {
-      asset->{
-        ...,
-    metadata
-      }
-    },
-    dimensions,
-    price
-  }
 }`;
 
 export const ILLUSTRATIONS_SLUG_QUERY = groq`*[_type == "illustration" && defined(slug.current)][]{
@@ -43,40 +22,29 @@ export const ILLUSTRATIONS_SLUG_QUERY = groq`*[_type == "illustration" && define
 }`;
 
 export const ILLUSTRATION_QUERY = groq`*[_type == "illustration" && slug.current == $slug][0]{
-title,
-slug,
-category,
-position,
-technique,
-paymentUrl,
-description,
-mainImage {
-  asset->{
-    ...,
-    metadata
-  }
-},
-gifImage {
-  asset->{
-    ...,
-    metadata
-  }
-},
-titleImage {
-  asset->{
-    ...,
-    metadata
-  }
-},
-"formats": formats[]{
-  image {
-      asset->{
-        ...,
-    metadata
-      }
-    },
+  title,
+  category,
+  technique,
+  paymentUrl,
+  description,
+  titleImage {
+    asset->{
+      ...,
+      metadata
+    }
+  },
+  "formats": formats[]{
+    image {
+        asset->{
+          ...,
+      metadata
+        }
+      },
     dimensions,
     price
+  },
+  "prev": *[_type == 'illustration' && category._ref == ^.category._ref && _createdAt < ^._createdAt] | order(_createdAt desc)[0]{
+    "slug": slug.current
   }
 }`;
 

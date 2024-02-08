@@ -45,7 +45,6 @@ export default function Illustrations({ illustrations }) {
             <Link
               href="/illustration/[slug]"
               as={`/illustration/${slug.current}`}
-              // href={`/?illustrationSlug=${slug.current}`}
               scroll={false}
             >
               <Image

@@ -13,7 +13,9 @@ import {
 } from "../../../sanity/lib/queries";
 
 export default function IllustrationPage({ illustration, illustrations }) {
-  const router = useRouter();
+  console.log(illustration.prev);
+
+  // const router = useRouter();
 
   // useEffect(() => {
   //   router.prefetch("/");
@@ -30,7 +32,10 @@ export default function IllustrationPage({ illustration, illustrations }) {
         <Article id={articleId} pathname={router.pathname} />
       </Modal> */}
 
-      <IllustrationModal illustration={illustration} />
+      <IllustrationModal
+        illustration={illustration}
+        illustrations={illustrations}
+      />
       <IllustrationsGrid illustrations={illustrations} />
     </>
   );
@@ -39,7 +44,6 @@ export default function IllustrationPage({ illustration, illustrations }) {
 export const getStaticProps = async ({ params = {} }) => {
   const illustration = await getClient().fetch(ILLUSTRATION_QUERY, params);
   const illustrations = await getClient().fetch(ILLUSTRATIONS_QUERY);
-
   return {
     props: {
       illustration,
