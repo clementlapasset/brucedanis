@@ -221,18 +221,18 @@ export default function IllustrationModal({ illustration }) {
   }
 
   function handlePrevBtn() {
-    if (prev !== null) {
-      handlePush(prev);
+    if (illustration.prev !== null) {
+      handlePush(illustration.prev);
     } else {
-      handlePush(last);
+      handlePush(illustration.last);
     }
   }
 
   function handleNextBtn() {
-    if (next !== null) {
-      handlePush(next);
+    if (illustration.next !== null) {
+      handlePush(illustration.next);
     } else {
-      handlePush(first);
+      handlePush(illustration.first);
     }
   }
 
