@@ -191,7 +191,6 @@ export default function IllustrationModal({ illustration }) {
   }
 
   useEffect(() => {
-    setIsVisible(true);
     document.body.style.overflow = "hidden";
 
     // Outside click to close
@@ -204,6 +203,7 @@ export default function IllustrationModal({ illustration }) {
     return () => {
       document.removeEventListener("click", checkIfClickedOutside);
       document.body.style.overflow = "scroll";
+      setIsVisible(true);
     };
   }, []);
 
