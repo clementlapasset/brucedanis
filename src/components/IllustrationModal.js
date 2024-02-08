@@ -10,6 +10,7 @@ import linkArrow from "../assets/icons/link-arrow.svg";
 import { useEffect, useRef, useState } from "react";
 
 const StyledContainer = styled.section`
+  z-index: 1;
   background-color: white;
   position: fixed;
   top: 0;
@@ -165,9 +166,9 @@ export default function IllustrationModal({ illustration, handlePrevNext }) {
   const modalRef = useRef();
   const [selectedFormat, setSelectedFormat] = useState(formats[0]);
 
-  useEffect(() => {
-    setSelectedFormat(formats[0]);
-  }, [formats]);
+  // useEffect(() => {
+  //   setSelectedFormat(formats[0]);
+  // }, [formats]);
 
   // Let the exit animation before component is unmount
   function handleQuitModal() {
@@ -179,14 +180,9 @@ export default function IllustrationModal({ illustration, handlePrevNext }) {
 
   useEffect(() => {
     // Avoid body scroll when modal is open
-    const isIllustrationSlug = !!router.query.illustrationSlug;
-    if (isIllustrationSlug) {
-      setIsVisible(isIllustrationSlug);
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "scroll";
-      handleQuitModal();
-    }
+    setIsVisible(true);
+    document.body.style.overflow = "hidden";
+    // handleQuitModal();
 
     // Outside click to close
     const checkIfClickedOutside = (e) => {
@@ -197,11 +193,14 @@ export default function IllustrationModal({ illustration, handlePrevNext }) {
     document.addEventListener("click", checkIfClickedOutside);
     return () => {
       document.removeEventListener("click", checkIfClickedOutside);
+      document.body.style.overflow = "scroll";
     };
-  }, [router]);
+  }, []);
 
   const mainImageProps = useNextSanityImage(sanityClient, selectedFormat.image);
   const titleImageProps = useNextSanityImage(sanityClient, titleImage);
+
+  console.log(titleImage);
 
   return (
     <StyledContainer $isVisible={isVisible}>
@@ -255,7 +254,7 @@ export default function IllustrationModal({ illustration, handlePrevNext }) {
                     $isSelected={isSelected}
                     onClick={() => setSelectedFormat(format)}
                   >
-                    <Image
+                    {/* <Image
                       src={format.image.asset.url}
                       alt={`Format ${index}`}
                       width={500}
@@ -265,7 +264,7 @@ export default function IllustrationModal({ illustration, handlePrevNext }) {
                         objectFit: "contain",
                         maxHeight: "100px",
                       }}
-                    />
+                    /> */}
                     <p>{format.dimensions}</p>
                   </StyledFormat>
                 );

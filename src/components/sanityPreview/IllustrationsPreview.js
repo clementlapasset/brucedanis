@@ -1,6 +1,6 @@
 import { useLiveQuery } from "next-sanity/preview";
 
-import Illustrations from "../Illustrations";
+import Illustrations from "../IllustrationsGrid";
 import { ILLUSTRATIONS_QUERY } from "../../../sanity/lib/queries";
 
 export default function IllustrationsPreview({ illustrations = [] }) {

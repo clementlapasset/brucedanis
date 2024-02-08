@@ -6,7 +6,7 @@ import theme from "@/styles/theme";
 import GlobalStyle from "@/styles/globalStyle";
 import dynamic from "next/dynamic";
 import IllustrationModal from "@/components/IllustrationModal";
-import Illustrations from "@/components/Illustrations";
+import IllustrationsGrid from "@/components/IllustrationsGrid";
 import HomeFooter from "@/components/HomeFooter";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
@@ -56,41 +56,43 @@ export default function Home({ illustrations, draftMode, events }) {
 
   const router = useRouter();
 
-  useEffect(() => {
-    const isIllustrationSlug = !!router.query.illustrationSlug;
-    if (isIllustrationSlug) {
-      const findIllustration = (illustration) =>
-        illustration.slug.current === router.query.illustrationSlug;
-      const illustration = illustrations.find(findIllustration);
-      setIllustration(illustration);
-      const illustrationsByCategory = illustrations.filter(
-        (illustrations) =>
-          illustrations.category._ref === illustration?.category._ref
-      );
-      setIllustrationsByCategory(illustrationsByCategory);
-      setIllustrationIndex(illustrationsByCategory.findIndex(findIllustration));
-      setIsModal(isIllustrationSlug);
-    } else {
-      setIsModal(false);
-    }
-  }, [router]);
+  // useEffect(() => {
+  //   const isIllustrationSlug = !!router.query.illustrationSlug;
+  //   if (isIllustrationSlug) {
+  //     const findIllustration = (illustration) =>
+  //       illustration.slug.current === router.query.illustrationSlug;
+  //     const illustration = illustrations.find(findIllustration);
+  //     setIllustration(illustration);
+  //     const illustrationsByCategory = illustrations.filter(
+  //       (illustrations) =>
+  //         illustrations.category._ref === illustration?.category._ref
+  //     );
+  //     setIllustrationsByCategory(illustrationsByCategory);
+  //     setIllustrationIndex(illustrationsByCategory.findIndex(findIllustration));
+  //     setIsModal(isIllustrationSlug);
+  //   } else {
+  //     setIsModal(false);
+  //   }
+  // }, [router]);
 
   return (
-    <ThemeProvider theme={theme}>
-      <GlobalStyle />
+    <>
+      {/* // <ThemeProvider theme={theme}> */}
+      {/* <GlobalStyle /> */}
       {draftMode ? (
         <IllustrationsPreview illustrations={illustrations} />
       ) : (
-        isPageLoaded && <Illustrations illustrations={illustrations} />
+        isPageLoaded && <IllustrationsGrid illustrations={illustrations} />
       )}
       <HomeFooter events={events} isPageLoaded={isPageLoaded} />
-      {isModal && (
+      {/* {isModal && (
         <IllustrationModal
           illustration={illustration}
           handlePrevNext={handlePrevNext}
         />
-      )}
-    </ThemeProvider>
+      )} */}
+      {/* </ThemeProvider> */}
+    </>
   );
 }
 

@@ -42,7 +42,12 @@ export default function Illustrations({ illustrations }) {
         const gifImageProps = useNextSanityImage(sanityClient, gifImage);
         return (
           <StyledIllustration $position={position} key={title}>
-            <Link href={`/?illustrationSlug=${slug.current}`} scroll={false}>
+            <Link
+              href="/illustration/[slug]"
+              as={`/illustration/${slug.current}`}
+              // href={`/?illustrationSlug=${slug.current}`}
+              scroll={false}
+            >
               <Image
                 {...mainImageProps}
                 style={{ maxWidth: "100%", height: "auto" }}

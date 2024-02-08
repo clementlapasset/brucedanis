@@ -42,6 +42,42 @@ export const ILLUSTRATIONS_SLUG_QUERY = groq`*[_type == "illustration" && define
   "params": { "slug": slug.current }
 }`;
 
-export const ILLUSTRATION_QUERY = groq`*[_type == "illustration" && slug.current == $slug][0]`;
+export const ILLUSTRATION_QUERY = groq`*[_type == "illustration" && slug.current == $slug][0]{
+title,
+slug,
+category,
+position,
+technique,
+paymentUrl,
+description,
+mainImage {
+  asset->{
+    ...,
+    metadata
+  }
+},
+gifImage {
+  asset->{
+    ...,
+    metadata
+  }
+},
+titleImage {
+  asset->{
+    ...,
+    metadata
+  }
+},
+"formats": formats[]{
+  image {
+      asset->{
+        ...,
+    metadata
+      }
+    },
+    dimensions,
+    price
+  }
+}`;
 
 export const EVENTS_QUERY = groq`*[_type == "event"]`;
