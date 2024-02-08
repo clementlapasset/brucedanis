@@ -4,7 +4,7 @@ import signature from "@/assets/imgs/signature.png";
 import signatureGif from "@/assets/imgs/signature.gif";
 import { useState, useEffect } from "react";
 import { useContext } from "react";
-import { Context } from "@/app/context";
+import { Context } from "@/app/Context";
 
 const noAuto = "calc(14.28vw - 30px) ";
 
