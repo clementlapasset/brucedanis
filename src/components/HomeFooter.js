@@ -3,6 +3,8 @@ import styled from "styled-components";
 import signature from "@/assets/imgs/signature.png";
 import signatureGif from "@/assets/imgs/signature.gif";
 import { useState, useEffect } from "react";
+import { useContext } from "react";
+import { Context } from "@/app/context";
 
 const noAuto = "calc(14.28vw - 30px) ";
 
@@ -138,9 +140,10 @@ const StyledContainer = styled.section`
 
 export default function HomeFooter({ events, isPageLoaded }) {
   const [isFullPage, setIsFullPage] = useState(false);
-  const [isMinimized, setIsMinimized] = useState(false);
+  // const [isMinimized, setIsMinimized] = useState(false);
   const [screenHeight, setScreenHeight] = useState();
   const [scrollY, setScrollY] = useState(0);
+  const { isFooterMinimized, setIsFooterMinimized } = useContext(Context);
 
   useEffect(() => {
     const screenHeight = window.innerHeight;
@@ -157,10 +160,10 @@ export default function HomeFooter({ events, isPageLoaded }) {
     const handleIsMinimized = () => {
       const currentScrollY = window.scrollY;
       if (currentScrollY > scrollY) {
-        setIsMinimized(true);
+        setIsFooterMinimized(true);
       }
       if (currentScrollY < scrollY) {
-        setIsMinimized(false);
+        setIsFooterMinimized(false);
       }
       setScrollY(currentScrollY);
     };
@@ -171,13 +174,13 @@ export default function HomeFooter({ events, isPageLoaded }) {
   }, [scrollY]);
 
   function handleTouch() {
-    setIsMinimized(!isMinimized);
+    setIsFooterMinimized(!isFooterMinimized);
   }
 
   if (screenHeight)
     return (
       <StyledContainer
-        $isMinimized={isMinimized}
+        $isMinimized={isFooterMinimized}
         $isFullPage={isFullPage}
         $screenHeight={screenHeight}
         onTouchStart={() => handleTouch()}

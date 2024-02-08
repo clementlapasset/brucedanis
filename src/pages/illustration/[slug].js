@@ -2,10 +2,6 @@ import { getClient } from "../../../sanity/lib/client";
 import IllustrationsGrid from "@/components/IllustrationsGrid";
 import HomeFooter from "@/components/HomeFooter";
 
-import { useEffect } from "react";
-import { useRouter } from "next/router";
-// import Article from '../../components/Article';
-// import Grid, { data } from '../../components/Grid';
 import IllustrationModal from "../../components/IllustrationModal";
 import {
   ILLUSTRATION_QUERY,
@@ -19,23 +15,8 @@ export default function IllustrationPage({
   illustrations,
   events,
 }) {
-  // const router = useRouter();
-
-  // useEffect(() => {
-  //   router.prefetch("/");
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
-
   return (
     <>
-      {/* <Modal
-        isOpen={true} // The modal should always be shown on page load, it is the 'page'
-        onRequestClose={() => router.push('/', undefined, { scroll: false })}
-        contentLabel="Post modal"
-      >
-        <Article id={articleId} pathname={router.pathname} />
-      </Modal> */}
-
       <IllustrationsGrid illustrations={illustrations} />
       <HomeFooter events={events} isPageLoaded={true} />
       <IllustrationModal

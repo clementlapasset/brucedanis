@@ -2,6 +2,7 @@ import { lazy, Suspense } from "react";
 import { ThemeProvider } from "styled-components";
 import theme from "@/styles/theme";
 import GlobalStyle from "@/styles/globalStyle";
+import { DataProvider } from "@/app/context";
 
 const PreviewProvider = lazy(() =>
   import("@/components/sanityPreview/PreviewProvider")
@@ -23,8 +24,9 @@ export default function App({ Component, pageProps }) {
   ) : (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
-
-      <Component {...pageProps} />
+      <DataProvider>
+        <Component {...pageProps} />
+      </DataProvider>
     </ThemeProvider>
   );
 }
