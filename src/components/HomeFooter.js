@@ -143,22 +143,22 @@ export default function HomeFooter({ events, isPageLoaded }) {
   const [isFullPage, setIsFullPage] = useState(false);
   const [screenHeight, setScreenHeight] = useState();
   const [scrollY, setScrollY] = useState(0);
-  const [isMobile, setIsMobile] = useState(false);
+  // const [isMobile, setIsMobile] = useState(false);
   const { isFooterMinimized, setIsFooterMinimized } = useContext(Context);
 
   useEffect(() => {
     const screenHeight = window.innerHeight;
     setScreenHeight(screenHeight);
 
-    const handleResize = () => {
-      const screenWidth = window.innerWidth;
-      screenWidth < breakpoint.md ? setIsMobile(true) : setIsMobile(false);
-    };
-    handleResize();
-    window.addEventListener("resize", handleResize);
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
+    // const handleResize = () => {
+    //   const screenWidth = window.innerWidth;
+    //   screenWidth < breakpoint.md ? setIsMobile(true) : setIsMobile(false);
+    // };
+    // handleResize();
+    // window.addEventListener("resize", handleResize);
+    // return () => {
+    //   window.removeEventListener("resize", handleResize);
+    // };
   }, []);
 
   useEffect(() => {
@@ -170,10 +170,12 @@ export default function HomeFooter({ events, isPageLoaded }) {
   useEffect(() => {
     const handleIsMinimized = () => {
       const currentScrollY = window.scrollY;
-      if (currentScrollY > scrollY) {
+      if (currentScrollY > scrollY || currentScrollY < scrollY) {
         setIsFooterMinimized(true);
       }
-      if (!isMobile && currentScrollY < scrollY) {
+      const isScrollToBottom =
+        window.innerHeight + currentScrollY >= document.body.offsetHeight;
+      if (currentScrollY === 0 || isScrollToBottom) {
         setIsFooterMinimized(false);
       }
       setScrollY(currentScrollY);
@@ -182,7 +184,7 @@ export default function HomeFooter({ events, isPageLoaded }) {
     return () => {
       window.removeEventListener("scroll", handleIsMinimized);
     };
-  }, [scrollY, isMobile]);
+  }, [scrollY]);
 
   function handleTouch() {
     setIsFooterMinimized(!isFooterMinimized);
@@ -195,6 +197,8 @@ export default function HomeFooter({ events, isPageLoaded }) {
         $isFullPage={isFullPage}
         $screenHeight={screenHeight}
         onTouchStart={() => handleTouch()}
+        onMouseEnter={() => setIsFooterMinimized(false)}
+        onMouseLeave={() => setIsFooterMinimized(true)}
       >
         <aside className="signature">
           {isFullPage ? (

@@ -7,8 +7,10 @@ import styled from "styled-components";
 
 const StyledContainer = styled.section`
   display: block !important;
+  padding-bottom: 244px !important;
   @media ${({ theme }) => theme.minWidth.md} {
     display: grid !important;
+    padding-bottom: 153px !important;
   }
 `;
 const StyledIllustration = styled.div`
