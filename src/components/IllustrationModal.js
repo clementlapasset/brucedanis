@@ -26,11 +26,12 @@ const StyledContainer = styled.section`
   .modal {
     display: block;
     background-color: white;
-    padding: 0 30px;
     margin: 45px 0;
+    padding: 0 30px;
     height: calc(100vh - 90px);
     overflow-y: scroll;
     @media ${({ theme }) => theme.minWidth.md} {
+      padding: 0 0 0 30px;
       display: grid;
       margin: 90px;
       height: calc(100vh - 180px);
@@ -63,12 +64,13 @@ const StyledContainer = styled.section`
       }
     }
     .infosPanel {
+      padding-right: 30px;
       @media ${({ theme }) => theme.minWidth.md} {
         overflow-y: scroll;
         grid-column: 6 / 8;
         display: flex;
         flex-direction: column;
-        padding: 60px 0 30px;
+        padding: 60px 30px 30px 0;
         align-items: flex-start;
       }
       .title-image {
