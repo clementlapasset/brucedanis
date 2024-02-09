@@ -14,18 +14,20 @@ const VisualEditing = lazy(() =>
 export default function App({ Component, pageProps }) {
   const { draftMode, token } = pageProps;
 
-  return draftMode ? (
-    <PreviewProvider token={token}>
-      <Component {...pageProps} />
-      <Suspense>
-        <VisualEditing />
-      </Suspense>
-    </PreviewProvider>
-  ) : (
+  return (
     <ThemeProvider theme={theme}>
       <GlobalStyle />
       <DataProvider>
-        <Component {...pageProps} />
+        {draftMode ? (
+          <PreviewProvider token={token}>
+            <Component {...pageProps} />
+            <Suspense>
+              <VisualEditing />
+            </Suspense>
+          </PreviewProvider>
+        ) : (
+          <Component {...pageProps} />
+        )}
       </DataProvider>
     </ThemeProvider>
   );
