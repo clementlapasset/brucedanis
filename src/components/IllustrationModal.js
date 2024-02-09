@@ -53,6 +53,8 @@ const StyledContainer = styled.section`
     }
     .main-image {
       padding: 15px 0 30px;
+      opacity: ${({ $isTransition }) => ($isTransition ? 0 : 1)};
+      transition: opacity 0.2s;
       @media ${({ theme }) => theme.minWidth.md} {
         grid-column: 1 / 6;
         align-self: center;
@@ -173,27 +175,15 @@ export default function IllustrationModal({ illustration }) {
 
   const router = useRouter();
   const [isVisible, setIsVisible] = useState(false);
+  const [isTransition, setIsTransition] = useState(false);
   const modalRef = useRef();
   const [selectedFormat, setSelectedFormat] = useState(
     illustration?.formats[0]
   );
 
   useEffect(() => {
-    setSelectedFormat(illustration?.formats[0]);
-  }, [illustration?.formats]);
-
-  // Let the exit animation before component is unmount
-  function handleQuitModal() {
-    setIsVisible(false);
-    setTimeout(() => {
-      router.push("/", undefined, { scroll: false });
-    }, 400);
-  }
-
-  useEffect(() => {
     document.body.style.overflow = "hidden";
     setIsVisible(true);
-
     // Outside click to close
     const checkIfClickedOutside = (e) => {
       if (modalRef.current && !modalRef.current.contains(e.target)) {
@@ -207,6 +197,18 @@ export default function IllustrationModal({ illustration }) {
     };
   }, []);
 
+  useEffect(() => {
+    setSelectedFormat(illustration?.formats[0]);
+  }, [illustration?.formats]);
+
+  // Let the exit animation before component is unmount
+  function handleQuitModal() {
+    setIsVisible(false);
+    setTimeout(() => {
+      router.push("/", undefined, { scroll: false });
+    }, 400);
+  }
+
   const mainImageProps = useNextSanityImage(
     sanityClient,
     selectedFormat?.image
@@ -217,7 +219,11 @@ export default function IllustrationModal({ illustration }) {
   );
 
   function handlePush(target) {
-    router.push(`/illustration/${target.slug}`, undefined, { scroll: false });
+    router
+      .push(`/illustration/${target.slug}`, undefined, { scroll: false })
+      .then(() => {
+        setIsTransition(false);
+      });
   }
 
   function handlePrevBtn() {
@@ -229,15 +235,18 @@ export default function IllustrationModal({ illustration }) {
   }
 
   function handleNextBtn() {
-    if (illustration.next !== null) {
-      handlePush(illustration.next);
-    } else {
-      handlePush(illustration.first);
-    }
+    setIsTransition(true);
+    setTimeout(() => {
+      if (illustration.next !== null) {
+        handlePush(illustration.next);
+      } else {
+        handlePush(illustration.first);
+      }
+    }, 200);
   }
 
   return (
-    <StyledContainer $isVisible={isVisible}>
+    <StyledContainer $isVisible={isVisible} $isTransition={isTransition}>
       <div className="modal grid" ref={modalRef}>
         <button className="close-btn" onClick={() => router.push("/")}>
           <CloseBtn />

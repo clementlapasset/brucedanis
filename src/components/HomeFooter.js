@@ -5,7 +5,7 @@ import signatureGif from "@/assets/imgs/signature.gif";
 import { useState, useEffect } from "react";
 import { useContext } from "react";
 import { Context } from "@/app/Context";
-import { breakpoint } from "@/styles/theme";
+// import { breakpoint } from "@/styles/theme";
 
 const noAuto = "calc(14.28vw - 30px) ";
 
