@@ -24,8 +24,6 @@ export const ILLUSTRATIONS_SLUG_QUERY = groq`*[_type == "illustration" && define
 export const ILLUSTRATION_QUERY = groq`*[_type == "illustration" && slug.current == $slug][0]{
   title,
   category,
-  technique,
-  paymentUrl,
   description,
   titleImage {
     asset->{
@@ -40,8 +38,10 @@ export const ILLUSTRATION_QUERY = groq`*[_type == "illustration" && slug.current
       metadata
         }
       },
+    technique,
     dimensions,
-    price
+    price,
+    paymentUrl
   },
   "prev": *[_type == 'illustration' && category._ref == ^.category._ref && _createdAt < ^._createdAt] | order(_createdAt desc)[0]{
     "slug": slug.current
