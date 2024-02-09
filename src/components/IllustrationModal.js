@@ -34,7 +34,6 @@ const StyledContainer = styled.section`
       display: grid;
       margin: 90px;
       height: calc(100vh - 180px);
-      overflow-y: auto;
     }
     .close-btn {
       position: absolute;
@@ -64,8 +63,8 @@ const StyledContainer = styled.section`
       }
     }
     .infosPanel {
-      overflow-y: scroll;
       @media ${({ theme }) => theme.minWidth.md} {
+        overflow-y: scroll;
         grid-column: 6 / 8;
         display: flex;
         flex-direction: column;
@@ -176,10 +175,11 @@ export default function IllustrationModal({ illustration }) {
   const router = useRouter();
   const [isVisible, setIsVisible] = useState(false);
   const [isTransition, setIsTransition] = useState(false);
-  const modalRef = useRef();
   const [selectedFormat, setSelectedFormat] = useState(
     illustration?.formats[0]
   );
+  const modalRef = useRef();
+  const infoRef = useRef();
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
@@ -245,10 +245,23 @@ export default function IllustrationModal({ illustration }) {
     }, 200);
   }
 
+  // Force scroll up on page change
+  useEffect(() => {
+    if (infoRef.current) {
+      infoRef.current.scrollTop = 0;
+    }
+    if (modalRef.current) {
+      modalRef.current.scrollTop = 0;
+    }
+  }, [router.asPath]);
+
   return (
     <StyledContainer $isVisible={isVisible} $isTransition={isTransition}>
       <div className="modal grid" ref={modalRef}>
-        <button className="close-btn" onClick={() => router.push("/")}>
+        <button
+          className="close-btn"
+          onClick={() => router.push("/", { scroll: false })}
+        >
           <CloseBtn />
         </button>
         <Image
@@ -260,7 +273,7 @@ export default function IllustrationModal({ illustration }) {
           sizes="(max-width: 800px) 100vw, 800px"
           style={{ maxWidth: "100%", height: "auto" }}
         />
-        <section className="infosPanel">
+        <section className="infosPanel" ref={infoRef}>
           <Image
             {...titleImageProps}
             className="title-image"
