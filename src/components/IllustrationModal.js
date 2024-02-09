@@ -52,14 +52,20 @@ const StyledContainer = styled.section`
       }
     }
     .main-image {
-      padding: 15px 0 30px;
+      padding: 0 0 30px;
       opacity: ${({ $isTransition }) => ($isTransition ? 0 : 1)};
       transition: opacity 0.2s;
+      max-height: calc(100vh - 190px);
+      max-width: 100%;
+      object-fit: contain;
+      margin: 0 auto;
+      display: block;
       @media ${({ theme }) => theme.minWidth.md} {
+        max-width: 100%;
+        height: auto;
         grid-column: 1 / 6;
         align-self: center;
         max-height: calc(100vh - 260px);
-        object-fit: contain;
         padding: 30px 0;
       }
     }
@@ -286,7 +292,6 @@ export default function IllustrationModal({ illustration }) {
           blurDataURL={selectedFormat?.image.asset.metadata.lqip}
           alt={illustration?.title}
           sizes="(max-width: 800px) 100vw, 800px"
-          style={{ maxWidth: "100%", height: "auto" }}
         />
         <section className="infosPanel" ref={infoRef}>
           <Image
