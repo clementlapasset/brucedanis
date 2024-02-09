@@ -1,20 +1,22 @@
+export const breakpoint = {
+  xs: 375,
+  sm: 768,
+  md: 1024,
+  lg: 1280,
+  xl: 1440,
+  xxl: 1728,
+};
+
 const theme = {
   colors: {},
-  breakpoint: {
-    xs: "375px",
-    sm: "768px",
-    md: "1024px",
-    lg: "1280px",
-    xl: "1440px",
-    xxl: "1728px",
-  },
+
   minWidth: {
-    xs: `(min-width: 375px)`,
-    sm: `(min-width: 768px)`,
-    md: `(min-width: 1024px)`,
-    lg: `(min-width: 1280px)`,
-    xl: `(min-width: 1440px)`,
-    xxl: `(min-width: 1728px)`,
+    xs: `(min-width: ${breakpoint.xs}px)`,
+    sm: `(min-width: ${breakpoint.sm}px)`,
+    md: `(min-width: ${breakpoint.md}px)`,
+    lg: `(min-width: ${breakpoint.lg}px)`,
+    xl: `(min-width: ${breakpoint.xl}px)`,
+    xxl: `(min-width: ${breakpoint.xxl}px)`,
   },
   cubicBezier: {
     pageTranstion: "cubic-bezier(.65,.05,.36,1)",

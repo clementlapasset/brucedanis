@@ -16,12 +16,12 @@ export default function IllustrationPage({
   illustrations,
   events,
 }) {
-  const router = useRouter();
+  // const router = useRouter();
 
-  useEffect(() => {
-    router.prefetch("/");
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  // useEffect(() => {
+  //   router.prefetch("/");
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, []);
 
   return (
     <>
