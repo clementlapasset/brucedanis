@@ -69,11 +69,16 @@ const StyledContainer = styled.section`
         display: flex;
         flex-direction: column;
         padding: 60px 0 30px;
+        align-items: flex-start;
       }
       .title-image {
         padding-bottom: 15px;
+        height: 50px;
+        width: auto;
+        object-fit: contain;
         @media ${({ theme }) => theme.minWidth.md} {
           padding-bottom: 30px;
+          height: 80px;
         }
       }
       .info-container {
@@ -100,11 +105,19 @@ const StyledContainer = styled.section`
           margin: 30px 0 45px;
         }
       }
+      .format-title {
+        text-transform: uppercase;
+        font-size: 12px;
+        letter-spacing: 1px;
+        font-weight: normal;
+        margin-bottom: 15px;
+      }
       .formats {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         grid-gap: 30px;
         padding-bottom: 60px;
+        width: 100%;
       }
     }
     .prevArrow,
@@ -277,7 +290,6 @@ export default function IllustrationModal({ illustration }) {
           <Image
             {...titleImageProps}
             className="title-image"
-            style={{ maxWidth: "100%", height: "auto" }}
             placeholder="blur"
             blurDataURL={illustration?.titleImage.asset.metadata.lqip}
             alt={illustration?.title}
@@ -298,33 +310,38 @@ export default function IllustrationModal({ illustration }) {
             Commander&nbsp;
             <Image src={linkArrow} alt="Commander" width={10} height={10} />
           </a>
-          <div className="formats">
-            {illustration?.formats.map((format, index) => {
-              const isSelected =
-                format.dimensions === selectedFormat?.dimensions;
-              return (
-                <StyledFormat
-                  className="format"
-                  key={index}
-                  $isSelected={isSelected}
-                  onClick={() => setSelectedFormat(format)}
-                >
-                  <Image
-                    src={format.image.asset.url}
-                    alt={`Format ${index}`}
-                    width={500}
-                    height={500}
-                    style={{
-                      width: "100%",
-                      objectFit: "contain",
-                      maxHeight: "100px",
-                    }}
-                  />
-                  <p>{format.dimensions}</p>
-                </StyledFormat>
-              );
-            })}
-          </div>
+          {illustration?.formats.length > 1 && (
+            <>
+              <h2 className="format-title">Autres formats</h2>
+              <div className="formats">
+                {illustration?.formats.map((format, index) => {
+                  const isSelected =
+                    format.dimensions === selectedFormat?.dimensions;
+                  return (
+                    <StyledFormat
+                      className="format"
+                      key={index}
+                      $isSelected={isSelected}
+                      onClick={() => setSelectedFormat(format)}
+                    >
+                      <Image
+                        src={format.image.asset.url}
+                        alt={`Format ${index}`}
+                        width={500}
+                        height={500}
+                        style={{
+                          width: "100%",
+                          objectFit: "contain",
+                          maxHeight: "100px",
+                        }}
+                      />
+                      <p>{format.dimensions}</p>
+                    </StyledFormat>
+                  );
+                })}
+              </div>
+            </>
+          )}
         </section>
         <button className="prevArrow" onClick={() => handlePrevBtn()}>
           <PrevArrow />
