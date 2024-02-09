@@ -262,14 +262,14 @@ export default function IllustrationModal({ illustration }) {
             sizes="(max-width: 800px) 100vw, 800px"
           />
           <div className="info-container">
-            <div>{illustration?.technique}</div>
+            <div>{selectedFormat?.technique}</div>
             <div>{selectedFormat?.dimensions}</div>
             <div>{selectedFormat?.price}&nbsp;€</div>
           </div>
           <div className="description">{illustration?.description}</div>
           <a
             className="buy-btn"
-            href={illustration?.paymentUrl}
+            href={selectedFormat?.paymentUrl}
             target="_blank"
             rel="noopener noreferrer"
           >

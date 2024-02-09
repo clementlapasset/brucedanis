@@ -90,23 +90,9 @@ export default {
       validation: (Rule) => Rule.required(),
     },
     {
-      name: "technique",
-      title: "Technique",
-      description: "Technique utilisée qui apparaitra sous le titre",
-      type: "string",
-      validation: (Rule) => Rule.required(),
-    },
-    {
       name: "description",
       title: "Description (optionnel)",
       type: "text",
-    },
-    {
-      name: "paymentUrl",
-      type: "url",
-      title: "Lien vers la page de paiement",
-      description: "À créer sur Stripe",
-      validation: (Rule) => Rule.required(),
     },
     {
       name: "formats",
@@ -126,6 +112,13 @@ export default {
               validation: (Rule) => Rule.required(),
             },
             {
+              name: "technique",
+              title: "Technique",
+              description: "Technique utilisée qui apparaitra sous le titre",
+              type: "string",
+              validation: (Rule) => Rule.required(),
+            },
+            {
               name: "dimensions",
               title: "Dimensions",
               type: "string",
@@ -137,6 +130,13 @@ export default {
               type: "number",
               title: "Prix",
               validation: (Rule) => Rule.required().min(1),
+            },
+            {
+              name: "paymentUrl",
+              type: "url",
+              title: "Lien vers la page de paiement",
+              description: "À créer sur Stripe (mettre le même prix)",
+              validation: (Rule) => Rule.required(),
             },
           ],
         },
