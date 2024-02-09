@@ -26,15 +26,15 @@ const StyledContainer = styled.section`
   .modal {
     display: block;
     background-color: white;
-    padding: 0 30px;
     margin: 45px 0;
+    padding: 0 30px;
     height: calc(100vh - 90px);
     overflow-y: scroll;
     @media ${({ theme }) => theme.minWidth.md} {
+      padding: 0 0 0 30px;
       display: grid;
       margin: 90px;
       height: calc(100vh - 180px);
-      overflow-y: auto;
     }
     .close-btn {
       position: absolute;
@@ -52,29 +52,41 @@ const StyledContainer = styled.section`
       }
     }
     .main-image {
-      padding: 15px 0 30px;
+      padding: 0 0 30px;
       opacity: ${({ $isTransition }) => ($isTransition ? 0 : 1)};
       transition: opacity 0.2s;
+      max-height: calc(100vh - 190px);
+      max-width: 100%;
+      object-fit: contain;
+      margin: 0 auto;
+      display: block;
       @media ${({ theme }) => theme.minWidth.md} {
+        max-width: 100%;
+        height: auto;
         grid-column: 1 / 6;
         align-self: center;
         max-height: calc(100vh - 260px);
-        object-fit: contain;
         padding: 30px 0;
       }
     }
     .infosPanel {
-      overflow-y: scroll;
+      padding-right: 30px;
       @media ${({ theme }) => theme.minWidth.md} {
+        overflow-y: scroll;
         grid-column: 6 / 8;
         display: flex;
         flex-direction: column;
-        padding: 60px 0 30px;
+        padding: 60px 30px 30px 0;
+        align-items: flex-start;
       }
       .title-image {
         padding-bottom: 15px;
+        height: 50px;
+        width: auto;
+        object-fit: contain;
         @media ${({ theme }) => theme.minWidth.md} {
           padding-bottom: 30px;
+          height: 80px;
         }
       }
       .info-container {
@@ -101,11 +113,19 @@ const StyledContainer = styled.section`
           margin: 30px 0 45px;
         }
       }
+      .format-title {
+        text-transform: uppercase;
+        font-size: 12px;
+        letter-spacing: 1px;
+        font-weight: normal;
+        margin-bottom: 15px;
+      }
       .formats {
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         grid-gap: 30px;
         padding-bottom: 60px;
+        width: 100%;
       }
     }
     .prevArrow,
@@ -176,10 +196,11 @@ export default function IllustrationModal({ illustration }) {
   const router = useRouter();
   const [isVisible, setIsVisible] = useState(false);
   const [isTransition, setIsTransition] = useState(false);
-  const modalRef = useRef();
   const [selectedFormat, setSelectedFormat] = useState(
     illustration?.formats[0]
   );
+  const modalRef = useRef();
+  const infoRef = useRef();
 
   useEffect(() => {
     document.body.style.overflow = "hidden";
@@ -245,10 +266,23 @@ export default function IllustrationModal({ illustration }) {
     }, 200);
   }
 
+  // Force scroll up on page change
+  useEffect(() => {
+    if (infoRef.current) {
+      infoRef.current.scrollTop = 0;
+    }
+    if (modalRef.current) {
+      modalRef.current.scrollTop = 0;
+    }
+  }, [router.asPath]);
+
   return (
     <StyledContainer $isVisible={isVisible} $isTransition={isTransition}>
       <div className="modal grid" ref={modalRef}>
-        <button className="close-btn" onClick={() => router.push("/")}>
+        <button
+          className="close-btn"
+          onClick={() => router.push("/", { scroll: false })}
+        >
           <CloseBtn />
         </button>
         <Image
@@ -258,13 +292,11 @@ export default function IllustrationModal({ illustration }) {
           blurDataURL={selectedFormat?.image.asset.metadata.lqip}
           alt={illustration?.title}
           sizes="(max-width: 800px) 100vw, 800px"
-          style={{ maxWidth: "100%", height: "auto" }}
         />
-        <section className="infosPanel">
+        <section className="infosPanel" ref={infoRef}>
           <Image
             {...titleImageProps}
             className="title-image"
-            style={{ maxWidth: "100%", height: "auto" }}
             placeholder="blur"
             blurDataURL={illustration?.titleImage.asset.metadata.lqip}
             alt={illustration?.title}
@@ -285,33 +317,38 @@ export default function IllustrationModal({ illustration }) {
             Commander&nbsp;
             <Image src={linkArrow} alt="Commander" width={10} height={10} />
           </a>
-          <div className="formats">
-            {illustration?.formats.map((format, index) => {
-              const isSelected =
-                format.dimensions === selectedFormat?.dimensions;
-              return (
-                <StyledFormat
-                  className="format"
-                  key={index}
-                  $isSelected={isSelected}
-                  onClick={() => setSelectedFormat(format)}
-                >
-                  <Image
-                    src={format.image.asset.url}
-                    alt={`Format ${index}`}
-                    width={500}
-                    height={500}
-                    style={{
-                      width: "100%",
-                      objectFit: "contain",
-                      maxHeight: "100px",
-                    }}
-                  />
-                  <p>{format.dimensions}</p>
-                </StyledFormat>
-              );
-            })}
-          </div>
+          {illustration?.formats.length > 1 && (
+            <>
+              <h2 className="format-title">Autres formats</h2>
+              <div className="formats">
+                {illustration?.formats.map((format, index) => {
+                  const isSelected =
+                    format.dimensions === selectedFormat?.dimensions;
+                  return (
+                    <StyledFormat
+                      className="format"
+                      key={index}
+                      $isSelected={isSelected}
+                      onClick={() => setSelectedFormat(format)}
+                    >
+                      <Image
+                        src={format.image.asset.url}
+                        alt={`Format ${index}`}
+                        width={500}
+                        height={500}
+                        style={{
+                          width: "100%",
+                          objectFit: "contain",
+                          maxHeight: "100px",
+                        }}
+                      />
+                      <p>{format.dimensions}</p>
+                    </StyledFormat>
+                  );
+                })}
+              </div>
+            </>
+          )}
         </section>
         <button className="prevArrow" onClick={() => handlePrevBtn()}>
           <PrevArrow />
