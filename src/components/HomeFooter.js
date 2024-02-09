@@ -5,6 +5,7 @@ import signatureGif from "@/assets/imgs/signature.gif";
 import { useState, useEffect } from "react";
 import { useContext } from "react";
 import { Context } from "@/app/Context";
+import { breakpoint } from "@/styles/theme";
 
 const noAuto = "calc(14.28vw - 30px) ";
 
@@ -140,14 +141,24 @@ const StyledContainer = styled.section`
 
 export default function HomeFooter({ events, isPageLoaded }) {
   const [isFullPage, setIsFullPage] = useState(false);
-  // const [isMinimized, setIsMinimized] = useState(false);
   const [screenHeight, setScreenHeight] = useState();
   const [scrollY, setScrollY] = useState(0);
+  const [isMobile, setIsMobile] = useState(false);
   const { isFooterMinimized, setIsFooterMinimized } = useContext(Context);
 
   useEffect(() => {
     const screenHeight = window.innerHeight;
     setScreenHeight(screenHeight);
+
+    const handleResize = () => {
+      const screenWidth = window.innerWidth;
+      screenWidth < breakpoint.md ? setIsMobile(true) : setIsMobile(false);
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
   }, []);
 
   useEffect(() => {
@@ -162,7 +173,7 @@ export default function HomeFooter({ events, isPageLoaded }) {
       if (currentScrollY > scrollY) {
         setIsFooterMinimized(true);
       }
-      if (currentScrollY < scrollY) {
+      if (!isMobile && currentScrollY < scrollY) {
         setIsFooterMinimized(false);
       }
       setScrollY(currentScrollY);
@@ -171,7 +182,7 @@ export default function HomeFooter({ events, isPageLoaded }) {
     return () => {
       window.removeEventListener("scroll", handleIsMinimized);
     };
-  }, [scrollY]);
+  }, [scrollY, isMobile]);
 
   function handleTouch() {
     setIsFooterMinimized(!isFooterMinimized);
