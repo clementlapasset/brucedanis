@@ -140,7 +140,7 @@ const StyledContainer = styled.section`
 `;
 
 export default function HomeFooter({ events, isPageLoaded }) {
-  const [isFullPage, setIsFullPage] = useState(false);
+  const [isFullPage, setIsFullPage] = useState(true);
   const [screenHeight, setScreenHeight] = useState();
   const [scrollY, setScrollY] = useState(0);
   // const [isMobile, setIsMobile] = useState(false);
