@@ -83,6 +83,7 @@ const StyledContainer = styled.section`
         padding-bottom: 15px;
         height: 50px;
         width: auto;
+        max-width: 100%;
         object-fit: contain;
         @media ${({ theme }) => theme.minWidth.md} {
           padding-bottom: 30px;

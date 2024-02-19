@@ -27,11 +27,15 @@ const StyledIllustration = styled.div`
   a {
     position: relative;
   }
-  .gifImage {
-    opacity: 0;
-    position: absolute;
-    top: 0;
-    left: 0;
+  img {
+    width: 100%;
+    height: auto;
+    &.gifImage {
+      opacity: 0;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
   }
 `;
 
@@ -51,7 +55,6 @@ export default function Illustrations({ illustrations }) {
             >
               <Image
                 {...mainImageProps}
-                style={{ maxWidth: "100%", height: "auto" }}
                 placeholder="blur"
                 blurDataURL={mainImage?.asset.metadata.lqip}
                 alt={title}
@@ -59,7 +62,6 @@ export default function Illustrations({ illustrations }) {
               />
               <Image
                 {...gifImageProps}
-                style={{ maxWidth: "100%", height: "auto" }}
                 alt={title}
                 sizes="(max-width: 800px) 100vw, 800px"
                 className="gifImage"
