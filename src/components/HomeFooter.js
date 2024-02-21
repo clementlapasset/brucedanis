@@ -1,44 +1,34 @@
 import Image from "next/image";
 import styled from "styled-components";
-import signature from "@/assets/imgs/signature.png";
+import signature from "@/assets/imgs/signature.jpeg";
 import signatureGif from "@/assets/imgs/signature.gif";
 import { useState, useEffect } from "react";
 import { useContext } from "react";
 import { Context } from "@/app/Context";
-// import { breakpoint } from "@/styles/theme";
 
 const noAuto = "calc(14.28vw - 30px) ";
 
 const StyledContainer = styled.section`
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 15px;
+  padding: 15px;
   box-sizing: border-box;
   position: fixed;
-  transition: all 1s;
+  transition: all 0.8s ${({ theme }) => theme.cubicBezier.pageTranstion};
   width: 100%;
   bottom: 0;
   left: 0;
   background-color: white;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  padding: 15px;
+  display: ${({ $isIntroTransition, $isFullPage }) =>
+    $isIntroTransition || $isFullPage ? "block" : "grid"};
   height: ${({ $screenHeight, $isFullPage, $isMinimized }) =>
     $isFullPage ? $screenHeight : $isMinimized ? 60 : 244}px;
   @media ${({ theme }) => theme.minWidth.md} {
-    grid-template-columns: ${({ $isFullPage }) =>
-      $isFullPage
-        ? "50vw 50vw 0 0 0 0 0"
-        : noAuto + noAuto + noAuto + noAuto + noAuto + noAuto + noAuto};
-    grid-gap: ${({ $isFullPage }) => ($isFullPage ? 0 : "30px")};
+    grid-template-columns: repeat(7, 1fr);
+    grid-gap: 30px;
     padding: ${({ $isMinimized }) => ($isMinimized ? "15px 30px" : "30px")};
-    justify-content: ${({ $isFullPage }) => $isFullPage && "center"};
     height: ${({ $screenHeight, $isFullPage, $isMinimized }) =>
       $isFullPage ? $screenHeight : $isMinimized ? 60 : 153}px;
-  }
-  & > div {
-    position: ${({ $isFullPage }) => ($isFullPage ? "absolute" : "relative")};
-    transition: opacity 0.4s ${({ $isMinimized }) => !$isMinimized && "0.5s"};
-    opacity: ${({ $isFullPage, $isMinimized }) =>
-      $isFullPage || $isMinimized ? 0 : 1};
-    line-height: 18px;
   }
   span {
     height: 45px;
@@ -47,25 +37,19 @@ const StyledContainer = styled.section`
     }
   }
   .signature {
-    transition: all 1s 0.2s;
-    top: ${({ $isFullPage }) => ($isFullPage ? "calc(50% - 30px)" : "15px")};
+    transition: all 0.8s ${({ theme }) => theme.cubicBezier.pageTranstion};
     position: absolute;
-    width: 100%;
-    grid-column: 1/3;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    bottom: ${({ $isFullPage, $isMinimized }) =>
+      $isFullPage ? "calc(50% - 50px)" : $isMinimized ? "8px" : "30px"};
+    left: ${({ $isFullPage }) => ($isFullPage ? "calc(50% - 150px)" : "30px")};
+    width: 300px;
     @media ${({ theme }) => theme.minWidth.md} {
-      height: unset;
-      width: auto;
-      display: block;
-      transition: all 1s;
-      left: ${({ $isFullPage }) => ($isFullPage ? "calc(50% - 300px)" : "0px")};
-      bottom: ${({ $isFullPage, $isMinimized }) =>
-        $isFullPage ? "calc(50% - 170px)" : $isMinimized ? "8px" : "30px"};
+      width: 600px;
+      left: ${({ $isFullPage }) =>
+        $isFullPage ? "calc(50% - 300px)" : "30px"};
     }
     .img {
-      transition: all 1s;
+      transition: all 0.8s ${({ theme }) => theme.cubicBezier.pageTranstion};
       height: auto;
       width: 170px;
       margin-bottom: 15px;
@@ -78,9 +62,16 @@ const StyledContainer = styled.section`
     }
     .gif {
       width: 100%;
-      max-width: 600px;
       height: auto;
     }
+  }
+  & > div {
+    position: ${({ $isFullPage, $isIntroTransition }) =>
+      $isFullPage || $isIntroTransition ? "absolute" : "relative"};
+    transition: opacity 0.4s;
+    opacity: ${({ $isFullPage, $isMinimized, $isIntroTransition }) =>
+      $isFullPage || $isMinimized || $isIntroTransition ? 0 : 1};
+    line-height: 18px;
   }
   h2 {
     text-transform: uppercase;
@@ -140,10 +131,9 @@ const StyledContainer = styled.section`
 `;
 
 export default function HomeFooter({ events, isPageLoaded }) {
-  // const [isFullPage, setIsFullPage] = useState(true);
   const [screenHeight, setScreenHeight] = useState();
   const [scrollY, setScrollY] = useState(0);
-  // const [isMobile, setIsMobile] = useState(false);
+  const [isIntroTransition, setIsIntroTransition] = useState(false);
   const {
     isFooterMinimized,
     setIsFooterMinimized,
@@ -154,21 +144,17 @@ export default function HomeFooter({ events, isPageLoaded }) {
   useEffect(() => {
     const screenHeight = window.innerHeight;
     setScreenHeight(screenHeight);
-
-    // const handleResize = () => {
-    //   const screenWidth = window.innerWidth;
-    //   screenWidth < breakpoint.md ? setIsMobile(true) : setIsMobile(false);
-    // };
-    // handleResize();
-    // window.addEventListener("resize", handleResize);
-    // return () => {
-    //   window.removeEventListener("resize", handleResize);
-    // };
   }, []);
 
   useEffect(() => {
+    document.body.style.overflow = "hidden";
     setTimeout(() => {
       isPageLoaded && setIsLandingIntro(false);
+      document.body.style.overflow = "scroll";
+      setIsIntroTransition(true);
+      setTimeout(() => {
+        setIsIntroTransition(false);
+      }, 800);
     }, 3000);
   }, [isPageLoaded]);
 
@@ -200,6 +186,7 @@ export default function HomeFooter({ events, isPageLoaded }) {
       <StyledContainer
         $isMinimized={isFooterMinimized}
         $isFullPage={isLandingIntro}
+        $isIntroTransition={isIntroTransition}
         $screenHeight={screenHeight}
         onTouchStart={() => handleTouch()}
         onMouseEnter={() => setIsFooterMinimized(false)}
@@ -225,11 +212,10 @@ export default function HomeFooter({ events, isPageLoaded }) {
             </>
           )}
         </aside>
-        <span></span>
+        {/* <span></span> */}
         {events.length > 0 && (
           <div className="expos">
             <h2>Expos en cours</h2>
-
             {events.map((event, index) => (
               <a key={index} href={event.href}>
                 {event.title}
