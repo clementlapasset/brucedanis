@@ -31,10 +31,19 @@ export default defineConfig({
               S,
               context,
             }),
-            S.listItem().title("Évenements").child(S.documentTypeList("event")),
             S.listItem()
               .title("Catégories")
               .child(S.documentTypeList("category")),
+            S.listItem().title("Évenements").child(S.documentTypeList("event")),
+            S.listItem()
+              .title("Message de vacances")
+              .child(
+                S.editor()
+                  .id("text")
+                  .schemaType("vacation")
+                  .documentId("text")
+                  .title("Message de vacances")
+              ),
           ]);
       },
     }),

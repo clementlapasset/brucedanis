@@ -58,3 +58,5 @@ export const ILLUSTRATION_QUERY = groq`*[_type == "illustration" && slug.current
 }`;
 
 export const EVENTS_QUERY = groq`*[_type == "event"]`;
+
+export const VACATION_QUERY = groq`*[_type == "vacation"]`;
