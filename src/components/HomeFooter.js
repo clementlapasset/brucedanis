@@ -140,11 +140,16 @@ const StyledContainer = styled.section`
 `;
 
 export default function HomeFooter({ events, isPageLoaded }) {
-  const [isFullPage, setIsFullPage] = useState(true);
+  // const [isFullPage, setIsFullPage] = useState(true);
   const [screenHeight, setScreenHeight] = useState();
   const [scrollY, setScrollY] = useState(0);
   // const [isMobile, setIsMobile] = useState(false);
-  const { isFooterMinimized, setIsFooterMinimized } = useContext(Context);
+  const {
+    isFooterMinimized,
+    setIsFooterMinimized,
+    isLandingIntro,
+    setIsLandingIntro,
+  } = useContext(Context);
 
   useEffect(() => {
     const screenHeight = window.innerHeight;
@@ -163,7 +168,7 @@ export default function HomeFooter({ events, isPageLoaded }) {
 
   useEffect(() => {
     setTimeout(() => {
-      isPageLoaded && setIsFullPage(false);
+      isPageLoaded && setIsLandingIntro(false);
     }, 3000);
   }, [isPageLoaded]);
 
@@ -194,14 +199,14 @@ export default function HomeFooter({ events, isPageLoaded }) {
     return (
       <StyledContainer
         $isMinimized={isFooterMinimized}
-        $isFullPage={isFullPage}
+        $isFullPage={isLandingIntro}
         $screenHeight={screenHeight}
         onTouchStart={() => handleTouch()}
         onMouseEnter={() => setIsFooterMinimized(false)}
         onMouseLeave={() => setIsFooterMinimized(true)}
       >
         <aside className="signature">
-          {isFullPage ? (
+          {isLandingIntro ? (
             <Image
               src={signatureGif}
               width={600}

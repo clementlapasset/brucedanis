@@ -280,10 +280,7 @@ export default function IllustrationModal({ illustration }) {
   return (
     <StyledContainer $isVisible={isVisible} $isTransition={isTransition}>
       <div className="modal grid" ref={modalRef}>
-        <button
-          className="close-btn"
-          onClick={() => router.push("/", { scroll: false })}
-        >
+        <button className="close-btn" onClick={() => handleQuitModal()}>
           <CloseBtn />
         </button>
         <Image
