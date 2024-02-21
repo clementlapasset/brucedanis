@@ -6,8 +6,6 @@ import { useState, useEffect } from "react";
 import { useContext } from "react";
 import { Context } from "@/app/Context";
 
-const noAuto = "calc(14.28vw - 30px) ";
-
 const StyledContainer = styled.section`
   grid-template-columns: repeat(2, 1fr);
   grid-gap: 15px;
@@ -22,7 +20,7 @@ const StyledContainer = styled.section`
   display: ${({ $isIntroTransition, $isFullPage }) =>
     $isIntroTransition || $isFullPage ? "block" : "grid"};
   height: ${({ $screenHeight, $isFullPage, $isMinimized }) =>
-    $isFullPage ? $screenHeight : $isMinimized ? 60 : 244}px;
+    $isFullPage ? $screenHeight : $isMinimized ? 60 : 270}px;
   @media ${({ theme }) => theme.minWidth.md} {
     grid-template-columns: repeat(7, 1fr);
     grid-gap: 30px;
@@ -40,23 +38,24 @@ const StyledContainer = styled.section`
     transition: all 0.8s ${({ theme }) => theme.cubicBezier.pageTranstion};
     position: absolute;
     bottom: ${({ $isFullPage, $isMinimized }) =>
-      $isFullPage ? "calc(50% - 50px)" : $isMinimized ? "8px" : "30px"};
-    left: ${({ $isFullPage }) => ($isFullPage ? "calc(50% - 150px)" : "30px")};
+      $isFullPage ? "calc(50% - 50px)" : $isMinimized ? "12px" : "215px"};
+    left: ${({ $isFullPage }) =>
+      $isFullPage ? "calc(50% - 150px)" : "calc(50% - 100px)"};
     width: 300px;
     @media ${({ theme }) => theme.minWidth.md} {
       width: 600px;
       left: ${({ $isFullPage }) =>
         $isFullPage ? "calc(50% - 300px)" : "30px"};
+      bottom: ${({ $isFullPage, $isMinimized }) =>
+        $isFullPage ? "calc(50% - 50px)" : $isMinimized ? "8px" : "30px"};
     }
     .img {
       transition: all 0.8s ${({ theme }) => theme.cubicBezier.pageTranstion};
       height: auto;
       width: 170px;
-      margin-bottom: 15px;
       @media ${({ theme }) => theme.minWidth.md} {
         position: relative;
         top: unset;
-        margin-bottom: 0;
         width: ${({ $isMinimized }) => ($isMinimized ? 170 : 370)}px;
       }
     }
@@ -212,7 +211,7 @@ export default function HomeFooter({ events, isPageLoaded }) {
             </>
           )}
         </aside>
-        {/* <span></span> */}
+        <span></span>
         {events.length > 0 && (
           <div className="expos">
             <h2>Expos en cours</h2>
