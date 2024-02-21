@@ -4,8 +4,9 @@
 
 import { visionTool } from "@sanity/vision";
 import { defineConfig } from "sanity";
-import { structureTool } from "sanity/structure";
 import { presentationTool } from "sanity/presentation";
+import { structureTool } from "sanity/structure";
+import { orderableDocumentListDeskItem } from "@sanity/orderable-document-list";
 
 // Go to https://www.sanity.io/docs/api-versioning to learn how API versioning works
 import { apiVersion, dataset, projectId } from "./sanity/env";
@@ -19,7 +20,33 @@ export default defineConfig({
     types: schemaTypes,
   },
   plugins: [
-    structureTool(),
+    structureTool({
+      structure: (S, context) => {
+        return S.list()
+          .title("Contenu du site")
+          .items([
+            orderableDocumentListDeskItem({
+              type: "illustration",
+              title: "Illustrations",
+              S,
+              context,
+            }),
+            S.listItem()
+              .title("Catégories")
+              .child(S.documentTypeList("category")),
+            S.listItem().title("Évenements").child(S.documentTypeList("event")),
+            S.listItem()
+              .title("Message de vacances")
+              .child(
+                S.editor()
+                  .id("text")
+                  .schemaType("vacation")
+                  .documentId("text")
+                  .title("Message de vacances")
+              ),
+          ]);
+      },
+    }),
     visionTool({ defaultApiVersion: apiVersion }),
     presentationTool({
       previewUrl: {

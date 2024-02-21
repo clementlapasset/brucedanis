@@ -14,7 +14,9 @@ const StyledContainer = styled.section`
   }
 `;
 const StyledIllustration = styled.div`
+  margin-bottom: 60px;
   @media ${({ theme }) => theme.minWidth.md} {
+    margin-bottom: 0;
     grid-column: ${({ $position }) =>
       $position.columnStart + "/" + ($position.columnEnd + 1)};
     grid-row: ${({ $position }) => $position.rowStart + "/" + $position.rowEnd};

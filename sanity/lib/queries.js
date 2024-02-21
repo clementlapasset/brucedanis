@@ -1,20 +1,20 @@
 import { groq } from "next-sanity";
-export const ILLUSTRATIONS_QUERY = groq`*[_type == "illustration" && defined(slug)] {
-title,
-slug,
-position,
-mainImage {
-  asset->{
-    ...,
-    metadata
-  }
-},
-gifImage {
-  asset->{
-    ...,
-    metadata
-  }
-},
+export const ILLUSTRATIONS_QUERY = groq`*[_type == "illustration" && defined(slug)]|order(orderRank) {
+  title,
+  slug,
+  position,
+  mainImage {
+    asset->{
+      ...,
+      metadata
+    }
+  },
+  gifImage {
+    asset->{
+      ...,
+      metadata
+    }
+  },
 }`;
 
 export const ILLUSTRATIONS_SLUG_QUERY = groq`*[_type == "illustration" && defined(slug.current)][]{
@@ -58,3 +58,5 @@ export const ILLUSTRATION_QUERY = groq`*[_type == "illustration" && slug.current
 }`;
 
 export const EVENTS_QUERY = groq`*[_type == "event"]`;
+
+export const VACATION_QUERY = groq`*[_type == "vacation"]`;

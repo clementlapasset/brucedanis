@@ -109,17 +109,21 @@ const StyledContainer = styled.section`
         text-transform: uppercase;
         font-size: 16px;
         font-weight: bold;
-        margin: 30px 0;
+        margin: 30px 0 5px;
         @media ${({ theme }) => theme.minWidth.md} {
-          margin: 30px 0 45px;
+          margin: 30px 0 5px;
         }
       }
+
       .format-title {
         text-transform: uppercase;
         font-size: 12px;
         letter-spacing: 1px;
         font-weight: normal;
-        margin-bottom: 15px;
+        margin: 30px 0 15px;
+        @media ${({ theme }) => theme.minWidth.md} {
+          margin: 45px 0 15px;
+        }
       }
       .formats {
         display: grid;
@@ -180,7 +184,7 @@ const StyledFormat = styled.div`
   }
 `;
 
-export default function IllustrationModal({ illustration }) {
+export default function IllustrationModal({ illustration, vacation }) {
   // const {
   //   title,
   //   titleImage,
@@ -315,6 +319,7 @@ export default function IllustrationModal({ illustration }) {
             Commander&nbsp;
             <Image src={linkArrow} alt="Commander" width={10} height={10} />
           </a>
+          <p className="vacation-notice">{vacation[0]?.text}</p>
           {illustration?.formats.length > 1 && (
             <>
               <h2 className="format-title">Autres formats</h2>
