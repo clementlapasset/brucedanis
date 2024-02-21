@@ -114,7 +114,10 @@ const StyledContainer = styled.section`
           margin: 30px 0 5px;
         }
       }
-
+      .vacation-notice {
+        font-size: 12px;
+        line-height: 15px;
+      }
       .format-title {
         text-transform: uppercase;
         font-size: 12px;
@@ -185,19 +188,6 @@ const StyledFormat = styled.div`
 `;
 
 export default function IllustrationModal({ illustration, vacation }) {
-  // const {
-  //   title,
-  //   titleImage,
-  //   technique,
-  //   paymentUrl,
-  //   description,
-  //   formats,
-  //   prev,
-  //   next,
-  //   first,
-  //   last,
-  // } = illustration;
-
   const router = useRouter();
   const [isVisible, setIsVisible] = useState(false);
   const [isTransition, setIsTransition] = useState(false);
