@@ -40,7 +40,7 @@ const StyledContainer = styled.section`
     bottom: ${({ $isFullPage, $isMinimized }) =>
       $isFullPage ? "calc(50% - 50px)" : $isMinimized ? "12px" : "215px"};
     left: ${({ $isFullPage }) =>
-      $isFullPage ? "calc(50% - 150px)" : "calc(50% - 100px)"};
+      $isFullPage ? "calc(50% - 150px)" : "calc(50% - 90px)"};
     width: 300px;
     @media ${({ theme }) => theme.minWidth.md} {
       width: 600px;
