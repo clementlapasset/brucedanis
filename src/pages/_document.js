@@ -8,7 +8,10 @@ export default function Document() {
         <meta name="og:description" content="Bruce d'Anis" />
         <meta name="og:type" content="website" />
         <meta name="og:url" content="brucedanis.shop" />
-        <meta property="og:image" content="brucedanis.shop/signature.jpeg" />
+        <meta
+          property="og:image"
+          content="https://brucedanis.vercel.app/signature.jpeg"
+        />
         <meta property="og:image:type" content="<generated>" />
         <meta property="og:image:width" content="<generated>" />
         <meta property="og:image:height" content="<generated>" />
