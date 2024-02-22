@@ -7,18 +7,18 @@ export default function Document() {
         <meta name="description" content="Bruce d'Anis" />
         <meta name="og:description" content="Bruce d'Anis" />
         <meta name="og:type" content="website" />
-        <meta name="og:url" content="brucedanis.shop" />
-        <meta property="og:image" content="/signature.jpg" />
-        <meta property="og:image:type" content="<generated>" />
-        <meta property="og:image:width" content="<generated>" />
-        <meta property="og:image:height" content="<generated>" />
-        <meta name="twitter:image" content="<generated>" />
-        <meta name="twitter:image:type" content="<generated>" />
-        <meta name="twitter:image:width" content="<generated>" />
-        <meta name="twitter:image:height" content="<generated>" />
+        <meta name="og:url" content="https://brucedanis.shop" />
+        <meta
+          property="og:image"
+          content="https://brucedanis.shop/signature.jpg"
+        />
+        <meta
+          name="twitter:image"
+          content="https://brucedanis.shop/signature.jpg"
+        />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Bruce d'Anis" />
-        <meta name="twitter:url" content="brucedanis.shop" />
+        <meta name="twitter:url" content="https://brucedanis.shop" />
         <meta name="twitter:description" content="Bruce d'Anis" />
         <meta property="og:image:alt" content="Bruce d'Anis" />
         <meta property="twitter:image:alt" content="Bruce d'Anis" />
