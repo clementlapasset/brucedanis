@@ -4,8 +4,6 @@ export default function Document() {
   return (
     <Html lang="fr">
       <Head>
-        <meta charSet="utf-8" />
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <meta property="og:title" content="Bruce d'Anis" key="title" />
         <meta name="og:description" content="Bruce d'Anis" />
         <meta name="og:type" content="website" />
