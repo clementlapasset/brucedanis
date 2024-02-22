@@ -20,6 +20,7 @@ export default function IllustrationPage({
   return (
     <>
       <Head>
+        <title>{`Bruce d'Anis - ${illustration?.title}`}</title>
         <meta
           property="og:title"
           content={`Bruce d'Anis - ${illustration?.title}`}

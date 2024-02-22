@@ -5,6 +5,7 @@ import dynamic from "next/dynamic";
 import IllustrationsGrid from "@/components/IllustrationsGrid";
 import HomeFooter from "@/components/HomeFooter";
 import { useEffect, useState } from "react";
+import Head from "next/head";
 
 const IllustrationsPreview = dynamic(() =>
   import("@/components/sanityPreview/IllustrationsPreview")
@@ -27,6 +28,10 @@ export default function Home({ illustrations, draftMode, events }) {
 
   return (
     <>
+      <Head>
+        <title>Bruce d'Anis</title>
+        <meta property="og:title" content="Bruce d'Anis" key="title" />
+      </Head>
       {draftMode ? (
         <IllustrationsPreview illustrations={illustrations} />
       ) : (
