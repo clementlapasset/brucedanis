@@ -188,7 +188,6 @@ const StyledFormat = styled.div`
 `;
 
 export default function IllustrationModal({ illustration, vacation }) {
-  console.log(illustration);
   const router = useRouter();
   const [isVisible, setIsVisible] = useState(false);
   const [isTransition, setIsTransition] = useState(false);

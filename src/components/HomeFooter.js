@@ -146,10 +146,10 @@ export default function HomeFooter({ events, isPageLoaded }) {
   }, []);
 
   useEffect(() => {
-    document.body.style.overflow = "hidden";
+    // document.body.style.overflow = "hidden";
     setTimeout(() => {
       isPageLoaded && setIsLandingIntro(false);
-      document.body.style.overflow = "scroll";
+      // document.body.style.overflow = "scroll";
       setIsIntroTransition(true);
       setTimeout(() => {
         setIsIntroTransition(false);
