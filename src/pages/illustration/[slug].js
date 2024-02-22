@@ -1,8 +1,6 @@
-import { useEffect } from "react";
 import { getClient } from "../../../sanity/lib/client";
 import IllustrationsGrid from "@/components/IllustrationsGrid";
 import HomeFooter from "@/components/HomeFooter";
-import { useRouter } from "next/router";
 import IllustrationModal from "../../components/IllustrationModal";
 import {
   ILLUSTRATION_QUERY,
@@ -18,13 +16,6 @@ export default function IllustrationPage({
   events,
   vacation,
 }) {
-  // const router = useRouter();
-
-  // useEffect(() => {
-  //   router.prefetch("/");
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
-
   return (
     <>
       <IllustrationsGrid illustrations={illustrations} />
