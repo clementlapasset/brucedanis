@@ -28,7 +28,8 @@ const StyledContainer = styled.section`
     background-color: white;
     margin: 45px 0;
     padding: 0 30px;
-    height: calc(100vh - 90px);
+    height: ${({ $isArrows }) =>
+      $isArrows ? "calc(100vh - 90px)" : "calc(100vh - 45px)"};
     overflow-y: scroll;
     @media ${({ theme }) => theme.minWidth.md} {
       padding: 0 0 0 30px;
@@ -70,7 +71,7 @@ const StyledContainer = styled.section`
       }
     }
     .infosPanel {
-      padding-right: 30px;
+      padding: 0 30px 30px 0;
       @media ${({ theme }) => theme.minWidth.md} {
         overflow-y: scroll;
         grid-column: 6 / 8;
@@ -132,7 +133,6 @@ const StyledContainer = styled.section`
         display: grid;
         grid-template-columns: repeat(2, 1fr);
         grid-gap: 30px;
-        padding-bottom: 60px;
         width: 100%;
       }
     }
@@ -188,6 +188,7 @@ const StyledFormat = styled.div`
 `;
 
 export default function IllustrationModal({ illustration, vacation }) {
+  console.log(illustration);
   const router = useRouter();
   const [isVisible, setIsVisible] = useState(false);
   const [isTransition, setIsTransition] = useState(false);
@@ -272,7 +273,11 @@ export default function IllustrationModal({ illustration, vacation }) {
   }, [router.asPath]);
 
   return (
-    <StyledContainer $isVisible={isVisible} $isTransition={isTransition}>
+    <StyledContainer
+      $isVisible={isVisible}
+      $isTransition={isTransition}
+      $isArrows={illustration?.categoryCount > 1}
+    >
       <div className="modal grid" ref={modalRef}>
         <button className="close-btn" onClick={() => handleQuitModal()}>
           <CloseBtn />
@@ -343,12 +348,16 @@ export default function IllustrationModal({ illustration, vacation }) {
             </>
           )}
         </section>
-        <button className="prevArrow" onClick={() => handlePrevBtn()}>
-          <PrevArrow />
-        </button>
-        <button className="nextArrow" onClick={() => handleNextBtn()}>
-          <NextArrow />
-        </button>
+        {illustration?.categoryCount > 1 && (
+          <>
+            <button className="prevArrow" onClick={() => handlePrevBtn()}>
+              <PrevArrow />
+            </button>
+            <button className="nextArrow" onClick={() => handleNextBtn()}>
+              <NextArrow />
+            </button>
+          </>
+        )}
       </div>
     </StyledContainer>
   );

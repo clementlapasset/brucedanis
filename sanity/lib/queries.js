@@ -54,7 +54,8 @@ export const ILLUSTRATION_QUERY = groq`*[_type == "illustration" && slug.current
   },
   "first": *[_type == 'illustration' && category._ref == ^.category._ref ] | order(_createdAt asc)[0]{
     "slug": slug.current
-  }
+  },
+  "categoryCount": count(*[_type == 'illustration' && category._ref == ^.category._ref ])
 }`;
 
 export const EVENTS_QUERY = groq`*[_type == "event"]`;
