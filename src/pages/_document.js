@@ -4,6 +4,7 @@ export default function Document() {
   return (
     <Html lang="fr">
       <Head>
+        <title>Bruce d'Anis</title>
         <meta property="og:title" content="Bruce d'Anis" key="title" />
         <meta name="og:description" content="Bruce d'Anis" />
         <meta name="og:type" content="website" />

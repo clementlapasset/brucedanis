@@ -9,6 +9,7 @@ import {
   EVENTS_QUERY,
   VACATION_QUERY,
 } from "../../../sanity/lib/queries";
+import Head from "next/head";
 
 export default function IllustrationPage({
   illustration,
@@ -18,6 +19,13 @@ export default function IllustrationPage({
 }) {
   return (
     <>
+      <Head>
+        <meta
+          property="og:title"
+          content={`Bruce d'Anis - ${illustration.title}`}
+          key="title"
+        />
+      </Head>
       <IllustrationsGrid illustrations={illustrations} />
       <HomeFooter events={events} isPageLoaded={true} />
       <IllustrationModal
