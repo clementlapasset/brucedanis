@@ -188,6 +188,7 @@ const StyledFormat = styled.div`
 `;
 
 export default function IllustrationModal({ illustration, vacation }) {
+  console.log(vacation);
   const router = useRouter();
   const [isVisible, setIsVisible] = useState(false);
   const [isTransition, setIsTransition] = useState(false);
@@ -313,7 +314,7 @@ export default function IllustrationModal({ illustration, vacation }) {
             Commander&nbsp;
             <Image src={linkArrow} alt="Commander" width={10} height={10} />
           </a>
-          {vacation[0] && <p className="vacation-notice">{vacation[0].text}</p>}
+          {vacation && <p className="vacation-notice">{vacation[0]?.text}</p>}
           {illustration?.formats.length > 1 && (
             <>
               <h2 className="format-title">Autres formats</h2>
