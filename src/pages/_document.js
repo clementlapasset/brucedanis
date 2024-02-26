@@ -4,8 +4,14 @@ export default function Document() {
   return (
     <Html lang="fr">
       <Head>
-        <meta name="description" content="Bruce d'Anis" />
-        <meta name="og:description" content="Bruce d'Anis" />
+        <meta
+          name="description"
+          content="Illustrateur drolatique basé à Marseille"
+        />
+        <meta
+          name="og:description"
+          content="Illustrateur drolatique basé à Marseille"
+        />
         <meta name="og:type" content="website" />
         <meta name="og:url" content="https://brucedanis.shop" />
         <meta
@@ -19,7 +25,10 @@ export default function Document() {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="Bruce d'Anis" />
         <meta name="twitter:url" content="https://brucedanis.shop" />
-        <meta name="twitter:description" content="Bruce d'Anis" />
+        <meta
+          name="twitter:description"
+          content="Illustrateur drolatique basé à Marseille"
+        />
         <meta property="og:image:alt" content="Bruce d'Anis" />
         <meta property="twitter:image:alt" content="Bruce d'Anis" />
         <link rel="shortcut icon" href="/favicon.jpg" />
