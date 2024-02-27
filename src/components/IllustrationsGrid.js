@@ -14,7 +14,7 @@ const StyledContainer = styled.section`
   }
 `;
 const StyledIllustration = styled.div`
-  margin-bottom: 60px;
+  margin-bottom: 120px;
   @media ${({ theme }) => theme.minWidth.md} {
     margin-bottom: 0;
     grid-column: ${({ $position }) =>
