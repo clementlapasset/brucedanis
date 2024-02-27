@@ -144,12 +144,14 @@ const StyledContainer = styled.section`
       height: 45px;
       display: flex;
       align-items: center;
+      background-color: white;
       @media ${({ theme }) => theme.minWidth.md} {
         top: 50%;
         bottom: 50%;
         width: 90px;
         height: 90px;
         display: block;
+        background-color: transparent;
       }
     }
     .prevArrow {
