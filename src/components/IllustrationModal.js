@@ -64,7 +64,6 @@ const StyledContainer = styled.section`
       display: block;
       @media ${({ theme }) => theme.minWidth.md} {
         max-width: 100%;
-        height: auto;
         grid-column: 1 / 6;
         align-self: center;
         max-height: calc(100vh - 260px);
