@@ -56,7 +56,8 @@ const StyledContainer = styled.section`
       padding: 0 0 30px;
       opacity: ${({ $isTransition }) => ($isTransition ? 0 : 1)};
       transition: opacity 0.2s;
-      max-height: calc(100vh - 190px);
+      max-height: calc(100vh - 280px);
+      height: auto;
       max-width: 100%;
       object-fit: contain;
       margin: 0 auto;
