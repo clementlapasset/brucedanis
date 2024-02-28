@@ -33,6 +33,13 @@ export default {
       validation: (Rule) => Rule.required(),
     },
     {
+      name: "illustrationsBlock",
+      title: "Bloc de l'illustration",
+      type: "reference",
+      to: [{ type: "illustrationsBlock" }],
+      validation: (Rule) => Rule.required(),
+    },
+    {
       name: "mainImage",
       title: "Illustration principale",
       description: "Image de l'illustration visible sur la page d'accueil",

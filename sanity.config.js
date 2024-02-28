@@ -32,6 +32,9 @@ export default defineConfig({
               context,
             }),
             S.listItem()
+              .title("Blocs d'illustrations")
+              .child(S.documentTypeList("illustrationsBlock")),
+            S.listItem()
               .title("Catégories")
               .child(S.documentTypeList("category")),
             S.listItem().title("Évenements").child(S.documentTypeList("event")),
