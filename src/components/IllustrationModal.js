@@ -71,7 +71,7 @@ const StyledContainer = styled.section`
       }
     }
     .infosPanel {
-      padding: 0 30px 30px 0;
+      padding: 0 30px 90px 0;
       @media ${({ theme }) => theme.minWidth.md} {
         overflow-y: scroll;
         grid-column: 6 / 8;
