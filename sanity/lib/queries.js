@@ -1,20 +1,43 @@
 import { groq } from "next-sanity";
-export const ILLUSTRATIONS_QUERY = groq`*[_type == "illustration" && defined(slug)]|order(orderRank) {
-  title,
-  slug,
-  position,
-  mainImage {
-    asset->{
-      ...,
-      metadata
+// export const ILLUSTRATIONS_QUERY = groq`*[_type == "illustration" && defined(slug)]|order(orderRank) {
+//   title,
+//   slug,
+//   position,
+//   mainImage {
+//     asset->{
+//       ...,
+//       metadata
+//     }
+//   },
+//   gifImage {
+//     asset->{
+//       ...,
+//       metadata
+//     }
+//   },
+// }`;
+
+export const ILLUSTRATIONS_QUERY = groq`*[_type == "illustrationsBlock"]{
+  "id": _id,
+  "number": number,
+  "illustrations": *[_type == "illustration" && defined(slug) && references(^._id)]|order(orderRank) {
+    title,
+    slug,
+    position,
+    mainImage {
+      asset->{
+        ...,
+        metadata
+      }
+    },
+    gifImage {
+      asset->{
+        ...,
+        metadata
+      }
+    },
+      "blockRef": illustrationsBlock->_id
     }
-  },
-  gifImage {
-    asset->{
-      ...,
-      metadata
-    }
-  },
 }`;
 
 export const ILLUSTRATIONS_SLUG_QUERY = groq`*[_type == "illustration" && defined(slug.current)][]{

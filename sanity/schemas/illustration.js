@@ -9,7 +9,7 @@ export default {
   type: "document",
   orderings: [orderRankOrdering],
   fields: [
-    orderRankField({ type: "illustration", newItemPosition: "before" }),
+    orderRankField({ type: "illustration", newItemPosition: "after" }),
     {
       name: "title",
       title: "Titre",
