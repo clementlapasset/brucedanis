@@ -190,12 +190,13 @@ const StyledFormat = styled.div`
 `;
 
 export default function IllustrationModal({ illustration, vacation }) {
+  const { formats, titleImage, categoryCount, title, description } =
+    illustration;
+
   const router = useRouter();
   const [isVisible, setIsVisible] = useState(false);
   const [isTransition, setIsTransition] = useState(false);
-  const [selectedFormat, setSelectedFormat] = useState(
-    illustration?.formats[0]
-  );
+  const [selectedFormat, setSelectedFormat] = useState(formats[0]);
   const modalRef = useRef();
   const infoRef = useRef();
 
@@ -216,8 +217,8 @@ export default function IllustrationModal({ illustration, vacation }) {
   }, []);
 
   useEffect(() => {
-    setSelectedFormat(illustration?.formats[0]);
-  }, [illustration?.formats]);
+    setSelectedFormat(formats[0]);
+  }, [formats]);
 
   // Let the exit animation before component is unmount
   function handleQuitModal() {
@@ -231,10 +232,7 @@ export default function IllustrationModal({ illustration, vacation }) {
     sanityClient,
     selectedFormat?.image
   );
-  const titleImageProps = useNextSanityImage(
-    sanityClient,
-    illustration?.titleImage
-  );
+  const titleImageProps = useNextSanityImage(sanityClient, titleImage);
 
   function handlePush(target) {
     router
@@ -277,7 +275,7 @@ export default function IllustrationModal({ illustration, vacation }) {
     <StyledContainer
       $isVisible={isVisible}
       $isTransition={isTransition}
-      $isArrows={illustration?.categoryCount > 1}
+      $isArrows={categoryCount > 1}
     >
       <div className="modal grid" ref={modalRef}>
         <button className="close-btn" onClick={() => handleQuitModal()}>
@@ -288,7 +286,7 @@ export default function IllustrationModal({ illustration, vacation }) {
           className="main-image"
           placeholder="blur"
           blurDataURL={selectedFormat?.image.asset.metadata.lqip}
-          alt={illustration?.title}
+          alt={title}
           sizes="(max-width: 800px) 100vw, 800px"
         />
         <section className="infosPanel" ref={infoRef}>
@@ -296,8 +294,8 @@ export default function IllustrationModal({ illustration, vacation }) {
             {...titleImageProps}
             className="title-image"
             placeholder="blur"
-            blurDataURL={illustration?.titleImage.asset.metadata.lqip}
-            alt={illustration?.title}
+            blurDataURL={titleImage.asset.metadata.lqip}
+            alt={title}
             sizes="(max-width: 800px) 100vw, 800px"
           />
           <div className="info-container">
@@ -305,7 +303,7 @@ export default function IllustrationModal({ illustration, vacation }) {
             <div>{selectedFormat?.dimensions}</div>
             <div>{selectedFormat?.price}&nbsp;€</div>
           </div>
-          <div className="description">{illustration?.description}</div>
+          <div className="description">{description}</div>
           <a
             className="buy-btn"
             href={selectedFormat?.paymentUrl}
@@ -316,11 +314,11 @@ export default function IllustrationModal({ illustration, vacation }) {
             <Image src={linkArrow} alt="Commander" width={10} height={10} />
           </a>
           {vacation && <p className="vacation-notice">{vacation[0]?.text}</p>}
-          {illustration?.formats.length > 1 && (
+          {formats.length > 1 && (
             <>
               <h2 className="format-title">Autres formats</h2>
               <div className="formats">
-                {illustration?.formats.map((format, index) => {
+                {formats.map((format, index) => {
                   const isSelected =
                     format.dimensions === selectedFormat?.dimensions;
                   return (
@@ -349,7 +347,7 @@ export default function IllustrationModal({ illustration, vacation }) {
             </>
           )}
         </section>
-        {illustration?.categoryCount > 1 && (
+        {categoryCount > 1 && (
           <>
             <button className="prevArrow" onClick={() => handlePrevBtn()}>
               <PrevArrow />
