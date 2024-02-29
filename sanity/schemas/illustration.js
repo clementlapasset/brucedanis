@@ -9,7 +9,7 @@ export default {
   type: "document",
   orderings: [orderRankOrdering],
   fields: [
-    orderRankField({ type: "illustration", newItemPosition: "after" }),
+    orderRankField({ type: "illustration", newItemPosition: "before" }),
     {
       name: "title",
       title: "Titre",
@@ -35,6 +35,8 @@ export default {
     {
       name: "illustrationsBlock",
       title: "Bloc de l'illustration",
+      description:
+        "Les blocs contiennent une ou plusieurs illustrations et viennent se placer les uns au-dessus des autres. Par exmple, le premier bloc, le bloc 1, est en bas de la page, les blocs suivants étants au-dessus de lui.",
       type: "reference",
       to: [{ type: "illustrationsBlock" }],
       validation: (Rule) => Rule.required(),

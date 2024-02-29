@@ -97,36 +97,4 @@ export default function Illustrations({ illustrations }) {
         })}
     </StyledContainer>
   );
-  // return (
-  //   <StyledContainer className="grid">
-  //     {illustrations?.map((illustration) => {
-  //       const { title, mainImage, gifImage, slug, position } = illustration;
-  //       const mainImageProps = useNextSanityImage(sanityClient, mainImage);
-  //       const gifImageProps = useNextSanityImage(sanityClient, gifImage);
-  //       return (
-  //         <StyledIllustration $position={position} key={title}>
-  //           <Link
-  //             href="/illustration/[slug]"
-  //             as={`/illustration/${slug.current}`}
-  //             scroll={false}
-  //           >
-  //             <Image
-  //               {...mainImageProps}
-  //               placeholder="blur"
-  //               blurDataURL={mainImage?.asset.metadata.lqip}
-  //               alt={title}
-  //               sizes="(max-width: 800px) 100vw, 800px"
-  //             />
-  //             <Image
-  //               {...gifImageProps}
-  //               alt={title}
-  //               sizes="(max-width: 800px) 100vw, 800px"
-  //               className="gifImage"
-  //             />
-  //           </Link>
-  //         </StyledIllustration>
-  //       );
-  //     })}
-  //   </StyledContainer>
-  // );
 }
