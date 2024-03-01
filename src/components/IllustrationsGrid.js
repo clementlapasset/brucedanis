@@ -2,7 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useNextSanityImage } from "next-sanity-image";
 import sanityClient from "../../sanity/lib/createClient";
-
+import { useEffect } from "react";
 import styled from "styled-components";
 
 const StyledContainer = styled.section`
@@ -52,6 +52,14 @@ export default function Illustrations({ illustrations }) {
     const currentTarget = e.currentTarget;
     currentTarget.classList.toggle("touch");
   };
+  useEffect(() => {
+    const scrollPosition = sessionStorage.getItem("scrollPosition");
+    if (scrollPosition) {
+      console.log("scroll position in grid is: ", scrollPosition);
+      window.scrollTo(0, scrollPosition);
+      sessionStorage.removeItem("scrollPosition");
+    }
+  }, []);
   return (
     <StyledContainer>
       {illustrations

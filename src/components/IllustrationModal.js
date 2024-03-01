@@ -3,6 +3,7 @@ import sanityClient from "../../sanity/lib/createClient";
 import Image from "next/image";
 import { useNextSanityImage } from "next-sanity-image";
 import { useRouter } from "next/router";
+import Link from "next/link";
 import PrevArrow from "../assets/icons/ArrowLeft";
 import NextArrow from "../assets/icons/ArrowRight";
 import CloseBtn from "../assets/icons/CloseBtn";
@@ -271,6 +272,13 @@ export default function IllustrationModal({ illustration, vacation }) {
     }
   }, [router.asPath]);
 
+  const saveScrollPosition = () => {
+    sessionStorage.setItem(
+      "scrollPosition",
+      window.pageYOffset || document.documentElement.scrollTop
+    );
+  };
+
   return (
     <StyledContainer
       $isVisible={isVisible}
@@ -278,9 +286,14 @@ export default function IllustrationModal({ illustration, vacation }) {
       $isArrows={categoryCount > 1}
     >
       <div className="modal grid" ref={modalRef}>
-        <button className="close-btn" onClick={() => handleQuitModal()}>
+        <Link href="/" scroll={false}>
+          <button className="close-btn" onClick={saveScrollPosition}>
+            <CloseBtn />
+          </button>
+        </Link>
+        {/* <button className="close-btn" onClick={() => handleQuitModal()}>
           <CloseBtn />
-        </button>
+        </button> */}
         <Image
           {...mainImageProps}
           className="main-image"
