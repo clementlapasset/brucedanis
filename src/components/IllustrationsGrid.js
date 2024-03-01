@@ -26,7 +26,8 @@ const StyledIllustration = styled.div`
       $position.columnStart + "/" + ($position.columnEnd + 1)};
     grid-row: ${({ $position }) => $position.rowStart + "/" + $position.rowEnd};
   }
-  &:hover {
+  &:hover,
+  &.touch {
     .gifImage {
       opacity: 1;
     }
@@ -47,6 +48,10 @@ const StyledIllustration = styled.div`
 `;
 
 export default function Illustrations({ illustrations }) {
+  const handleTouchStart = (e) => {
+    const currentTarget = e.currentTarget;
+    currentTarget.classList.toggle("touch");
+  };
   return (
     <StyledContainer>
       {illustrations
@@ -69,7 +74,11 @@ export default function Illustrations({ illustrations }) {
                   gifImage
                 );
                 return (
-                  <StyledIllustration $position={position} key={title}>
+                  <StyledIllustration
+                    $position={position}
+                    key={title}
+                    onTouchStart={handleTouchStart}
+                  >
                     <Link
                       href="/illustration/[slug]"
                       as={`/illustration/${slug.current}`}
