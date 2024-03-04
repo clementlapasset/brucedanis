@@ -294,14 +294,14 @@ export default function IllustrationModal({ illustration, vacation }) {
           {...mainImageProps}
           className="main-image"
           alt={title}
-          sizes="(max-width: 800px) 100vw, 800px"
+          sizes="calc(100vw - 500px)"
         />
         <section className="infosPanel" ref={infoRef}>
           <Image
             {...titleImageProps}
             className="title-image"
             alt={title}
-            sizes="(max-width: 800px) 100vw, 800px"
+            sizes="(max-width: 800px) 100vw, 400px"
           />
           <div className="info-container">
             <div>{selectedFormat?.technique}</div>
@@ -336,8 +336,8 @@ export default function IllustrationModal({ illustration, vacation }) {
                       <Image
                         src={format.image.asset.url}
                         alt={`Format ${index}`}
-                        width={500}
-                        height={500}
+                        width={200}
+                        height={200}
                         style={{
                           width: "100%",
                           objectFit: "contain",

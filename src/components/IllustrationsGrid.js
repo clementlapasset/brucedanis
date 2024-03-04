@@ -89,15 +89,11 @@ export default function Illustrations({ illustrations }) {
                     scroll={false}
                     shallow={true}
                   >
-                    <Image
-                      {...mainImageProps}
-                      alt={title}
-                      sizes="(max-width: 800px) 100vw, 800px"
-                    />
+                    <Image {...mainImageProps} alt={title} sizes="100vw" />
                     <Image
                       {...gifImageProps}
                       alt={title}
-                      sizes="(max-width: 800px) 100vw, 800px"
+                      sizes="100vw"
                       className="gifImage"
                     />
                   </Link>
