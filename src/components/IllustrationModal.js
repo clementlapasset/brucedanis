@@ -260,14 +260,14 @@ export default function IllustrationModal({ illustration, vacation }) {
   }
 
   function handleNextBtn() {
-    setIsTransition(true);
-    setTimeout(() => {
-      if (illustration.next !== null) {
-        handlePush(illustration.next);
-      } else {
-        handlePush(illustration.first);
-      }
-    }, 200);
+    // setIsTransition(true);
+    // setTimeout(() => {
+    if (illustration.next !== null) {
+      handlePush(illustration.next);
+    } else {
+      handlePush(illustration.first);
+    }
+    // }, 200);
   }
 
   // Force scroll up on page change
