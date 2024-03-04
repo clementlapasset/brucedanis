@@ -202,7 +202,9 @@ export default function IllustrationModal({ illustration, vacation }) {
   const infoRef = useRef();
 
   useEffect(() => {
-    document.body.style.overflow = "hidden";
+    setTimeout(() => {
+      document.body.style.overflow = "hidden";
+    }, 100);
     setIsVisible(true);
     // Outside click to close
     const checkIfClickedOutside = (e) => {
@@ -225,10 +227,14 @@ export default function IllustrationModal({ illustration, vacation }) {
   function handleQuitModal() {
     setIsVisible(false);
     setTimeout(() => {
-      router.push({
-        pathname: "/",
-        query: { scrollPosition: document.documentElement.scrollTop },
-      });
+      router.push(
+        {
+          pathname: "/",
+          query: { scrollPosition: document.documentElement.scrollTop },
+        },
+        "/",
+        { scroll: false, shallow: true }
+      );
     }, 400);
   }
   const mainImageProps = useNextSanityImage(
@@ -287,8 +293,6 @@ export default function IllustrationModal({ illustration, vacation }) {
         <Image
           {...mainImageProps}
           className="main-image"
-          placeholder="blur"
-          blurDataURL={selectedFormat?.image.asset.metadata.lqip}
           alt={title}
           sizes="(max-width: 800px) 100vw, 800px"
         />
@@ -296,8 +300,6 @@ export default function IllustrationModal({ illustration, vacation }) {
           <Image
             {...titleImageProps}
             className="title-image"
-            placeholder="blur"
-            blurDataURL={titleImage.asset.metadata.lqip}
             alt={title}
             sizes="(max-width: 800px) 100vw, 800px"
           />

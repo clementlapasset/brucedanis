@@ -28,7 +28,7 @@ export default function IllustrationPage({
         />
       </Head>
       <IllustrationsGrid illustrations={illustrations} />
-      <HomeFooter events={events} isPageLoaded={true} />
+      <HomeFooter events={events} inModal />
       <IllustrationModal
         illustration={illustration}
         illustrations={illustrations}

@@ -6,17 +6,18 @@ import IllustrationsGrid from "@/components/IllustrationsGrid";
 import HomeFooter from "@/components/HomeFooter";
 import { useEffect, useState } from "react";
 import Head from "next/head";
+import { useContext } from "react";
+import { Context } from "@/app/Context";
 
 const IllustrationsPreview = dynamic(() =>
   import("@/components/sanityPreview/IllustrationsPreview")
 );
 
 export default function Home({ illustrations, draftMode, events }) {
-  const [isPageLoaded, setIsPageLoaded] = useState(false);
-
+  const { isFirstLoad, setIsFirstLoad } = useContext(Context);
   useEffect(() => {
     const onPageLoad = () => {
-      setIsPageLoaded(true);
+      setIsFirstLoad(true);
     };
     if (document.readyState === "complete") {
       onPageLoad();
@@ -35,9 +36,9 @@ export default function Home({ illustrations, draftMode, events }) {
       {draftMode ? (
         <IllustrationsPreview illustrations={illustrations} />
       ) : (
-        isPageLoaded && <IllustrationsGrid illustrations={illustrations} />
+        isFirstLoad && <IllustrationsGrid illustrations={illustrations} />
       )}
-      <HomeFooter events={events} isPageLoaded={isPageLoaded} />
+      <HomeFooter events={events} />
     </>
   );
 }

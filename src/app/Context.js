@@ -4,6 +4,7 @@ const Context = createContext();
 const DataProvider = ({ children }) => {
   const [isFooterMinimized, setIsFooterMinimized] = useState(false);
   const [isLandingIntro, setIsLandingIntro] = useState(true);
+  const [isFirstLoad, setIsFirstLoad] = useState(false);
 
   return (
     <Context.Provider
@@ -12,6 +13,8 @@ const DataProvider = ({ children }) => {
         setIsFooterMinimized,
         isLandingIntro,
         setIsLandingIntro,
+        isFirstLoad,
+        setIsFirstLoad,
       }}
     >
       {children}

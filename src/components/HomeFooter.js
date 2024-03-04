@@ -129,7 +129,7 @@ const StyledContainer = styled.section`
   }
 `;
 
-export default function HomeFooter({ events, isPageLoaded }) {
+export default function HomeFooter({ events, inModal }) {
   const [screenHeight, setScreenHeight] = useState();
   const [scrollY, setScrollY] = useState(0);
   const [isIntroTransition, setIsIntroTransition] = useState(false);
@@ -152,14 +152,19 @@ export default function HomeFooter({ events, isPageLoaded }) {
   }, [isLandingIntro]);
 
   useEffect(() => {
-    setTimeout(() => {
-      isPageLoaded && setIsLandingIntro(false);
-      setIsIntroTransition(true);
+    if (inModal) {
+      setIsIntroTransition(false);
+      setIsLandingIntro(false);
+    } else {
       setTimeout(() => {
-        setIsIntroTransition(false);
-      }, 800);
-    }, 3000);
-  }, [isPageLoaded]);
+        setIsLandingIntro(false);
+        setIsIntroTransition(true);
+        setTimeout(() => {
+          setIsIntroTransition(false);
+        }, 800);
+      }, 3000);
+    }
+  }, []);
 
   useEffect(() => {
     const handleIsMinimized = () => {

@@ -64,57 +64,49 @@ export default function Illustrations({ illustrations }) {
 
   return (
     <StyledContainer>
-      {illustrations
-        .sort((a, b) => b.number - a.number)
-        .map((illustrationsBlock) => {
-          return (
-            <StyledIllustrationsBlock
-              className="grid"
-              key={illustrationsBlock.id}
-            >
-              {illustrationsBlock.illustrations.map((illustration) => {
-                const { title, mainImage, gifImage, slug, position } =
-                  illustration;
-                const mainImageProps = useNextSanityImage(
-                  sanityClient,
-                  mainImage
-                );
-                const gifImageProps = useNextSanityImage(
-                  sanityClient,
-                  gifImage
-                );
-                return (
-                  <StyledIllustration
-                    $position={position}
-                    key={title}
-                    onTouchStart={handleTouchStart}
+      {illustrations.map((illustrationsBlock) => {
+        return (
+          <StyledIllustrationsBlock
+            className="grid"
+            key={illustrationsBlock.id}
+          >
+            {illustrationsBlock.illustrations.map((illustration) => {
+              const { title, mainImage, gifImage, slug, position } =
+                illustration;
+              const mainImageProps = useNextSanityImage(
+                sanityClient,
+                mainImage
+              );
+              const gifImageProps = useNextSanityImage(sanityClient, gifImage);
+              return (
+                <StyledIllustration
+                  $position={position}
+                  key={title}
+                  onTouchStart={() => handleTouchStart}
+                >
+                  <Link
+                    href={`/illustration/${slug.current}`}
+                    scroll={false}
+                    shallow={true}
                   >
-                    <Link
-                      href="/illustration/[slug]"
-                      as={`/illustration/${slug.current}`}
-                      scroll={false}
-                      shallow={true}
-                    >
-                      <Image
-                        {...mainImageProps}
-                        placeholder="blur"
-                        blurDataURL={mainImage?.asset.metadata.lqip}
-                        alt={title}
-                        sizes="(max-width: 800px) 100vw, 800px"
-                      />
-                      <Image
-                        {...gifImageProps}
-                        alt={title}
-                        sizes="(max-width: 800px) 100vw, 800px"
-                        className="gifImage"
-                      />
-                    </Link>
-                  </StyledIllustration>
-                );
-              })}
-            </StyledIllustrationsBlock>
-          );
-        })}
+                    <Image
+                      {...mainImageProps}
+                      alt={title}
+                      sizes="(max-width: 800px) 100vw, 800px"
+                    />
+                    <Image
+                      {...gifImageProps}
+                      alt={title}
+                      sizes="(max-width: 800px) 100vw, 800px"
+                      className="gifImage"
+                    />
+                  </Link>
+                </StyledIllustration>
+              );
+            })}
+          </StyledIllustrationsBlock>
+        );
+      })}
     </StyledContainer>
   );
 }

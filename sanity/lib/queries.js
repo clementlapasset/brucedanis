@@ -1,9 +1,9 @@
 import { groq } from "next-sanity";
 
-export const ILLUSTRATIONS_QUERY = groq`*[_type == "illustrationsBlock"]{
+export const ILLUSTRATIONS_QUERY = groq`*[_type == "illustrationsBlock"] | order(number desc){
   "id": _id,
-  "number": number,
-  "illustrations": *[_type == "illustration" && defined(slug) && references(^._id)]|order(orderRank) {
+  number,
+  "illustrations": *[_type == "illustration" && defined(slug) && references(^._id)] | order(orderRank) {
     title,
     slug,
     position,
