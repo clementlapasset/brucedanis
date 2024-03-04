@@ -224,10 +224,14 @@ export default function IllustrationModal({ illustration, vacation }) {
   function handleQuitModal() {
     setIsVisible(false);
     setTimeout(() => {
-      router.push({
-        pathname: "/",
-        query: { scrollPosition: document.documentElement.scrollTop },
-      });
+      router.push(
+        {
+          pathname: "/",
+          query: { scrollPosition: document.documentElement.scrollTop },
+        },
+        "/",
+        { scroll: false, shallow: true }
+      );
     }, 400);
   }
   const mainImageProps = useNextSanityImage(
