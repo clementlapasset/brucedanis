@@ -2,8 +2,9 @@ import Link from "next/link";
 import Image from "next/image";
 import { useNextSanityImage } from "next-sanity-image";
 import sanityClient from "../../sanity/lib/createClient";
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 import styled from "styled-components";
+import { useRouter } from "next/router";
 
 const StyledContainer = styled.section`
   padding-bottom: 244px;
@@ -48,18 +49,19 @@ const StyledIllustration = styled.div`
 `;
 
 export default function Illustrations({ illustrations }) {
+  const router = useRouter();
+
   const handleTouchStart = (e) => {
     const currentTarget = e.currentTarget;
     currentTarget.classList.toggle("touch");
   };
-  useEffect(() => {
-    const scrollPosition = sessionStorage.getItem("scrollPosition");
-    if (scrollPosition) {
-      console.log("scroll position in grid is: ", scrollPosition);
-      window.scrollTo(0, scrollPosition);
-      sessionStorage.removeItem("scrollPosition");
+
+  useLayoutEffect(() => {
+    if (router.query.scrollPosition) {
+      window.scrollTo(0, router.query.scrollPosition);
     }
-  }, []);
+  }, [router.query.scrollPosition]);
+
   return (
     <StyledContainer>
       {illustrations
@@ -91,6 +93,7 @@ export default function Illustrations({ illustrations }) {
                       href="/illustration/[slug]"
                       as={`/illustration/${slug.current}`}
                       scroll={false}
+                      shallow={true}
                     >
                       <Image
                         {...mainImageProps}
