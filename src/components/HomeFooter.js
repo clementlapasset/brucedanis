@@ -129,7 +129,7 @@ const StyledContainer = styled.section`
   }
 `;
 
-export default function HomeFooter({ events }) {
+export default function HomeFooter({ events, inModal }) {
   const [screenHeight, setScreenHeight] = useState();
   const [scrollY, setScrollY] = useState(0);
   const [isIntroTransition, setIsIntroTransition] = useState(false);
@@ -152,14 +152,18 @@ export default function HomeFooter({ events }) {
   }, [isLandingIntro]);
 
   useEffect(() => {
-    setTimeout(() => {
-      // isPageLoaded && setIsLandingIntro(false);
+    if (inModal) {
+      setIsIntroTransition(false);
       setIsLandingIntro(false);
-      setIsIntroTransition(true);
+    } else {
       setTimeout(() => {
-        setIsIntroTransition(false);
-      }, 800);
-    }, 3000);
+        setIsLandingIntro(false);
+        setIsIntroTransition(true);
+        setTimeout(() => {
+          setIsIntroTransition(false);
+        }, 800);
+      }, 3000);
+    }
   }, []);
 
   useEffect(() => {
