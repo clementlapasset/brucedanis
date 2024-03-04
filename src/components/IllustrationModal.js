@@ -201,7 +201,9 @@ export default function IllustrationModal({ illustration, vacation }) {
   const infoRef = useRef();
 
   useEffect(() => {
-    document.body.style.overflow = "hidden";
+    setTimeout(() => {
+      document.body.style.overflow = "hidden";
+    }, 100);
     setIsVisible(true);
     // Outside click to close
     const checkIfClickedOutside = (e) => {
