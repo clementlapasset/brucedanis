@@ -290,8 +290,6 @@ export default function IllustrationModal({ illustration, vacation }) {
         <Image
           {...mainImageProps}
           className="main-image"
-          placeholder="blur"
-          blurDataURL={selectedFormat?.image.asset.metadata.lqip}
           alt={title}
           sizes="(max-width: 800px) 100vw, 800px"
         />
@@ -299,8 +297,6 @@ export default function IllustrationModal({ illustration, vacation }) {
           <Image
             {...titleImageProps}
             className="title-image"
-            placeholder="blur"
-            blurDataURL={titleImage.asset.metadata.lqip}
             alt={title}
             sizes="(max-width: 800px) 100vw, 800px"
           />
