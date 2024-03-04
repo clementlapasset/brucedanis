@@ -182,6 +182,7 @@ const StyledContainer = styled.section`
 `;
 const StyledFormat = styled.div`
   justify-self: start;
+  cursor: pointer;
   p {
     text-decoration: ${({ $isSelected }) => $isSelected && "underline"};
     text-decoration-thickness: 2px;
