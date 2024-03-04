@@ -10,6 +10,8 @@ import {
   VACATION_QUERY,
 } from "../../../sanity/lib/queries";
 import Head from "next/head";
+import { useContext } from "react";
+import { Context } from "@/app/Context";
 
 export default function IllustrationPage({
   illustration,
@@ -17,6 +19,8 @@ export default function IllustrationPage({
   events,
   vacation,
 }) {
+  const { isFirstLoad } = useContext(Context);
+
   return (
     <>
       <Head>
@@ -27,7 +31,7 @@ export default function IllustrationPage({
           key="title"
         />
       </Head>
-      <IllustrationsGrid illustrations={illustrations} />
+      {isFirstLoad && <IllustrationsGrid illustrations={illustrations} />}
       <HomeFooter events={events} isPageLoaded={true} />
       <IllustrationModal
         illustration={illustration}
