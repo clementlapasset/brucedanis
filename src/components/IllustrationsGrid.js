@@ -82,7 +82,7 @@ export default function Illustrations({ illustrations }) {
                 <StyledIllustration
                   $position={position}
                   key={title}
-                  onTouchStart={handleTouchStart}
+                  // onTouchStart={handleTouchStart}
                 >
                   <Link
                     href="/illustration/[slug]"
