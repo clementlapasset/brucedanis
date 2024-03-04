@@ -227,11 +227,9 @@ export default function IllustrationModal({ illustration, vacation }) {
       router.push({
         pathname: "/",
         query: { scrollPosition: document.documentElement.scrollTop },
-        options: { scroll: false, shallow: true },
       });
     }, 400);
   }
-  // local;
   const mainImageProps = useNextSanityImage(
     sanityClient,
     selectedFormat?.image
