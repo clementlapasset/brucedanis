@@ -294,7 +294,7 @@ export default function IllustrationModal({ illustration, vacation }) {
           {...mainImageProps}
           className="main-image"
           alt={title}
-          sizes="calc(100vw - 500px)"
+          sizes="(max-width: 800px) 100vw, calc(100vw - 500px)"
         />
         <section className="infosPanel" ref={infoRef}>
           <Image
