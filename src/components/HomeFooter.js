@@ -119,11 +119,13 @@ const StyledContainer = styled.section`
       text-align: left;
     }
     .credits-links {
+      font-size: 9px;
       display: flex;
       flex-wrap: wrap;
       justify-content: end;
       @media ${({ theme }) => theme.minWidth.md} {
         justify-content: start;
+        font-size: 10px;
       }
     }
   }
@@ -252,7 +254,7 @@ export default function HomeFooter({ events, inModal }) {
         <div className="credits">
           <p>© 2024 Bruce d’Anis</p>
           <p className="credits-links">
-            Site réalisé par&nbsp;
+            Réalisé par&nbsp;
             <a
               target="_blank"
               rel="noreferrer"
