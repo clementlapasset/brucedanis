@@ -233,7 +233,7 @@ export default function HomeFooter({ events, inModal }) {
         )}
         <div className="adresse">
           <h2>Adresse</h2>
-          <a href="#">
+          <a href="https://maps.app.goo.gl/J2kWjzDk8sC9mBSa6">
             Atelier Di Bernard <br />
             97 rue Jean de Bernardy <br />
             13001, Marseille
@@ -241,8 +241,10 @@ export default function HomeFooter({ events, inModal }) {
         </div>
         <div className="contact">
           <h2>Contact</h2>
-          <a href="tel:+33612345678">06 12 34 56 78</a>
-          <a href="mailto:jeaniermans@gmail.com">jeaniermans@gmail.com</a>
+          <a href="tel:+33752928244">07 52 92 82 44</a>
+          <a href="mailto:brucedanis.illustrations@gmail.com">
+            brucedanis.illustrations@gmail.com
+          </a>
           <a href="https://www.instagram.com/brucedanis.illustrations">
             @brucedanis
           </a>
