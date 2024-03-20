@@ -5,6 +5,7 @@ import sanityClient from "../../sanity/lib/createClient";
 import { useLayoutEffect } from "react";
 import styled from "styled-components";
 import { useRouter } from "next/router";
+import linkArrow from "../assets/icons/link-arrow.svg";
 
 const StyledContainer = styled.section`
   padding-bottom: 244px;
@@ -44,6 +45,18 @@ const StyledIllustration = styled.div`
       position: absolute;
       top: 0;
       left: 0;
+    }
+  }
+  .see-btn {
+    display: flex;
+    text-transform: uppercase;
+    font-size: 12px;
+    margin-top: 15px;
+    img {
+      width: auto;
+    }
+    @media ${({ theme }) => theme.minWidth.md} {
+      display: none;
     }
   }
 `;
@@ -96,6 +109,15 @@ export default function Illustrations({ illustrations }) {
                       sizes="100vw"
                       className="gifImage"
                     />
+                    <div className="see-btn">
+                      Voir&nbsp;
+                      <Image
+                        src={linkArrow}
+                        alt="Commander"
+                        width={10}
+                        height={10}
+                      />
+                    </div>
                   </Link>
                 </StyledIllustration>
               );
