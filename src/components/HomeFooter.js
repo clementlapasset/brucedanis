@@ -106,6 +106,17 @@ const StyledContainer = styled.section`
       grid-row: auto;
       text-align: left;
     }
+    .email-mobile {
+      @media ${({ theme }) => theme.minWidth.md} {
+        display: none;
+      }
+    }
+    .email-desktop {
+      display: none;
+      @media ${({ theme }) => theme.minWidth.md} {
+        display: block;
+      }
+    }
   }
   .credits {
     align-self: flex-end;
@@ -245,7 +256,10 @@ export default function HomeFooter({ events, inModal }) {
           <h2>Contact</h2>
           <a href="tel:+33752928244">07 52 92 82 44</a>
           <a href="mailto:brucedanis.illustrations@gmail.com">
-            brucedanis.illustrations@gmail.com
+            <div className="email-mobile">E-mail</div>
+            <div className="email-desktop">
+              brucedanis.illustrations@gmail.com
+            </div>
           </a>
           <a href="https://www.instagram.com/brucedanis.illustrations">
             @brucedanis
