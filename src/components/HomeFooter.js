@@ -247,8 +247,10 @@ export default function HomeFooter({ events, inModal }) {
         <div className="adresse">
           <h2>Adresse</h2>
           <a href="https://maps.app.goo.gl/J2kWjzDk8sC9mBSa6">
-            Atelier Di Bernard <br />
-            97 rue Jean de Bernardy <br />
+            Atelier Algue
+            <br />
+            47 rue Jean de Bernardy
+            <br />
             13001, Marseille
           </a>
         </div>
